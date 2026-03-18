@@ -1,11 +1,9 @@
-import json
-import os
+from __future__ import annotations
+
+from app.core.config import get_settings
+from app.repositories.fixture_builder import build_fixture_bundle
 
 
 def load_protein_data() -> dict:
-    data_path = os.path.join(os.path.dirname(__file__), "..", "data", "proteins.json")
-    if os.path.exists(data_path):
-        with open(data_path) as f:
-            proteins = json.load(f)
-        return {p["uniprot_id"]: p for p in proteins}
-    return {}
+    bundle = build_fixture_bundle(get_settings().data_dir)
+    return {protein["uniprot_id"]: protein for protein in bundle.proteins}

@@ -1,827 +1,5 @@
 [
   {
-    "uniprot_id": "P31749",
-    "name": "RAC-alpha serine/threonine-protein kinase",
-    "gene_name": "AKT1",
-    "organism": "Homo sapiens",
-    "function_description": "Serine/threonine-protein kinase that regulates many processes including metabolism, proliferation, cell survival, growth and angiogenesis. Mediates the PI3K/AKT signaling pathway.",
-    "function_category": "enzyme",
-    "sequence_length": 480,
-    "subcellular_location": "Cytoplasm, Nucleus",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P31749",
-    "umap_x": 7.2,
-    "umap_y": 2.8,
-    "umap_z": 1.4,
-    "diseases": [
-      {"name": "Breast cancer", "association_score": 0.85},
-      {"name": "Colorectal cancer", "association_score": 0.78},
-      {"name": "Proteus syndrome", "association_score": 0.92}
-    ],
-    "drugs": [
-      {"name": "Capivasertib", "mechanism": "AKT inhibitor", "max_phase": 4},
-      {"name": "Ipatasertib", "mechanism": "AKT inhibitor", "max_phase": 3}
-    ],
-    "go_terms": [
-      {"id": "GO:0004674", "term": "protein serine/threonine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0046777", "term": "protein autophosphorylation", "category": "biological_process"},
-      {"id": "GO:0005524", "term": "ATP binding", "category": "molecular_function"}
-    ]
-  },
-  {
-    "uniprot_id": "P00533",
-    "name": "Epidermal growth factor receptor",
-    "gene_name": "EGFR",
-    "organism": "Homo sapiens",
-    "function_description": "Receptor tyrosine kinase that binds epidermal growth factor and activates downstream signaling cascades to convert extracellular signals to cellular responses.",
-    "function_category": "enzyme",
-    "sequence_length": 1210,
-    "subcellular_location": "Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P00533",
-    "umap_x": 8.5,
-    "umap_y": 3.1,
-    "umap_z": 0.9,
-    "diseases": [
-      {"name": "Non-small cell lung cancer", "association_score": 0.97},
-      {"name": "Glioblastoma", "association_score": 0.88},
-      {"name": "Colorectal cancer", "association_score": 0.82}
-    ],
-    "drugs": [
-      {"name": "Erlotinib", "mechanism": "EGFR tyrosine kinase inhibitor", "max_phase": 4},
-      {"name": "Osimertinib", "mechanism": "Third-generation EGFR inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0004716", "term": "receptor signaling protein tyrosine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0007173", "term": "epidermal growth factor receptor signaling pathway", "category": "biological_process"},
-      {"id": "GO:0005886", "term": "plasma membrane", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P12931",
-    "name": "Proto-oncogene tyrosine-protein kinase Src",
-    "gene_name": "SRC",
-    "organism": "Homo sapiens",
-    "function_description": "Non-receptor tyrosine kinase that plays a role in the regulation of cell growth, differentiation, migration, and immune response. Involved in signaling pathways triggered by receptor tyrosine kinases.",
-    "function_category": "enzyme",
-    "sequence_length": 536,
-    "subcellular_location": "Cell membrane, Cytoplasm",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P12931",
-    "umap_x": 6.8,
-    "umap_y": 1.5,
-    "umap_z": 2.1,
-    "diseases": [
-      {"name": "Colorectal cancer", "association_score": 0.75},
-      {"name": "Breast cancer", "association_score": 0.70}
-    ],
-    "drugs": [
-      {"name": "Dasatinib", "mechanism": "SRC/ABL kinase inhibitor", "max_phase": 4},
-      {"name": "Bosutinib", "mechanism": "SRC/ABL kinase inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0004713", "term": "protein tyrosine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0007169", "term": "transmembrane receptor protein tyrosine kinase signaling pathway", "category": "biological_process"},
-      {"id": "GO:0005925", "term": "focal adhesion", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P00519",
-    "name": "Tyrosine-protein kinase ABL1",
-    "gene_name": "ABL1",
-    "organism": "Homo sapiens",
-    "function_description": "Non-receptor tyrosine kinase involved in cell differentiation, cell division, cell adhesion, and stress response. The BCR-ABL fusion protein is the hallmark of chronic myeloid leukemia.",
-    "function_category": "enzyme",
-    "sequence_length": 1149,
-    "subcellular_location": "Nucleus, Cytoplasm",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P00519",
-    "umap_x": 9.1,
-    "umap_y": 4.2,
-    "umap_z": 1.8,
-    "diseases": [
-      {"name": "Chronic myeloid leukemia", "association_score": 0.99},
-      {"name": "Acute lymphoblastic leukemia", "association_score": 0.88}
-    ],
-    "drugs": [
-      {"name": "Imatinib", "mechanism": "BCR-ABL tyrosine kinase inhibitor", "max_phase": 4},
-      {"name": "Nilotinib", "mechanism": "BCR-ABL tyrosine kinase inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0004713", "term": "protein tyrosine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0006468", "term": "protein phosphorylation", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P15056",
-    "name": "Serine/threonine-protein kinase B-raf",
-    "gene_name": "BRAF",
-    "organism": "Homo sapiens",
-    "function_description": "Serine/threonine-protein kinase that plays a role in regulating the MAP kinase/ERK signaling pathway affecting cell division, differentiation, and secretion.",
-    "function_category": "enzyme",
-    "sequence_length": 766,
-    "subcellular_location": "Cytoplasm",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P15056",
-    "umap_x": 5.9,
-    "umap_y": 0.8,
-    "umap_z": 2.5,
-    "diseases": [
-      {"name": "Melanoma", "association_score": 0.97},
-      {"name": "Colorectal cancer", "association_score": 0.80},
-      {"name": "Non-small cell lung cancer", "association_score": 0.75}
-    ],
-    "drugs": [
-      {"name": "Vemurafenib", "mechanism": "BRAF V600E inhibitor", "max_phase": 4},
-      {"name": "Dabrafenib", "mechanism": "BRAF inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0004674", "term": "protein serine/threonine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0000165", "term": "MAPK cascade", "category": "biological_process"},
-      {"id": "GO:0005829", "term": "cytosol", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "Q02750",
-    "name": "Dual specificity mitogen-activated protein kinase kinase 1",
-    "gene_name": "MAP2K1",
-    "organism": "Homo sapiens",
-    "function_description": "Dual specificity kinase that activates ERK1 and ERK2 MAP kinases. Essential component of the RAS-RAF-MEK-ERK signal transduction pathway.",
-    "function_category": "enzyme",
-    "sequence_length": 393,
-    "subcellular_location": "Cytoplasm",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q02750",
-    "umap_x": 7.7,
-    "umap_y": 4.6,
-    "umap_z": 0.5,
-    "diseases": [
-      {"name": "Cardiofaciocutaneous syndrome", "association_score": 0.90},
-      {"name": "Melanoma", "association_score": 0.72}
-    ],
-    "drugs": [
-      {"name": "Trametinib", "mechanism": "MEK1/MEK2 inhibitor", "max_phase": 4},
-      {"name": "Cobimetinib", "mechanism": "MEK1 inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0004708", "term": "MAP kinase kinase activity", "category": "molecular_function"},
-      {"id": "GO:0000165", "term": "MAPK cascade", "category": "biological_process"},
-      {"id": "GO:0005829", "term": "cytosol", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P11802",
-    "name": "Cyclin-dependent kinase 4",
-    "gene_name": "CDK4",
-    "organism": "Homo sapiens",
-    "function_description": "Serine/threonine-protein kinase involved in the control of the cell cycle G1/S transition. Phosphorylates and inhibits members of the retinoblastoma protein family.",
-    "function_category": "enzyme",
-    "sequence_length": 303,
-    "subcellular_location": "Nucleus",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P11802",
-    "umap_x": 6.3,
-    "umap_y": 3.7,
-    "umap_z": 1.1,
-    "diseases": [
-      {"name": "Melanoma", "association_score": 0.82},
-      {"name": "Breast cancer", "association_score": 0.78}
-    ],
-    "drugs": [
-      {"name": "Palbociclib", "mechanism": "CDK4/6 inhibitor", "max_phase": 4},
-      {"name": "Ribociclib", "mechanism": "CDK4/6 inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0004693", "term": "cyclin-dependent protein serine/threonine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0000082", "term": "G1/S transition of mitotic cell cycle", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "Q00534",
-    "name": "Cyclin-dependent kinase 6",
-    "gene_name": "CDK6",
-    "organism": "Homo sapiens",
-    "function_description": "Serine/threonine-protein kinase involved in cell cycle regulation. Partners with D-type cyclins to phosphorylate the retinoblastoma protein.",
-    "function_category": "enzyme",
-    "sequence_length": 326,
-    "subcellular_location": "Nucleus, Cytoplasm",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q00534",
-    "umap_x": 5.4,
-    "umap_y": 2.2,
-    "umap_z": 2.8,
-    "diseases": [
-      {"name": "Acute lymphoblastic leukemia", "association_score": 0.70},
-      {"name": "Breast cancer", "association_score": 0.75}
-    ],
-    "drugs": [
-      {"name": "Abemaciclib", "mechanism": "CDK4/6 inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0004693", "term": "cyclin-dependent protein serine/threonine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0000082", "term": "G1/S transition of mitotic cell cycle", "category": "biological_process"},
-      {"id": "GO:0005737", "term": "cytoplasm", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "O60674",
-    "name": "Tyrosine-protein kinase JAK2",
-    "gene_name": "JAK2",
-    "organism": "Homo sapiens",
-    "function_description": "Non-receptor tyrosine kinase involved in cytokine receptor signaling. Mediates signaling through the JAK-STAT pathway for cell proliferation, differentiation, and apoptosis.",
-    "function_category": "enzyme",
-    "sequence_length": 1132,
-    "subcellular_location": "Cytoplasm, Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/O60674",
-    "umap_x": 8.9,
-    "umap_y": 1.0,
-    "umap_z": 0.3,
-    "diseases": [
-      {"name": "Polycythemia vera", "association_score": 0.98},
-      {"name": "Myelofibrosis", "association_score": 0.95},
-      {"name": "Essential thrombocythemia", "association_score": 0.90}
-    ],
-    "drugs": [
-      {"name": "Ruxolitinib", "mechanism": "JAK1/JAK2 inhibitor", "max_phase": 4},
-      {"name": "Fedratinib", "mechanism": "JAK2 inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0004713", "term": "protein tyrosine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0007259", "term": "receptor signaling pathway via JAK-STAT", "category": "biological_process"},
-      {"id": "GO:0005737", "term": "cytoplasm", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P04626",
-    "name": "Receptor tyrosine-protein kinase erbB-2",
-    "gene_name": "ERBB2",
-    "organism": "Homo sapiens",
-    "function_description": "Receptor tyrosine kinase that is part of the EGFR family. Lacks a known ligand but heterodimerizes with other EGFR family members to activate downstream signaling.",
-    "function_category": "enzyme",
-    "sequence_length": 1255,
-    "subcellular_location": "Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P04626",
-    "umap_x": 7.0,
-    "umap_y": 0.3,
-    "umap_z": 1.7,
-    "diseases": [
-      {"name": "Breast cancer", "association_score": 0.98},
-      {"name": "Gastric cancer", "association_score": 0.85}
-    ],
-    "drugs": [
-      {"name": "Trastuzumab", "mechanism": "Anti-HER2 monoclonal antibody", "max_phase": 4},
-      {"name": "Pertuzumab", "mechanism": "Anti-HER2 monoclonal antibody", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0004716", "term": "receptor signaling protein tyrosine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0007169", "term": "transmembrane receptor protein tyrosine kinase signaling pathway", "category": "biological_process"},
-      {"id": "GO:0005886", "term": "plasma membrane", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P01116",
-    "name": "GTPase KRas",
-    "gene_name": "KRAS",
-    "organism": "Homo sapiens",
-    "function_description": "Small GTPase that acts as a molecular switch in cell signaling. Cycles between active GTP-bound and inactive GDP-bound forms to regulate cell growth, differentiation, and survival.",
-    "function_category": "signaling",
-    "sequence_length": 189,
-    "subcellular_location": "Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P01116",
-    "umap_x": -7.3,
-    "umap_y": 2.5,
-    "umap_z": 1.2,
-    "diseases": [
-      {"name": "Non-small cell lung cancer", "association_score": 0.96},
-      {"name": "Pancreatic cancer", "association_score": 0.98},
-      {"name": "Colorectal cancer", "association_score": 0.90}
-    ],
-    "drugs": [
-      {"name": "Sotorasib", "mechanism": "KRAS G12C inhibitor", "max_phase": 4},
-      {"name": "Adagrasib", "mechanism": "KRAS G12C inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0005525", "term": "GTP binding", "category": "molecular_function"},
-      {"id": "GO:0007265", "term": "Ras protein signal transduction", "category": "biological_process"},
-      {"id": "GO:0005886", "term": "plasma membrane", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P01111",
-    "name": "GTPase NRas",
-    "gene_name": "NRAS",
-    "organism": "Homo sapiens",
-    "function_description": "Small GTPase involved in signal transduction. Mutations are found in various cancers, particularly melanoma and acute myeloid leukemia.",
-    "function_category": "signaling",
-    "sequence_length": 189,
-    "subcellular_location": "Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P01111",
-    "umap_x": -6.1,
-    "umap_y": 3.8,
-    "umap_z": 0.7,
-    "diseases": [
-      {"name": "Melanoma", "association_score": 0.88},
-      {"name": "Acute myeloid leukemia", "association_score": 0.80}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0005525", "term": "GTP binding", "category": "molecular_function"},
-      {"id": "GO:0007265", "term": "Ras protein signal transduction", "category": "biological_process"},
-      {"id": "GO:0005886", "term": "plasma membrane", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P42336",
-    "name": "Phosphatidylinositol 4,5-bisphosphate 3-kinase catalytic subunit alpha isoform",
-    "gene_name": "PIK3CA",
-    "organism": "Homo sapiens",
-    "function_description": "Catalytic subunit of PI3K that phosphorylates phosphatidylinositol lipids. Activates AKT signaling to regulate cell growth, survival, and metabolism.",
-    "function_category": "signaling",
-    "sequence_length": 1068,
-    "subcellular_location": "Cytoplasm",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P42336",
-    "umap_x": -8.5,
-    "umap_y": 1.2,
-    "umap_z": 2.0,
-    "diseases": [
-      {"name": "Breast cancer", "association_score": 0.92},
-      {"name": "Ovarian cancer", "association_score": 0.78},
-      {"name": "Endometrial cancer", "association_score": 0.75}
-    ],
-    "drugs": [
-      {"name": "Alpelisib", "mechanism": "PI3K alpha-selective inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0046934", "term": "phosphatidylinositol-4,5-bisphosphate 3-kinase activity", "category": "molecular_function"},
-      {"id": "GO:0014065", "term": "phosphatidylinositol 3-kinase signaling", "category": "biological_process"},
-      {"id": "GO:0005829", "term": "cytosol", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P42345",
-    "name": "Serine/threonine-protein kinase mTOR",
-    "gene_name": "MTOR",
-    "organism": "Homo sapiens",
-    "function_description": "Central regulator of cell growth and metabolism. Integrates signals from growth factors, nutrients, and energy status to control protein synthesis and autophagy.",
-    "function_category": "signaling",
-    "sequence_length": 2549,
-    "subcellular_location": "Cytoplasm, Lysosome membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P42345",
-    "umap_x": -9.2,
-    "umap_y": 4.1,
-    "umap_z": 1.5,
-    "diseases": [
-      {"name": "Tuberous sclerosis complex", "association_score": 0.85},
-      {"name": "Renal cell carcinoma", "association_score": 0.78}
-    ],
-    "drugs": [
-      {"name": "Everolimus", "mechanism": "mTOR inhibitor", "max_phase": 4},
-      {"name": "Temsirolimus", "mechanism": "mTOR inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0004674", "term": "protein serine/threonine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0031929", "term": "TOR signaling", "category": "biological_process"},
-      {"id": "GO:0005764", "term": "lysosome", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P60484",
-    "name": "Phosphatidylinositol 3,4,5-trisphosphate 3-phosphatase and dual-specificity protein phosphatase PTEN",
-    "gene_name": "PTEN",
-    "organism": "Homo sapiens",
-    "function_description": "Tumor suppressor that antagonizes the PI3K/AKT signaling pathway by dephosphorylating PIP3. Loss of PTEN function leads to uncontrolled cell growth.",
-    "function_category": "signaling",
-    "sequence_length": 403,
-    "subcellular_location": "Cytoplasm, Nucleus",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P60484",
-    "umap_x": -5.8,
-    "umap_y": 0.5,
-    "umap_z": 2.8,
-    "diseases": [
-      {"name": "Cowden syndrome", "association_score": 0.97},
-      {"name": "Glioblastoma", "association_score": 0.85},
-      {"name": "Prostate cancer", "association_score": 0.82}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0004725", "term": "protein tyrosine phosphatase activity", "category": "molecular_function"},
-      {"id": "GO:0006470", "term": "protein dephosphorylation", "category": "biological_process"},
-      {"id": "GO:0005829", "term": "cytosol", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P06400",
-    "name": "Retinoblastoma-associated protein",
-    "gene_name": "RB1",
-    "organism": "Homo sapiens",
-    "function_description": "Key regulator of the cell cycle that acts as a tumor suppressor. In its hypophosphorylated form, it binds E2F transcription factors to prevent G1/S transition.",
-    "function_category": "signaling",
-    "sequence_length": 928,
-    "subcellular_location": "Nucleus",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P06400",
-    "umap_x": -7.9,
-    "umap_y": 2.0,
-    "umap_z": 0.3,
-    "diseases": [
-      {"name": "Retinoblastoma", "association_score": 0.99},
-      {"name": "Osteosarcoma", "association_score": 0.75},
-      {"name": "Small cell lung cancer", "association_score": 0.72}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0003700", "term": "DNA-binding transcription factor activity", "category": "molecular_function"},
-      {"id": "GO:0000082", "term": "G1/S transition of mitotic cell cycle", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P04637",
-    "name": "Cellular tumor antigen p53",
-    "gene_name": "TP53",
-    "organism": "Homo sapiens",
-    "function_description": "Tumor suppressor that responds to diverse cellular stresses by regulating expression of target genes involved in cell cycle arrest, apoptosis, senescence, and DNA repair.",
-    "function_category": "signaling",
-    "sequence_length": 393,
-    "subcellular_location": "Nucleus, Cytoplasm",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P04637",
-    "umap_x": -6.5,
-    "umap_y": 4.5,
-    "umap_z": 1.9,
-    "diseases": [
-      {"name": "Li-Fraumeni syndrome", "association_score": 0.99},
-      {"name": "Breast cancer", "association_score": 0.90},
-      {"name": "Colorectal cancer", "association_score": 0.88}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0003700", "term": "DNA-binding transcription factor activity", "category": "molecular_function"},
-      {"id": "GO:0006915", "term": "apoptotic process", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "Q00987",
-    "name": "E3 ubiquitin-protein ligase Mdm2",
-    "gene_name": "MDM2",
-    "organism": "Homo sapiens",
-    "function_description": "E3 ubiquitin ligase that targets tumor suppressor p53 for proteasomal degradation. Acts as a key negative regulator of p53 in a feedback loop.",
-    "function_category": "signaling",
-    "sequence_length": 491,
-    "subcellular_location": "Nucleus, Cytoplasm",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q00987",
-    "umap_x": -8.8,
-    "umap_y": 3.2,
-    "umap_z": 2.4,
-    "diseases": [
-      {"name": "Soft tissue sarcoma", "association_score": 0.82},
-      {"name": "Acute myeloid leukemia", "association_score": 0.68}
-    ],
-    "drugs": [
-      {"name": "Idasanutlin", "mechanism": "MDM2 antagonist", "max_phase": 3}
-    ],
-    "go_terms": [
-      {"id": "GO:0004842", "term": "ubiquitin-protein transferase activity", "category": "molecular_function"},
-      {"id": "GO:0006511", "term": "ubiquitin-dependent protein catabolic process", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P35222",
-    "name": "Catenin beta-1",
-    "gene_name": "CTNNB1",
-    "organism": "Homo sapiens",
-    "function_description": "Key downstream component of the Wnt signaling pathway. Functions as both a structural component of cell-cell adhesion junctions and a transcriptional co-activator.",
-    "function_category": "signaling",
-    "sequence_length": 781,
-    "subcellular_location": "Cytoplasm, Nucleus, Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P35222",
-    "umap_x": -5.3,
-    "umap_y": 1.8,
-    "umap_z": 0.9,
-    "diseases": [
-      {"name": "Hepatocellular carcinoma", "association_score": 0.82},
-      {"name": "Colorectal cancer", "association_score": 0.85},
-      {"name": "Pilomatricoma", "association_score": 0.90}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0005515", "term": "protein binding", "category": "molecular_function"},
-      {"id": "GO:0016055", "term": "Wnt signaling pathway", "category": "biological_process"},
-      {"id": "GO:0005913", "term": "cell-cell adherens junction", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P46531",
-    "name": "Neurogenic locus notch homolog protein 1",
-    "gene_name": "NOTCH1",
-    "organism": "Homo sapiens",
-    "function_description": "Transmembrane receptor that regulates cell fate decisions during development. Upon ligand binding, the intracellular domain is cleaved and translocates to the nucleus to activate transcription.",
-    "function_category": "signaling",
-    "sequence_length": 2555,
-    "subcellular_location": "Cell membrane, Nucleus",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P46531",
-    "umap_x": -9.7,
-    "umap_y": 0.8,
-    "umap_z": 1.1,
-    "diseases": [
-      {"name": "T-cell acute lymphoblastic leukemia", "association_score": 0.95},
-      {"name": "Aortic valve disease", "association_score": 0.80}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0004872", "term": "receptor activity", "category": "molecular_function"},
-      {"id": "GO:0007219", "term": "Notch signaling pathway", "category": "biological_process"},
-      {"id": "GO:0005886", "term": "plasma membrane", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P02452",
-    "name": "Collagen alpha-1(I) chain",
-    "gene_name": "COL1A1",
-    "organism": "Homo sapiens",
-    "function_description": "Major structural protein of bone, skin, tendon, and other connective tissues. Forms a triple helix with two alpha-1 and one alpha-2 chains.",
-    "function_category": "structural",
-    "sequence_length": 1464,
-    "subcellular_location": "Extracellular matrix",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P02452",
-    "umap_x": 1.5,
-    "umap_y": -9.2,
-    "umap_z": 0.8,
-    "diseases": [
-      {"name": "Osteogenesis imperfecta", "association_score": 0.98},
-      {"name": "Ehlers-Danlos syndrome", "association_score": 0.85}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0005201", "term": "extracellular matrix structural constituent", "category": "molecular_function"},
-      {"id": "GO:0030199", "term": "collagen fibril organization", "category": "biological_process"},
-      {"id": "GO:0005615", "term": "extracellular space", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P02458",
-    "name": "Collagen alpha-1(II) chain",
-    "gene_name": "COL2A1",
-    "organism": "Homo sapiens",
-    "function_description": "Major structural component of cartilage. Essential for the normal development of bones and other connective tissues.",
-    "function_category": "structural",
-    "sequence_length": 1487,
-    "subcellular_location": "Extracellular matrix",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P02458",
-    "umap_x": 2.8,
-    "umap_y": -10.5,
-    "umap_z": 1.5,
-    "diseases": [
-      {"name": "Stickler syndrome type 1", "association_score": 0.95},
-      {"name": "Achondrogenesis type 2", "association_score": 0.92}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0005201", "term": "extracellular matrix structural constituent", "category": "molecular_function"},
-      {"id": "GO:0030199", "term": "collagen fibril organization", "category": "biological_process"},
-      {"id": "GO:0005578", "term": "proteinaceous extracellular matrix", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P02751",
-    "name": "Fibronectin",
-    "gene_name": "FN1",
-    "organism": "Homo sapiens",
-    "function_description": "Extracellular matrix glycoprotein that binds integrins, collagen, fibrin, and heparan sulfate. Plays a major role in cell adhesion, migration, and wound healing.",
-    "function_category": "structural",
-    "sequence_length": 2386,
-    "subcellular_location": "Extracellular matrix, Secreted",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P02751",
-    "umap_x": 0.3,
-    "umap_y": -8.8,
-    "umap_z": 2.2,
-    "diseases": [
-      {"name": "Glomerulopathy with fibronectin deposits", "association_score": 0.90}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0005201", "term": "extracellular matrix structural constituent", "category": "molecular_function"},
-      {"id": "GO:0030198", "term": "extracellular matrix organization", "category": "biological_process"},
-      {"id": "GO:0005615", "term": "extracellular space", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P02545",
-    "name": "Prelamin-A/C",
-    "gene_name": "LMNA",
-    "organism": "Homo sapiens",
-    "function_description": "Type V intermediate filament protein that forms the nuclear lamina. Provides structural support for the nucleus and plays roles in gene regulation and chromatin organization.",
-    "function_category": "structural",
-    "sequence_length": 664,
-    "subcellular_location": "Nucleus, Nuclear inner membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P02545",
-    "umap_x": 1.9,
-    "umap_y": -11.3,
-    "umap_z": 0.4,
-    "diseases": [
-      {"name": "Emery-Dreifuss muscular dystrophy", "association_score": 0.95},
-      {"name": "Dilated cardiomyopathy", "association_score": 0.90},
-      {"name": "Hutchinson-Gilford progeria syndrome", "association_score": 0.98}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0005198", "term": "structural molecule activity", "category": "molecular_function"},
-      {"id": "GO:0006355", "term": "regulation of transcription, DNA-templated", "category": "biological_process"},
-      {"id": "GO:0005638", "term": "lamin filament", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P08670",
-    "name": "Vimentin",
-    "gene_name": "VIM",
-    "organism": "Homo sapiens",
-    "function_description": "Type III intermediate filament protein expressed in mesenchymal cells. Plays a role in cell attachment, migration, and signaling. A marker of epithelial-mesenchymal transition.",
-    "function_category": "structural",
-    "sequence_length": 466,
-    "subcellular_location": "Cytoplasm, Cytoskeleton",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P08670",
-    "umap_x": 0.7,
-    "umap_y": -9.9,
-    "umap_z": 1.8,
-    "diseases": [
-      {"name": "Cataract", "association_score": 0.70}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0005198", "term": "structural molecule activity", "category": "molecular_function"},
-      {"id": "GO:0045104", "term": "intermediate filament cytoskeleton organization", "category": "biological_process"},
-      {"id": "GO:0045111", "term": "intermediate filament cytoskeleton", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P68363",
-    "name": "Tubulin alpha-1B chain",
-    "gene_name": "TUBA1B",
-    "organism": "Homo sapiens",
-    "function_description": "Major constituent of microtubules. Tubulin alpha/beta heterodimers polymerize to form microtubules essential for cell division, intracellular transport, and cell shape.",
-    "function_category": "structural",
-    "sequence_length": 451,
-    "subcellular_location": "Cytoplasm, Cytoskeleton",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P68363",
-    "umap_x": 2.5,
-    "umap_y": -8.3,
-    "umap_z": 2.7,
-    "diseases": [
-      {"name": "Lissencephaly", "association_score": 0.72}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0005525", "term": "GTP binding", "category": "molecular_function"},
-      {"id": "GO:0007018", "term": "microtubule-based movement", "category": "biological_process"},
-      {"id": "GO:0015630", "term": "microtubule cytoskeleton", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P68133",
-    "name": "Actin, alpha skeletal muscle",
-    "gene_name": "ACTA1",
-    "organism": "Homo sapiens",
-    "function_description": "Major component of the thin filaments in skeletal muscle sarcomeres. Essential for muscle contraction and force generation.",
-    "function_category": "structural",
-    "sequence_length": 377,
-    "subcellular_location": "Cytoplasm, Cytoskeleton",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P68133",
-    "umap_x": 1.1,
-    "umap_y": -10.8,
-    "umap_z": 0.2,
-    "diseases": [
-      {"name": "Nemaline myopathy", "association_score": 0.95},
-      {"name": "Congenital fiber-type disproportion", "association_score": 0.80}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0005198", "term": "structural molecule activity", "category": "molecular_function"},
-      {"id": "GO:0030048", "term": "actin filament-based movement", "category": "biological_process"},
-      {"id": "GO:0015629", "term": "actin cytoskeleton", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P17661",
-    "name": "Desmin",
-    "gene_name": "DES",
-    "organism": "Homo sapiens",
-    "function_description": "Type III intermediate filament protein expressed in muscle cells. Maintains the structural and mechanical integrity of myofibrils by connecting them at the Z-disc.",
-    "function_category": "structural",
-    "sequence_length": 470,
-    "subcellular_location": "Cytoplasm, Cytoskeleton",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P17661",
-    "umap_x": 2.2,
-    "umap_y": -9.5,
-    "umap_z": 1.2,
-    "diseases": [
-      {"name": "Desminopathy", "association_score": 0.95},
-      {"name": "Dilated cardiomyopathy", "association_score": 0.80}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0005198", "term": "structural molecule activity", "category": "molecular_function"},
-      {"id": "GO:0045104", "term": "intermediate filament cytoskeleton organization", "category": "biological_process"},
-      {"id": "GO:0045111", "term": "intermediate filament cytoskeleton", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P05783",
-    "name": "Keratin, type I cytoskeletal 18",
-    "gene_name": "KRT18",
-    "organism": "Homo sapiens",
-    "function_description": "Type I intermediate filament chain expressed in simple epithelia. Partners with KRT8 to form the major intermediate filament network in epithelial cells of internal organs.",
-    "function_category": "structural",
-    "sequence_length": 430,
-    "subcellular_location": "Cytoplasm, Cytoskeleton",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P05783",
-    "umap_x": 0.5,
-    "umap_y": -11.8,
-    "umap_z": 2.4,
-    "diseases": [
-      {"name": "Cryptogenic cirrhosis", "association_score": 0.72}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0005198", "term": "structural molecule activity", "category": "molecular_function"},
-      {"id": "GO:0045104", "term": "intermediate filament cytoskeleton organization", "category": "biological_process"},
-      {"id": "GO:0005882", "term": "intermediate filament", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P12883",
-    "name": "Myosin-7",
-    "gene_name": "MYH7",
-    "organism": "Homo sapiens",
-    "function_description": "Heavy chain of cardiac beta-myosin. Functions as the major contractile protein in the heart, converting chemical energy into mechanical force for cardiac contraction.",
-    "function_category": "structural",
-    "sequence_length": 1935,
-    "subcellular_location": "Cytoplasm, Myofibril",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P12883",
-    "umap_x": 1.8,
-    "umap_y": -8.1,
-    "umap_z": 0.6,
-    "diseases": [
-      {"name": "Hypertrophic cardiomyopathy", "association_score": 0.97},
-      {"name": "Dilated cardiomyopathy", "association_score": 0.85},
-      {"name": "Laing distal myopathy", "association_score": 0.78}
-    ],
-    "drugs": [
-      {"name": "Mavacamten", "mechanism": "Cardiac myosin inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0003774", "term": "motor activity", "category": "molecular_function"},
-      {"id": "GO:0006936", "term": "muscle contraction", "category": "biological_process"},
-      {"id": "GO:0030016", "term": "myofibril", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "Q01959",
-    "name": "Sodium-dependent dopamine transporter",
-    "gene_name": "SLC6A3",
-    "organism": "Homo sapiens",
-    "function_description": "Transports dopamine from the synaptic cleft back into presynaptic neurons. Key regulator of dopaminergic neurotransmission and primary target for psychostimulants.",
-    "function_category": "transporter",
-    "sequence_length": 620,
-    "subcellular_location": "Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q01959",
-    "umap_x": 1.2,
-    "umap_y": 9.5,
-    "umap_z": 1.0,
-    "diseases": [
-      {"name": "Attention deficit hyperactivity disorder", "association_score": 0.78},
-      {"name": "Parkinson disease", "association_score": 0.72}
-    ],
-    "drugs": [
-      {"name": "Methylphenidate", "mechanism": "Dopamine reuptake inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0005329", "term": "dopamine transmembrane transporter activity", "category": "molecular_function"},
-      {"id": "GO:0015872", "term": "dopamine transport", "category": "biological_process"},
-      {"id": "GO:0005886", "term": "plasma membrane", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P31645",
-    "name": "Sodium-dependent serotonin transporter",
-    "gene_name": "SLC6A4",
-    "organism": "Homo sapiens",
-    "function_description": "Transports serotonin from the synaptic cleft back into presynaptic neurons. Primary target for selective serotonin reuptake inhibitors (SSRIs) used to treat depression.",
-    "function_category": "transporter",
-    "sequence_length": 630,
-    "subcellular_location": "Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P31645",
-    "umap_x": 2.5,
-    "umap_y": 10.8,
-    "umap_z": 0.5,
-    "diseases": [
-      {"name": "Major depressive disorder", "association_score": 0.82},
-      {"name": "Obsessive-compulsive disorder", "association_score": 0.75}
-    ],
-    "drugs": [
-      {"name": "Fluoxetine", "mechanism": "Selective serotonin reuptake inhibitor", "max_phase": 4},
-      {"name": "Sertraline", "mechanism": "Selective serotonin reuptake inhibitor", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0005335", "term": "serotonin transmembrane transporter activity", "category": "molecular_function"},
-      {"id": "GO:0006837", "term": "serotonin transport", "category": "biological_process"},
-      {"id": "GO:0005886", "term": "plasma membrane", "category": "cellular_component"}
-    ]
-  },
-  {
     "uniprot_id": "P08183",
     "name": "Multidrug resistance protein 1",
     "gene_name": "ABCB1",
@@ -835,16 +13,42 @@
     "umap_y": 8.3,
     "umap_z": 2.1,
     "diseases": [
-      {"name": "Inflammatory bowel disease", "association_score": 0.65},
-      {"name": "Multidrug resistance in cancer", "association_score": 0.90}
+      {
+        "id": "disease:inflammatory_bowel_disease",
+        "name": "Inflammatory bowel disease",
+        "association_score": 0.65
+      },
+      {
+        "id": "disease:multidrug_resistance_in_cancer",
+        "name": "Multidrug resistance in cancer",
+        "association_score": 0.9
+      }
     ],
     "drugs": [
-      {"name": "Tariquidar", "mechanism": "P-glycoprotein inhibitor", "max_phase": 3}
+      {
+        "id": "drug:tariquidar",
+        "name": "Tariquidar",
+        "mechanism": "P-glycoprotein inhibitor",
+        "max_phase": 3,
+        "drug_type": "Therapeutic"
+      }
     ],
     "go_terms": [
-      {"id": "GO:0042626", "term": "ATPase-coupled transmembrane transporter activity", "category": "molecular_function"},
-      {"id": "GO:0006855", "term": "drug transmembrane transport", "category": "biological_process"},
-      {"id": "GO:0005886", "term": "plasma membrane", "category": "cellular_component"}
+      {
+        "id": "GO:0042626",
+        "term": "ATPase-coupled transmembrane transporter activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006855",
+        "term": "drug transmembrane transport",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005886",
+        "term": "plasma membrane",
+        "category": "cellular_component"
+      }
     ]
   },
   {
@@ -861,222 +65,287 @@
     "umap_y": 11.2,
     "umap_z": 1.7,
     "diseases": [
-      {"name": "Gout", "association_score": 0.80},
-      {"name": "Junior blood group system", "association_score": 0.85}
+      {
+        "id": "disease:gout",
+        "name": "Gout",
+        "association_score": 0.8
+      },
+      {
+        "id": "disease:junior_blood_group_system",
+        "name": "Junior blood group system",
+        "association_score": 0.85
+      }
     ],
     "drugs": [],
     "go_terms": [
-      {"id": "GO:0042626", "term": "ATPase-coupled transmembrane transporter activity", "category": "molecular_function"},
-      {"id": "GO:0006855", "term": "drug transmembrane transport", "category": "biological_process"},
-      {"id": "GO:0016324", "term": "apical plasma membrane", "category": "cellular_component"}
+      {
+        "id": "GO:0042626",
+        "term": "ATPase-coupled transmembrane transporter activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006855",
+        "term": "drug transmembrane transport",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0016324",
+        "term": "apical plasma membrane",
+        "category": "cellular_component"
+      }
     ]
   },
   {
-    "uniprot_id": "P13569",
-    "name": "Cystic fibrosis transmembrane conductance regulator",
-    "gene_name": "CFTR",
+    "uniprot_id": "P00519",
+    "name": "Tyrosine-protein kinase ABL1",
+    "gene_name": "ABL1",
     "organism": "Homo sapiens",
-    "function_description": "cAMP-regulated chloride channel that also regulates other ion channels. Mutations cause cystic fibrosis, the most common lethal genetic disease in Caucasian populations.",
-    "function_category": "transporter",
-    "sequence_length": 1480,
-    "subcellular_location": "Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P13569",
-    "umap_x": 1.6,
-    "umap_y": 9.0,
-    "umap_z": 2.8,
+    "function_description": "Non-receptor tyrosine kinase involved in cell differentiation, cell division, cell adhesion, and stress response. The BCR-ABL fusion protein is the hallmark of chronic myeloid leukemia.",
+    "function_category": "enzyme",
+    "sequence_length": 1149,
+    "subcellular_location": "Nucleus, Cytoplasm",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P00519",
+    "umap_x": 9.1,
+    "umap_y": 4.2,
+    "umap_z": 1.8,
     "diseases": [
-      {"name": "Cystic fibrosis", "association_score": 0.99},
-      {"name": "Congenital bilateral absence of the vas deferens", "association_score": 0.88}
+      {
+        "id": "disease:chronic_myeloid_leukemia",
+        "name": "Chronic myeloid leukemia",
+        "association_score": 0.99
+      },
+      {
+        "id": "disease:acute_lymphoblastic_leukemia",
+        "name": "Acute lymphoblastic leukemia",
+        "association_score": 0.88
+      }
     ],
     "drugs": [
-      {"name": "Ivacaftor", "mechanism": "CFTR potentiator", "max_phase": 4},
-      {"name": "Elexacaftor", "mechanism": "CFTR corrector", "max_phase": 4}
+      {
+        "id": "drug:imatinib",
+        "name": "Imatinib",
+        "mechanism": "BCR-ABL tyrosine kinase inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:nilotinib",
+        "name": "Nilotinib",
+        "mechanism": "BCR-ABL tyrosine kinase inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
     ],
     "go_terms": [
-      {"id": "GO:0005254", "term": "chloride channel activity", "category": "molecular_function"},
-      {"id": "GO:0006821", "term": "chloride transport", "category": "biological_process"},
-      {"id": "GO:0016324", "term": "apical plasma membrane", "category": "cellular_component"}
+      {
+        "id": "GO:0004713",
+        "term": "protein tyrosine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006468",
+        "term": "protein phosphorylation",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
     ]
   },
   {
-    "uniprot_id": "P35670",
-    "name": "Copper-transporting ATPase 2",
-    "gene_name": "ATP7B",
+    "uniprot_id": "P68133",
+    "name": "Actin, alpha skeletal muscle",
+    "gene_name": "ACTA1",
     "organism": "Homo sapiens",
-    "function_description": "Copper-transporting P-type ATPase that is essential for copper homeostasis. Delivers copper to ceruloplasmin in the secretory pathway and excretes excess copper into bile.",
-    "function_category": "transporter",
-    "sequence_length": 1465,
-    "subcellular_location": "Golgi apparatus membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P35670",
-    "umap_x": 0.2,
-    "umap_y": 10.1,
-    "umap_z": 0.9,
+    "function_description": "Major component of the thin filaments in skeletal muscle sarcomeres. Essential for muscle contraction and force generation.",
+    "function_category": "structural",
+    "sequence_length": 377,
+    "subcellular_location": "Cytoplasm, Cytoskeleton",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P68133",
+    "umap_x": 1.1,
+    "umap_y": -10.8,
+    "umap_z": 0.2,
     "diseases": [
-      {"name": "Wilson disease", "association_score": 0.99}
+      {
+        "id": "disease:nemaline_myopathy",
+        "name": "Nemaline myopathy",
+        "association_score": 0.95
+      },
+      {
+        "id": "disease:congenital_fiber_type_disproportion",
+        "name": "Congenital fiber-type disproportion",
+        "association_score": 0.8
+      }
     ],
-    "drugs": [
-      {"name": "Penicillamine", "mechanism": "Copper chelator", "max_phase": 4}
-    ],
+    "drugs": [],
     "go_terms": [
-      {"id": "GO:0004008", "term": "copper-exporting ATPase activity", "category": "molecular_function"},
-      {"id": "GO:0006878", "term": "intracellular copper ion homeostasis", "category": "biological_process"},
-      {"id": "GO:0000139", "term": "Golgi membrane", "category": "cellular_component"}
+      {
+        "id": "GO:0005198",
+        "term": "structural molecule activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0030048",
+        "term": "actin filament-based movement",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0015629",
+        "term": "actin cytoskeleton",
+        "category": "cellular_component"
+      }
     ]
   },
   {
-    "uniprot_id": "P11166",
-    "name": "Solute carrier family 2, facilitated glucose transporter member 1",
-    "gene_name": "SLC2A1",
+    "uniprot_id": "P31749",
+    "name": "RAC-alpha serine/threonine-protein kinase",
+    "gene_name": "AKT1",
     "organism": "Homo sapiens",
-    "function_description": "Facilitative glucose transporter responsible for constitutive glucose uptake. Major glucose transporter in the blood-brain barrier and erythrocytes.",
-    "function_category": "transporter",
-    "sequence_length": 492,
-    "subcellular_location": "Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P11166",
-    "umap_x": 2.1,
-    "umap_y": 8.7,
+    "function_description": "Serine/threonine-protein kinase that regulates many processes including metabolism, proliferation, cell survival, growth and angiogenesis. Mediates the PI3K/AKT signaling pathway.",
+    "function_category": "enzyme",
+    "sequence_length": 480,
+    "subcellular_location": "Cytoplasm, Nucleus",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P31749",
+    "umap_x": 7.2,
+    "umap_y": 2.8,
     "umap_z": 1.4,
     "diseases": [
-      {"name": "GLUT1 deficiency syndrome", "association_score": 0.98},
-      {"name": "Epilepsy", "association_score": 0.72}
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.85
+      },
+      {
+        "id": "disease:colorectal_cancer",
+        "name": "Colorectal cancer",
+        "association_score": 0.78
+      },
+      {
+        "id": "disease:proteus_syndrome",
+        "name": "Proteus syndrome",
+        "association_score": 0.92
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:capivasertib",
+        "name": "Capivasertib",
+        "mechanism": "AKT inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:ipatasertib",
+        "name": "Ipatasertib",
+        "mechanism": "AKT inhibitor",
+        "max_phase": 3,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0004674",
+        "term": "protein serine/threonine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0046777",
+        "term": "protein autophosphorylation",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005524",
+        "term": "ATP binding",
+        "category": "molecular_function"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P02649",
+    "name": "Apolipoprotein E",
+    "gene_name": "APOE",
+    "organism": "Homo sapiens",
+    "function_description": "Lipid transport protein involved in neuronal maintenance, amyloid clearance, and late-onset Alzheimer risk.",
+    "function_category": "transporter",
+    "sequence_length": 317,
+    "subcellular_location": "Secreted",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P02649",
+    "umap_x": -4.6,
+    "umap_y": 5.9,
+    "umap_z": 2.5,
+    "diseases": [
+      {
+        "id": "disease:alzheimer_s_disease",
+        "name": "Alzheimer's disease",
+        "association_score": 0.94
+      },
+      {
+        "id": "disease:hyperlipoproteinemia_type_iii",
+        "name": "Hyperlipoproteinemia type III",
+        "association_score": 0.83
+      }
     ],
     "drugs": [],
     "go_terms": [
-      {"id": "GO:0005355", "term": "glucose transmembrane transporter activity", "category": "molecular_function"},
-      {"id": "GO:0015758", "term": "glucose transport", "category": "biological_process"},
-      {"id": "GO:0005886", "term": "plasma membrane", "category": "cellular_component"}
+      {
+        "id": "GO:0006869",
+        "term": "lipid transport",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0008201",
+        "term": "heparin binding",
+        "category": "molecular_function"
+      }
     ]
   },
   {
-    "uniprot_id": "Q13621",
-    "name": "Solute carrier family 12 member 1",
-    "gene_name": "SLC12A1",
+    "uniprot_id": "P05067",
+    "name": "Amyloid-beta precursor protein",
+    "gene_name": "APP",
     "organism": "Homo sapiens",
-    "function_description": "Sodium-potassium-chloride co-transporter expressed in the kidney thick ascending limb. Mediates reabsorption of sodium, potassium, and chloride from urine.",
-    "function_category": "transporter",
-    "sequence_length": 1099,
-    "subcellular_location": "Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q13621",
-    "umap_x": 1.0,
-    "umap_y": 11.5,
-    "umap_z": 2.3,
+    "function_description": "Membrane protein that is cleaved to generate amyloid-beta peptides and participates in neuronal growth and synaptic signaling.",
+    "function_category": "signaling",
+    "sequence_length": 770,
+    "subcellular_location": "Cell membrane, Golgi apparatus",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P05067",
+    "umap_x": -2.1,
+    "umap_y": 6.4,
+    "umap_z": 2.2,
     "diseases": [
-      {"name": "Bartter syndrome type 1", "association_score": 0.97}
+      {
+        "id": "disease:alzheimer_s_disease",
+        "name": "Alzheimer's disease",
+        "association_score": 0.96
+      },
+      {
+        "id": "disease:cerebral_amyloid_angiopathy",
+        "name": "Cerebral amyloid angiopathy",
+        "association_score": 0.77
+      }
     ],
     "drugs": [
-      {"name": "Furosemide", "mechanism": "Loop diuretic / NKCC2 inhibitor", "max_phase": 4}
+      {
+        "id": "drug:lecanemab",
+        "name": "Lecanemab",
+        "mechanism": "Amyloid-beta targeting antibody",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
     ],
     "go_terms": [
-      {"id": "GO:0008511", "term": "sodium:potassium:chloride symporter activity", "category": "molecular_function"},
-      {"id": "GO:0006814", "term": "sodium ion transport", "category": "biological_process"},
-      {"id": "GO:0016324", "term": "apical plasma membrane", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "O15245",
-    "name": "Solute carrier family 22 member 1",
-    "gene_name": "SLC22A1",
-    "organism": "Homo sapiens",
-    "function_description": "Organic cation transporter expressed primarily in the liver. Mediates hepatic uptake of various organic cations including metformin and other drugs.",
-    "function_category": "transporter",
-    "sequence_length": 554,
-    "subcellular_location": "Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/O15245",
-    "umap_x": 2.7,
-    "umap_y": 9.8,
-    "umap_z": 0.3,
-    "diseases": [
-      {"name": "Altered metformin pharmacokinetics", "association_score": 0.70}
-    ],
-    "drugs": [
-      {"name": "Metformin", "mechanism": "Substrate / OCT1-mediated hepatic uptake", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0015101", "term": "organic cation transmembrane transporter activity", "category": "molecular_function"},
-      {"id": "GO:0015695", "term": "organic cation transport", "category": "biological_process"},
-      {"id": "GO:0005886", "term": "plasma membrane", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "Q14654",
-    "name": "ATP-sensitive inward rectifier potassium channel 11",
-    "gene_name": "KCNJ11",
-    "organism": "Homo sapiens",
-    "function_description": "Inward-rectifier potassium channel that forms the pore of the ATP-sensitive potassium channel in pancreatic beta cells. Couples cell metabolism to electrical activity for insulin secretion.",
-    "function_category": "transporter",
-    "sequence_length": 390,
-    "subcellular_location": "Cell membrane",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q14654",
-    "umap_x": 0.5,
-    "umap_y": 10.5,
-    "umap_z": 1.9,
-    "diseases": [
-      {"name": "Neonatal diabetes mellitus", "association_score": 0.96},
-      {"name": "Congenital hyperinsulinism", "association_score": 0.92},
-      {"name": "Type 2 diabetes mellitus", "association_score": 0.68}
-    ],
-    "drugs": [
-      {"name": "Glibenclamide", "mechanism": "Sulfonylurea / KATP channel blocker", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0005242", "term": "inward rectifier potassium channel activity", "category": "molecular_function"},
-      {"id": "GO:0006813", "term": "potassium ion transport", "category": "biological_process"},
-      {"id": "GO:0005886", "term": "plasma membrane", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P38398",
-    "name": "Breast cancer type 1 susceptibility protein",
-    "gene_name": "BRCA1",
-    "organism": "Homo sapiens",
-    "function_description": "E3 ubiquitin-protein ligase that plays a central role in DNA repair through the homologous recombination pathway. Also involved in transcriptional regulation and cell cycle checkpoint control.",
-    "function_category": "dna_repair",
-    "sequence_length": 1863,
-    "subcellular_location": "Nucleus",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P38398",
-    "umap_x": -7.5,
-    "umap_y": -4.2,
-    "umap_z": 3.1,
-    "diseases": [
-      {"name": "Breast cancer", "association_score": 0.98},
-      {"name": "Ovarian cancer", "association_score": 0.96},
-      {"name": "Fanconi anemia", "association_score": 0.80}
-    ],
-    "drugs": [
-      {"name": "Olaparib", "mechanism": "PARP inhibitor (synthetic lethality)", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0004842", "term": "ubiquitin-protein transferase activity", "category": "molecular_function"},
-      {"id": "GO:0006281", "term": "DNA repair", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P51587",
-    "name": "Breast cancer type 2 susceptibility protein",
-    "gene_name": "BRCA2",
-    "organism": "Homo sapiens",
-    "function_description": "Mediator of homologous recombination DNA repair. Loads RAD51 onto single-stranded DNA to initiate strand invasion and repair of double-strand breaks.",
-    "function_category": "dna_repair",
-    "sequence_length": 3418,
-    "subcellular_location": "Nucleus",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P51587",
-    "umap_x": -8.8,
-    "umap_y": -5.5,
-    "umap_z": 4.2,
-    "diseases": [
-      {"name": "Breast cancer", "association_score": 0.97},
-      {"name": "Ovarian cancer", "association_score": 0.95},
-      {"name": "Pancreatic cancer", "association_score": 0.78}
-    ],
-    "drugs": [
-      {"name": "Olaparib", "mechanism": "PARP inhibitor (synthetic lethality)", "max_phase": 4},
-      {"name": "Rucaparib", "mechanism": "PARP inhibitor (synthetic lethality)", "max_phase": 4}
-    ],
-    "go_terms": [
-      {"id": "GO:0003697", "term": "single-stranded DNA binding", "category": "molecular_function"},
-      {"id": "GO:0000724", "term": "double-strand break repair via homologous recombination", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
+      {
+        "id": "GO:0005509",
+        "term": "calcium ion binding",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0042987",
+        "term": "amyloid precursor protein catabolic process",
+        "category": "biological_process"
+      }
     ]
   },
   {
@@ -1093,14 +362,81 @@
     "umap_y": -6.1,
     "umap_z": 2.8,
     "diseases": [
-      {"name": "Ataxia-telangiectasia", "association_score": 0.99},
-      {"name": "Breast cancer", "association_score": 0.75}
+      {
+        "id": "disease:ataxia_telangiectasia",
+        "name": "Ataxia-telangiectasia",
+        "association_score": 0.99
+      },
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.75
+      }
     ],
     "drugs": [],
     "go_terms": [
-      {"id": "GO:0004674", "term": "protein serine/threonine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0006974", "term": "cellular response to DNA damage stimulus", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
+      {
+        "id": "GO:0004674",
+        "term": "protein serine/threonine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006974",
+        "term": "cellular response to DNA damage stimulus",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P35670",
+    "name": "Copper-transporting ATPase 2",
+    "gene_name": "ATP7B",
+    "organism": "Homo sapiens",
+    "function_description": "Copper-transporting P-type ATPase that is essential for copper homeostasis. Delivers copper to ceruloplasmin in the secretory pathway and excretes excess copper into bile.",
+    "function_category": "transporter",
+    "sequence_length": 1465,
+    "subcellular_location": "Golgi apparatus membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P35670",
+    "umap_x": 0.2,
+    "umap_y": 10.1,
+    "umap_z": 0.9,
+    "diseases": [
+      {
+        "id": "disease:wilson_disease",
+        "name": "Wilson disease",
+        "association_score": 0.99
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:penicillamine",
+        "name": "Penicillamine",
+        "mechanism": "Copper chelator",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0004008",
+        "term": "copper-exporting ATPase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006878",
+        "term": "intracellular copper ion homeostasis",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0000139",
+        "term": "Golgi membrane",
+        "category": "cellular_component"
+      }
     ]
   },
   {
@@ -1117,144 +453,397 @@
     "umap_y": -4.8,
     "umap_z": 3.5,
     "diseases": [
-      {"name": "Seckel syndrome", "association_score": 0.92},
-      {"name": "Cutaneous telangiectasia and cancer syndrome", "association_score": 0.78}
+      {
+        "id": "disease:seckel_syndrome",
+        "name": "Seckel syndrome",
+        "association_score": 0.92
+      },
+      {
+        "id": "disease:cutaneous_telangiectasia_and_cancer_syndrome",
+        "name": "Cutaneous telangiectasia and cancer syndrome",
+        "association_score": 0.78
+      }
     ],
     "drugs": [
-      {"name": "Berzosertib", "mechanism": "ATR kinase inhibitor", "max_phase": 2}
+      {
+        "id": "drug:berzosertib",
+        "name": "Berzosertib",
+        "mechanism": "ATR kinase inhibitor",
+        "max_phase": 2,
+        "drug_type": "Therapeutic"
+      }
     ],
     "go_terms": [
-      {"id": "GO:0004674", "term": "protein serine/threonine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0000077", "term": "DNA damage checkpoint signaling", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
+      {
+        "id": "GO:0004674",
+        "term": "protein serine/threonine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0000077",
+        "term": "DNA damage checkpoint signaling",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
     ]
   },
   {
-    "uniprot_id": "P40692",
-    "name": "DNA mismatch repair protein Mlh1",
-    "gene_name": "MLH1",
+    "uniprot_id": "P15056",
+    "name": "Serine/threonine-protein kinase B-raf",
+    "gene_name": "BRAF",
     "organism": "Homo sapiens",
-    "function_description": "Key component of the DNA mismatch repair system. Partners with PMS2 to form the MutL-alpha heterodimer that corrects base-base mismatches and insertion/deletion loops.",
-    "function_category": "dna_repair",
-    "sequence_length": 756,
-    "subcellular_location": "Nucleus",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P40692",
-    "umap_x": -8.3,
-    "umap_y": -3.9,
-    "umap_z": 4.8,
+    "function_description": "Serine/threonine-protein kinase that plays a role in regulating the MAP kinase/ERK signaling pathway affecting cell division, differentiation, and secretion.",
+    "function_category": "enzyme",
+    "sequence_length": 766,
+    "subcellular_location": "Cytoplasm",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P15056",
+    "umap_x": 5.9,
+    "umap_y": 0.8,
+    "umap_z": 2.5,
     "diseases": [
-      {"name": "Lynch syndrome", "association_score": 0.98},
-      {"name": "Colorectal cancer", "association_score": 0.90},
-      {"name": "Endometrial cancer", "association_score": 0.82}
+      {
+        "id": "disease:melanoma",
+        "name": "Melanoma",
+        "association_score": 0.97
+      },
+      {
+        "id": "disease:colorectal_cancer",
+        "name": "Colorectal cancer",
+        "association_score": 0.8
+      },
+      {
+        "id": "disease:non_small_cell_lung_cancer",
+        "name": "Non-small cell lung cancer",
+        "association_score": 0.75
+      }
     ],
     "drugs": [
-      {"name": "Pembrolizumab", "mechanism": "Anti-PD-1 (for MSI-H tumors)", "max_phase": 4}
+      {
+        "id": "drug:vemurafenib",
+        "name": "Vemurafenib",
+        "mechanism": "BRAF V600E inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:dabrafenib",
+        "name": "Dabrafenib",
+        "mechanism": "BRAF inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
     ],
     "go_terms": [
-      {"id": "GO:0030983", "term": "mismatched DNA binding", "category": "molecular_function"},
-      {"id": "GO:0006298", "term": "mismatch repair", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
+      {
+        "id": "GO:0004674",
+        "term": "protein serine/threonine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0000165",
+        "term": "MAPK cascade",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005829",
+        "term": "cytosol",
+        "category": "cellular_component"
+      }
     ]
   },
   {
-    "uniprot_id": "P43246",
-    "name": "DNA mismatch repair protein Msh2",
-    "gene_name": "MSH2",
+    "uniprot_id": "P38398",
+    "name": "Breast cancer type 1 susceptibility protein",
+    "gene_name": "BRCA1",
     "organism": "Homo sapiens",
-    "function_description": "Component of the post-replicative DNA mismatch repair system. Heterodimerizes with MSH6 to form MutS-alpha, which recognizes single base mismatches and short insertion/deletion loops.",
+    "function_description": "E3 ubiquitin-protein ligase that plays a central role in DNA repair through the homologous recombination pathway. Also involved in transcriptional regulation and cell cycle checkpoint control.",
     "function_category": "dna_repair",
-    "sequence_length": 934,
+    "sequence_length": 1863,
     "subcellular_location": "Nucleus",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P43246",
-    "umap_x": -7.8,
-    "umap_y": -5.2,
-    "umap_z": 2.3,
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P38398",
+    "umap_x": -7.5,
+    "umap_y": -4.2,
+    "umap_z": 3.1,
     "diseases": [
-      {"name": "Lynch syndrome", "association_score": 0.97},
-      {"name": "Colorectal cancer", "association_score": 0.88}
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.98
+      },
+      {
+        "id": "disease:ovarian_cancer",
+        "name": "Ovarian cancer",
+        "association_score": 0.96
+      },
+      {
+        "id": "disease:fanconi_anemia",
+        "name": "Fanconi anemia",
+        "association_score": 0.8
+      }
     ],
     "drugs": [
-      {"name": "Pembrolizumab", "mechanism": "Anti-PD-1 (for MSI-H tumors)", "max_phase": 4}
+      {
+        "id": "drug:olaparib",
+        "name": "Olaparib",
+        "mechanism": "PARP inhibitor (synthetic lethality)",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
     ],
     "go_terms": [
-      {"id": "GO:0030983", "term": "mismatched DNA binding", "category": "molecular_function"},
-      {"id": "GO:0006298", "term": "mismatch repair", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
+      {
+        "id": "GO:0004842",
+        "term": "ubiquitin-protein transferase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006281",
+        "term": "DNA repair",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
     ]
   },
   {
-    "uniprot_id": "Q06609",
-    "name": "DNA repair protein RAD51 homolog 1",
-    "gene_name": "RAD51",
+    "uniprot_id": "P51587",
+    "name": "Breast cancer type 2 susceptibility protein",
+    "gene_name": "BRCA2",
     "organism": "Homo sapiens",
-    "function_description": "Recombinase that catalyzes strand transfer between a broken DNA molecule and its homologous template. Essential for homologous recombination repair of DNA double-strand breaks.",
+    "function_description": "Mediator of homologous recombination DNA repair. Loads RAD51 onto single-stranded DNA to initiate strand invasion and repair of double-strand breaks.",
     "function_category": "dna_repair",
-    "sequence_length": 339,
+    "sequence_length": 3418,
     "subcellular_location": "Nucleus",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q06609",
-    "umap_x": -8.6,
-    "umap_y": -6.5,
-    "umap_z": 3.8,
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P51587",
+    "umap_x": -8.8,
+    "umap_y": -5.5,
+    "umap_z": 4.2,
     "diseases": [
-      {"name": "Fanconi anemia", "association_score": 0.85},
-      {"name": "Breast cancer", "association_score": 0.68}
-    ],
-    "drugs": [],
-    "go_terms": [
-      {"id": "GO:0003697", "term": "single-stranded DNA binding", "category": "molecular_function"},
-      {"id": "GO:0000724", "term": "double-strand break repair via homologous recombination", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
-    ]
-  },
-  {
-    "uniprot_id": "P09874",
-    "name": "Poly [ADP-ribose] polymerase 1",
-    "gene_name": "PARP1",
-    "organism": "Homo sapiens",
-    "function_description": "Chromatin-associated enzyme that detects DNA strand breaks and catalyzes poly(ADP-ribosyl)ation of target proteins. Acts as a first responder to DNA damage to initiate repair.",
-    "function_category": "dna_repair",
-    "sequence_length": 1014,
-    "subcellular_location": "Nucleus",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P09874",
-    "umap_x": -7.0,
-    "umap_y": -4.5,
-    "umap_z": 4.5,
-    "diseases": [
-      {"name": "Breast cancer", "association_score": 0.82},
-      {"name": "Ovarian cancer", "association_score": 0.80}
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.97
+      },
+      {
+        "id": "disease:ovarian_cancer",
+        "name": "Ovarian cancer",
+        "association_score": 0.95
+      },
+      {
+        "id": "disease:pancreatic_cancer",
+        "name": "Pancreatic cancer",
+        "association_score": 0.78
+      }
     ],
     "drugs": [
-      {"name": "Olaparib", "mechanism": "PARP inhibitor", "max_phase": 4},
-      {"name": "Niraparib", "mechanism": "PARP inhibitor", "max_phase": 4}
+      {
+        "id": "drug:olaparib",
+        "name": "Olaparib",
+        "mechanism": "PARP inhibitor (synthetic lethality)",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:rucaparib",
+        "name": "Rucaparib",
+        "mechanism": "PARP inhibitor (synthetic lethality)",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
     ],
     "go_terms": [
-      {"id": "GO:0003950", "term": "NAD+ ADP-ribosyltransferase activity", "category": "molecular_function"},
-      {"id": "GO:0006281", "term": "DNA repair", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
+      {
+        "id": "GO:0003697",
+        "term": "single-stranded DNA binding",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0000724",
+        "term": "double-strand break repair via homologous recombination",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
     ]
   },
   {
-    "uniprot_id": "Q12888",
-    "name": "Tumor suppressor p53-binding protein 1",
-    "gene_name": "TP53BP1",
+    "uniprot_id": "P11802",
+    "name": "Cyclin-dependent kinase 4",
+    "gene_name": "CDK4",
     "organism": "Homo sapiens",
-    "function_description": "DNA damage response protein that promotes non-homologous end joining (NHEJ) repair. Rapidly recruited to sites of DNA double-strand breaks where it forms nuclear foci.",
-    "function_category": "dna_repair",
-    "sequence_length": 1972,
+    "function_description": "Serine/threonine-protein kinase involved in the control of the cell cycle G1/S transition. Phosphorylates and inhibits members of the retinoblastoma protein family.",
+    "function_category": "enzyme",
+    "sequence_length": 303,
     "subcellular_location": "Nucleus",
-    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q12888",
-    "umap_x": -9.4,
-    "umap_y": -5.8,
-    "umap_z": 2.6,
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P11802",
+    "umap_x": 6.3,
+    "umap_y": 3.7,
+    "umap_z": 1.1,
     "diseases": [
-      {"name": "Breast cancer", "association_score": 0.65},
-      {"name": "Immunodeficiency", "association_score": 0.60}
+      {
+        "id": "disease:melanoma",
+        "name": "Melanoma",
+        "association_score": 0.82
+      },
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.78
+      }
     ],
-    "drugs": [],
+    "drugs": [
+      {
+        "id": "drug:palbociclib",
+        "name": "Palbociclib",
+        "mechanism": "CDK4/6 inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:ribociclib",
+        "name": "Ribociclib",
+        "mechanism": "CDK4/6 inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
     "go_terms": [
-      {"id": "GO:0003677", "term": "DNA binding", "category": "molecular_function"},
-      {"id": "GO:0006302", "term": "double-strand break repair", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
+      {
+        "id": "GO:0004693",
+        "term": "cyclin-dependent protein serine/threonine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0000082",
+        "term": "G1/S transition of mitotic cell cycle",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "Q00534",
+    "name": "Cyclin-dependent kinase 6",
+    "gene_name": "CDK6",
+    "organism": "Homo sapiens",
+    "function_description": "Serine/threonine-protein kinase involved in cell cycle regulation. Partners with D-type cyclins to phosphorylate the retinoblastoma protein.",
+    "function_category": "enzyme",
+    "sequence_length": 326,
+    "subcellular_location": "Nucleus, Cytoplasm",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q00534",
+    "umap_x": 5.4,
+    "umap_y": 2.2,
+    "umap_z": 2.8,
+    "diseases": [
+      {
+        "id": "disease:acute_lymphoblastic_leukemia",
+        "name": "Acute lymphoblastic leukemia",
+        "association_score": 0.7
+      },
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.75
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:abemaciclib",
+        "name": "Abemaciclib",
+        "mechanism": "CDK4/6 inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0004693",
+        "term": "cyclin-dependent protein serine/threonine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0000082",
+        "term": "G1/S transition of mitotic cell cycle",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005737",
+        "term": "cytoplasm",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P13569",
+    "name": "Cystic fibrosis transmembrane conductance regulator",
+    "gene_name": "CFTR",
+    "organism": "Homo sapiens",
+    "function_description": "cAMP-regulated chloride channel that also regulates other ion channels. Mutations cause cystic fibrosis, the most common lethal genetic disease in Caucasian populations.",
+    "function_category": "transporter",
+    "sequence_length": 1480,
+    "subcellular_location": "Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P13569",
+    "umap_x": 1.6,
+    "umap_y": 9.0,
+    "umap_z": 2.8,
+    "diseases": [
+      {
+        "id": "disease:cystic_fibrosis",
+        "name": "Cystic fibrosis",
+        "association_score": 0.99
+      },
+      {
+        "id": "disease:congenital_bilateral_absence_of_the_vas_deferens",
+        "name": "Congenital bilateral absence of the vas deferens",
+        "association_score": 0.88
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:ivacaftor",
+        "name": "Ivacaftor",
+        "mechanism": "CFTR potentiator",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:elexacaftor",
+        "name": "Elexacaftor",
+        "mechanism": "CFTR corrector",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0005254",
+        "term": "chloride channel activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006821",
+        "term": "chloride transport",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0016324",
+        "term": "apical plasma membrane",
+        "category": "cellular_component"
+      }
     ]
   },
   {
@@ -1271,15 +860,1894 @@
     "umap_y": -3.5,
     "umap_z": 3.3,
     "diseases": [
-      {"name": "Breast cancer", "association_score": 0.82},
-      {"name": "Li-Fraumeni syndrome 2", "association_score": 0.75},
-      {"name": "Prostate cancer", "association_score": 0.65}
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.82
+      },
+      {
+        "id": "disease:li_fraumeni_syndrome_2",
+        "name": "Li-Fraumeni syndrome 2",
+        "association_score": 0.75
+      },
+      {
+        "id": "disease:prostate_cancer",
+        "name": "Prostate cancer",
+        "association_score": 0.65
+      }
     ],
     "drugs": [],
     "go_terms": [
-      {"id": "GO:0004674", "term": "protein serine/threonine kinase activity", "category": "molecular_function"},
-      {"id": "GO:0000077", "term": "DNA damage checkpoint signaling", "category": "biological_process"},
-      {"id": "GO:0005634", "term": "nucleus", "category": "cellular_component"}
+      {
+        "id": "GO:0004674",
+        "term": "protein serine/threonine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0000077",
+        "term": "DNA damage checkpoint signaling",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P02452",
+    "name": "Collagen alpha-1(I) chain",
+    "gene_name": "COL1A1",
+    "organism": "Homo sapiens",
+    "function_description": "Major structural protein of bone, skin, tendon, and other connective tissues. Forms a triple helix with two alpha-1 and one alpha-2 chains.",
+    "function_category": "structural",
+    "sequence_length": 1464,
+    "subcellular_location": "Extracellular matrix",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P02452",
+    "umap_x": 1.5,
+    "umap_y": -9.2,
+    "umap_z": 0.8,
+    "diseases": [
+      {
+        "id": "disease:osteogenesis_imperfecta",
+        "name": "Osteogenesis imperfecta",
+        "association_score": 0.98
+      },
+      {
+        "id": "disease:ehlers_danlos_syndrome",
+        "name": "Ehlers-Danlos syndrome",
+        "association_score": 0.85
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0005201",
+        "term": "extracellular matrix structural constituent",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0030199",
+        "term": "collagen fibril organization",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005615",
+        "term": "extracellular space",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P02458",
+    "name": "Collagen alpha-1(II) chain",
+    "gene_name": "COL2A1",
+    "organism": "Homo sapiens",
+    "function_description": "Major structural component of cartilage. Essential for the normal development of bones and other connective tissues.",
+    "function_category": "structural",
+    "sequence_length": 1487,
+    "subcellular_location": "Extracellular matrix",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P02458",
+    "umap_x": 2.8,
+    "umap_y": -10.5,
+    "umap_z": 1.5,
+    "diseases": [
+      {
+        "id": "disease:stickler_syndrome_type_1",
+        "name": "Stickler syndrome type 1",
+        "association_score": 0.95
+      },
+      {
+        "id": "disease:achondrogenesis_type_2",
+        "name": "Achondrogenesis type 2",
+        "association_score": 0.92
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0005201",
+        "term": "extracellular matrix structural constituent",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0030199",
+        "term": "collagen fibril organization",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005578",
+        "term": "proteinaceous extracellular matrix",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P35222",
+    "name": "Catenin beta-1",
+    "gene_name": "CTNNB1",
+    "organism": "Homo sapiens",
+    "function_description": "Key downstream component of the Wnt signaling pathway. Functions as both a structural component of cell-cell adhesion junctions and a transcriptional co-activator.",
+    "function_category": "signaling",
+    "sequence_length": 781,
+    "subcellular_location": "Cytoplasm, Nucleus, Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P35222",
+    "umap_x": -5.3,
+    "umap_y": 1.8,
+    "umap_z": 0.9,
+    "diseases": [
+      {
+        "id": "disease:hepatocellular_carcinoma",
+        "name": "Hepatocellular carcinoma",
+        "association_score": 0.82
+      },
+      {
+        "id": "disease:colorectal_cancer",
+        "name": "Colorectal cancer",
+        "association_score": 0.85
+      },
+      {
+        "id": "disease:pilomatricoma",
+        "name": "Pilomatricoma",
+        "association_score": 0.9
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0005515",
+        "term": "protein binding",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0016055",
+        "term": "Wnt signaling pathway",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005913",
+        "term": "cell-cell adherens junction",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P17661",
+    "name": "Desmin",
+    "gene_name": "DES",
+    "organism": "Homo sapiens",
+    "function_description": "Type III intermediate filament protein expressed in muscle cells. Maintains the structural and mechanical integrity of myofibrils by connecting them at the Z-disc.",
+    "function_category": "structural",
+    "sequence_length": 470,
+    "subcellular_location": "Cytoplasm, Cytoskeleton",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P17661",
+    "umap_x": 2.2,
+    "umap_y": -9.5,
+    "umap_z": 1.2,
+    "diseases": [
+      {
+        "id": "disease:desminopathy",
+        "name": "Desminopathy",
+        "association_score": 0.95
+      },
+      {
+        "id": "disease:dilated_cardiomyopathy",
+        "name": "Dilated cardiomyopathy",
+        "association_score": 0.8
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0005198",
+        "term": "structural molecule activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0045104",
+        "term": "intermediate filament cytoskeleton organization",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0045111",
+        "term": "intermediate filament cytoskeleton",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P00533",
+    "name": "Epidermal growth factor receptor",
+    "gene_name": "EGFR",
+    "organism": "Homo sapiens",
+    "function_description": "Receptor tyrosine kinase that binds epidermal growth factor and activates downstream signaling cascades to convert extracellular signals to cellular responses.",
+    "function_category": "enzyme",
+    "sequence_length": 1210,
+    "subcellular_location": "Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P00533",
+    "umap_x": 8.5,
+    "umap_y": 3.1,
+    "umap_z": 0.9,
+    "diseases": [
+      {
+        "id": "disease:non_small_cell_lung_cancer",
+        "name": "Non-small cell lung cancer",
+        "association_score": 0.97
+      },
+      {
+        "id": "disease:glioblastoma",
+        "name": "Glioblastoma",
+        "association_score": 0.88
+      },
+      {
+        "id": "disease:colorectal_cancer",
+        "name": "Colorectal cancer",
+        "association_score": 0.82
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:erlotinib",
+        "name": "Erlotinib",
+        "mechanism": "EGFR tyrosine kinase inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:osimertinib",
+        "name": "Osimertinib",
+        "mechanism": "Third-generation EGFR inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0004716",
+        "term": "receptor signaling protein tyrosine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0007173",
+        "term": "epidermal growth factor receptor signaling pathway",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005886",
+        "term": "plasma membrane",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P04626",
+    "name": "Receptor tyrosine-protein kinase erbB-2",
+    "gene_name": "ERBB2",
+    "organism": "Homo sapiens",
+    "function_description": "Receptor tyrosine kinase that is part of the EGFR family. Lacks a known ligand but heterodimerizes with other EGFR family members to activate downstream signaling.",
+    "function_category": "enzyme",
+    "sequence_length": 1255,
+    "subcellular_location": "Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P04626",
+    "umap_x": 7.0,
+    "umap_y": 0.3,
+    "umap_z": 1.7,
+    "diseases": [
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.98
+      },
+      {
+        "id": "disease:gastric_cancer",
+        "name": "Gastric cancer",
+        "association_score": 0.85
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:trastuzumab",
+        "name": "Trastuzumab",
+        "mechanism": "Anti-HER2 monoclonal antibody",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:pertuzumab",
+        "name": "Pertuzumab",
+        "mechanism": "Anti-HER2 monoclonal antibody",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0004716",
+        "term": "receptor signaling protein tyrosine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0007169",
+        "term": "transmembrane receptor protein tyrosine kinase signaling pathway",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005886",
+        "term": "plasma membrane",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P02751",
+    "name": "Fibronectin",
+    "gene_name": "FN1",
+    "organism": "Homo sapiens",
+    "function_description": "Extracellular matrix glycoprotein that binds integrins, collagen, fibrin, and heparan sulfate. Plays a major role in cell adhesion, migration, and wound healing.",
+    "function_category": "structural",
+    "sequence_length": 2386,
+    "subcellular_location": "Extracellular matrix, Secreted",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P02751",
+    "umap_x": 0.3,
+    "umap_y": -8.8,
+    "umap_z": 2.2,
+    "diseases": [
+      {
+        "id": "disease:glomerulopathy_with_fibronectin_deposits",
+        "name": "Glomerulopathy with fibronectin deposits",
+        "association_score": 0.9
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0005201",
+        "term": "extracellular matrix structural constituent",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0030198",
+        "term": "extracellular matrix organization",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005615",
+        "term": "extracellular space",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "O60674",
+    "name": "Tyrosine-protein kinase JAK2",
+    "gene_name": "JAK2",
+    "organism": "Homo sapiens",
+    "function_description": "Non-receptor tyrosine kinase involved in cytokine receptor signaling. Mediates signaling through the JAK-STAT pathway for cell proliferation, differentiation, and apoptosis.",
+    "function_category": "enzyme",
+    "sequence_length": 1132,
+    "subcellular_location": "Cytoplasm, Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/O60674",
+    "umap_x": 8.9,
+    "umap_y": 1.0,
+    "umap_z": 0.3,
+    "diseases": [
+      {
+        "id": "disease:polycythemia_vera",
+        "name": "Polycythemia vera",
+        "association_score": 0.98
+      },
+      {
+        "id": "disease:myelofibrosis",
+        "name": "Myelofibrosis",
+        "association_score": 0.95
+      },
+      {
+        "id": "disease:essential_thrombocythemia",
+        "name": "Essential thrombocythemia",
+        "association_score": 0.9
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:ruxolitinib",
+        "name": "Ruxolitinib",
+        "mechanism": "JAK1/JAK2 inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:fedratinib",
+        "name": "Fedratinib",
+        "mechanism": "JAK2 inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0004713",
+        "term": "protein tyrosine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0007259",
+        "term": "receptor signaling pathway via JAK-STAT",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005737",
+        "term": "cytoplasm",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "Q14654",
+    "name": "ATP-sensitive inward rectifier potassium channel 11",
+    "gene_name": "KCNJ11",
+    "organism": "Homo sapiens",
+    "function_description": "Inward-rectifier potassium channel that forms the pore of the ATP-sensitive potassium channel in pancreatic beta cells. Couples cell metabolism to electrical activity for insulin secretion.",
+    "function_category": "transporter",
+    "sequence_length": 390,
+    "subcellular_location": "Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q14654",
+    "umap_x": 0.5,
+    "umap_y": 10.5,
+    "umap_z": 1.9,
+    "diseases": [
+      {
+        "id": "disease:neonatal_diabetes_mellitus",
+        "name": "Neonatal diabetes mellitus",
+        "association_score": 0.96
+      },
+      {
+        "id": "disease:congenital_hyperinsulinism",
+        "name": "Congenital hyperinsulinism",
+        "association_score": 0.92
+      },
+      {
+        "id": "disease:type_2_diabetes_mellitus",
+        "name": "Type 2 diabetes mellitus",
+        "association_score": 0.68
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:glibenclamide",
+        "name": "Glibenclamide",
+        "mechanism": "Sulfonylurea / KATP channel blocker",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0005242",
+        "term": "inward rectifier potassium channel activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006813",
+        "term": "potassium ion transport",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005886",
+        "term": "plasma membrane",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P01116",
+    "name": "GTPase KRas",
+    "gene_name": "KRAS",
+    "organism": "Homo sapiens",
+    "function_description": "Small GTPase that acts as a molecular switch in cell signaling. Cycles between active GTP-bound and inactive GDP-bound forms to regulate cell growth, differentiation, and survival.",
+    "function_category": "signaling",
+    "sequence_length": 189,
+    "subcellular_location": "Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P01116",
+    "umap_x": -7.3,
+    "umap_y": 2.5,
+    "umap_z": 1.2,
+    "diseases": [
+      {
+        "id": "disease:non_small_cell_lung_cancer",
+        "name": "Non-small cell lung cancer",
+        "association_score": 0.96
+      },
+      {
+        "id": "disease:pancreatic_cancer",
+        "name": "Pancreatic cancer",
+        "association_score": 0.98
+      },
+      {
+        "id": "disease:colorectal_cancer",
+        "name": "Colorectal cancer",
+        "association_score": 0.9
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:sotorasib",
+        "name": "Sotorasib",
+        "mechanism": "KRAS G12C inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:adagrasib",
+        "name": "Adagrasib",
+        "mechanism": "KRAS G12C inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0005525",
+        "term": "GTP binding",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0007265",
+        "term": "Ras protein signal transduction",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005886",
+        "term": "plasma membrane",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P05783",
+    "name": "Keratin, type I cytoskeletal 18",
+    "gene_name": "KRT18",
+    "organism": "Homo sapiens",
+    "function_description": "Type I intermediate filament chain expressed in simple epithelia. Partners with KRT8 to form the major intermediate filament network in epithelial cells of internal organs.",
+    "function_category": "structural",
+    "sequence_length": 430,
+    "subcellular_location": "Cytoplasm, Cytoskeleton",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P05783",
+    "umap_x": 0.5,
+    "umap_y": -11.8,
+    "umap_z": 2.4,
+    "diseases": [
+      {
+        "id": "disease:cryptogenic_cirrhosis",
+        "name": "Cryptogenic cirrhosis",
+        "association_score": 0.72
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0005198",
+        "term": "structural molecule activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0045104",
+        "term": "intermediate filament cytoskeleton organization",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005882",
+        "term": "intermediate filament",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P02545",
+    "name": "Prelamin-A/C",
+    "gene_name": "LMNA",
+    "organism": "Homo sapiens",
+    "function_description": "Type V intermediate filament protein that forms the nuclear lamina. Provides structural support for the nucleus and plays roles in gene regulation and chromatin organization.",
+    "function_category": "structural",
+    "sequence_length": 664,
+    "subcellular_location": "Nucleus, Nuclear inner membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P02545",
+    "umap_x": 1.9,
+    "umap_y": -11.3,
+    "umap_z": 0.4,
+    "diseases": [
+      {
+        "id": "disease:emery_dreifuss_muscular_dystrophy",
+        "name": "Emery-Dreifuss muscular dystrophy",
+        "association_score": 0.95
+      },
+      {
+        "id": "disease:dilated_cardiomyopathy",
+        "name": "Dilated cardiomyopathy",
+        "association_score": 0.9
+      },
+      {
+        "id": "disease:hutchinson_gilford_progeria_syndrome",
+        "name": "Hutchinson-Gilford progeria syndrome",
+        "association_score": 0.98
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0005198",
+        "term": "structural molecule activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006355",
+        "term": "regulation of transcription, DNA-templated",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005638",
+        "term": "lamin filament",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "Q02750",
+    "name": "Dual specificity mitogen-activated protein kinase kinase 1",
+    "gene_name": "MAP2K1",
+    "organism": "Homo sapiens",
+    "function_description": "Dual specificity kinase that activates ERK1 and ERK2 MAP kinases. Essential component of the RAS-RAF-MEK-ERK signal transduction pathway.",
+    "function_category": "enzyme",
+    "sequence_length": 393,
+    "subcellular_location": "Cytoplasm",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q02750",
+    "umap_x": 7.7,
+    "umap_y": 4.6,
+    "umap_z": 0.5,
+    "diseases": [
+      {
+        "id": "disease:cardiofaciocutaneous_syndrome",
+        "name": "Cardiofaciocutaneous syndrome",
+        "association_score": 0.9
+      },
+      {
+        "id": "disease:melanoma",
+        "name": "Melanoma",
+        "association_score": 0.72
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:trametinib",
+        "name": "Trametinib",
+        "mechanism": "MEK1/MEK2 inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:cobimetinib",
+        "name": "Cobimetinib",
+        "mechanism": "MEK1 inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0004708",
+        "term": "MAP kinase kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0000165",
+        "term": "MAPK cascade",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005829",
+        "term": "cytosol",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P10636",
+    "name": "Microtubule-associated protein tau",
+    "gene_name": "MAPT",
+    "organism": "Homo sapiens",
+    "function_description": "Axonal microtubule-stabilizing protein that forms neurofibrillary tangles when hyperphosphorylated.",
+    "function_category": "structural",
+    "sequence_length": 758,
+    "subcellular_location": "Cytoplasm, Axon",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P10636",
+    "umap_x": -3.8,
+    "umap_y": 7.0,
+    "umap_z": 1.8,
+    "diseases": [
+      {
+        "id": "disease:alzheimer_s_disease",
+        "name": "Alzheimer's disease",
+        "association_score": 0.93
+      },
+      {
+        "id": "disease:frontotemporal_dementia",
+        "name": "Frontotemporal dementia",
+        "association_score": 0.88
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0008017",
+        "term": "microtubule binding",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0042552",
+        "term": "myelination",
+        "category": "biological_process"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "Q00987",
+    "name": "E3 ubiquitin-protein ligase Mdm2",
+    "gene_name": "MDM2",
+    "organism": "Homo sapiens",
+    "function_description": "E3 ubiquitin ligase that targets tumor suppressor p53 for proteasomal degradation. Acts as a key negative regulator of p53 in a feedback loop.",
+    "function_category": "signaling",
+    "sequence_length": 491,
+    "subcellular_location": "Nucleus, Cytoplasm",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q00987",
+    "umap_x": -8.8,
+    "umap_y": 3.2,
+    "umap_z": 2.4,
+    "diseases": [
+      {
+        "id": "disease:soft_tissue_sarcoma",
+        "name": "Soft tissue sarcoma",
+        "association_score": 0.82
+      },
+      {
+        "id": "disease:acute_myeloid_leukemia",
+        "name": "Acute myeloid leukemia",
+        "association_score": 0.68
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:idasanutlin",
+        "name": "Idasanutlin",
+        "mechanism": "MDM2 antagonist",
+        "max_phase": 3,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0004842",
+        "term": "ubiquitin-protein transferase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006511",
+        "term": "ubiquitin-dependent protein catabolic process",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P40692",
+    "name": "DNA mismatch repair protein Mlh1",
+    "gene_name": "MLH1",
+    "organism": "Homo sapiens",
+    "function_description": "Key component of the DNA mismatch repair system. Partners with PMS2 to form the MutL-alpha heterodimer that corrects base-base mismatches and insertion/deletion loops.",
+    "function_category": "dna_repair",
+    "sequence_length": 756,
+    "subcellular_location": "Nucleus",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P40692",
+    "umap_x": -8.3,
+    "umap_y": -3.9,
+    "umap_z": 4.8,
+    "diseases": [
+      {
+        "id": "disease:lynch_syndrome",
+        "name": "Lynch syndrome",
+        "association_score": 0.98
+      },
+      {
+        "id": "disease:colorectal_cancer",
+        "name": "Colorectal cancer",
+        "association_score": 0.9
+      },
+      {
+        "id": "disease:endometrial_cancer",
+        "name": "Endometrial cancer",
+        "association_score": 0.82
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:pembrolizumab",
+        "name": "Pembrolizumab",
+        "mechanism": "Anti-PD-1 (for MSI-H tumors)",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0030983",
+        "term": "mismatched DNA binding",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006298",
+        "term": "mismatch repair",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P43246",
+    "name": "DNA mismatch repair protein Msh2",
+    "gene_name": "MSH2",
+    "organism": "Homo sapiens",
+    "function_description": "Component of the post-replicative DNA mismatch repair system. Heterodimerizes with MSH6 to form MutS-alpha, which recognizes single base mismatches and short insertion/deletion loops.",
+    "function_category": "dna_repair",
+    "sequence_length": 934,
+    "subcellular_location": "Nucleus",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P43246",
+    "umap_x": -7.8,
+    "umap_y": -5.2,
+    "umap_z": 2.3,
+    "diseases": [
+      {
+        "id": "disease:lynch_syndrome",
+        "name": "Lynch syndrome",
+        "association_score": 0.97
+      },
+      {
+        "id": "disease:colorectal_cancer",
+        "name": "Colorectal cancer",
+        "association_score": 0.88
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:pembrolizumab",
+        "name": "Pembrolizumab",
+        "mechanism": "Anti-PD-1 (for MSI-H tumors)",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0030983",
+        "term": "mismatched DNA binding",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006298",
+        "term": "mismatch repair",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P42345",
+    "name": "Serine/threonine-protein kinase mTOR",
+    "gene_name": "MTOR",
+    "organism": "Homo sapiens",
+    "function_description": "Central regulator of cell growth and metabolism. Integrates signals from growth factors, nutrients, and energy status to control protein synthesis and autophagy.",
+    "function_category": "signaling",
+    "sequence_length": 2549,
+    "subcellular_location": "Cytoplasm, Lysosome membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P42345",
+    "umap_x": -9.2,
+    "umap_y": 4.1,
+    "umap_z": 1.5,
+    "diseases": [
+      {
+        "id": "disease:tuberous_sclerosis_complex",
+        "name": "Tuberous sclerosis complex",
+        "association_score": 0.85
+      },
+      {
+        "id": "disease:renal_cell_carcinoma",
+        "name": "Renal cell carcinoma",
+        "association_score": 0.78
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:everolimus",
+        "name": "Everolimus",
+        "mechanism": "mTOR inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:temsirolimus",
+        "name": "Temsirolimus",
+        "mechanism": "mTOR inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0004674",
+        "term": "protein serine/threonine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0031929",
+        "term": "TOR signaling",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005764",
+        "term": "lysosome",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P12883",
+    "name": "Myosin-7",
+    "gene_name": "MYH7",
+    "organism": "Homo sapiens",
+    "function_description": "Heavy chain of cardiac beta-myosin. Functions as the major contractile protein in the heart, converting chemical energy into mechanical force for cardiac contraction.",
+    "function_category": "structural",
+    "sequence_length": 1935,
+    "subcellular_location": "Cytoplasm, Myofibril",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P12883",
+    "umap_x": 1.8,
+    "umap_y": -8.1,
+    "umap_z": 0.6,
+    "diseases": [
+      {
+        "id": "disease:hypertrophic_cardiomyopathy",
+        "name": "Hypertrophic cardiomyopathy",
+        "association_score": 0.97
+      },
+      {
+        "id": "disease:dilated_cardiomyopathy",
+        "name": "Dilated cardiomyopathy",
+        "association_score": 0.85
+      },
+      {
+        "id": "disease:laing_distal_myopathy",
+        "name": "Laing distal myopathy",
+        "association_score": 0.78
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:mavacamten",
+        "name": "Mavacamten",
+        "mechanism": "Cardiac myosin inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0003774",
+        "term": "motor activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006936",
+        "term": "muscle contraction",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0030016",
+        "term": "myofibril",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P46531",
+    "name": "Neurogenic locus notch homolog protein 1",
+    "gene_name": "NOTCH1",
+    "organism": "Homo sapiens",
+    "function_description": "Transmembrane receptor that regulates cell fate decisions during development. Upon ligand binding, the intracellular domain is cleaved and translocates to the nucleus to activate transcription.",
+    "function_category": "signaling",
+    "sequence_length": 2555,
+    "subcellular_location": "Cell membrane, Nucleus",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P46531",
+    "umap_x": -9.7,
+    "umap_y": 0.8,
+    "umap_z": 1.1,
+    "diseases": [
+      {
+        "id": "disease:t_cell_acute_lymphoblastic_leukemia",
+        "name": "T-cell acute lymphoblastic leukemia",
+        "association_score": 0.95
+      },
+      {
+        "id": "disease:aortic_valve_disease",
+        "name": "Aortic valve disease",
+        "association_score": 0.8
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0004872",
+        "term": "receptor activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0007219",
+        "term": "Notch signaling pathway",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005886",
+        "term": "plasma membrane",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P01111",
+    "name": "GTPase NRas",
+    "gene_name": "NRAS",
+    "organism": "Homo sapiens",
+    "function_description": "Small GTPase involved in signal transduction. Mutations are found in various cancers, particularly melanoma and acute myeloid leukemia.",
+    "function_category": "signaling",
+    "sequence_length": 189,
+    "subcellular_location": "Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P01111",
+    "umap_x": -6.1,
+    "umap_y": 3.8,
+    "umap_z": 0.7,
+    "diseases": [
+      {
+        "id": "disease:melanoma",
+        "name": "Melanoma",
+        "association_score": 0.88
+      },
+      {
+        "id": "disease:acute_myeloid_leukemia",
+        "name": "Acute myeloid leukemia",
+        "association_score": 0.8
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0005525",
+        "term": "GTP binding",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0007265",
+        "term": "Ras protein signal transduction",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005886",
+        "term": "plasma membrane",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P09874",
+    "name": "Poly [ADP-ribose] polymerase 1",
+    "gene_name": "PARP1",
+    "organism": "Homo sapiens",
+    "function_description": "Chromatin-associated enzyme that detects DNA strand breaks and catalyzes poly(ADP-ribosyl)ation of target proteins. Acts as a first responder to DNA damage to initiate repair.",
+    "function_category": "dna_repair",
+    "sequence_length": 1014,
+    "subcellular_location": "Nucleus",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P09874",
+    "umap_x": -7.0,
+    "umap_y": -4.5,
+    "umap_z": 4.5,
+    "diseases": [
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.82
+      },
+      {
+        "id": "disease:ovarian_cancer",
+        "name": "Ovarian cancer",
+        "association_score": 0.8
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:olaparib",
+        "name": "Olaparib",
+        "mechanism": "PARP inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:niraparib",
+        "name": "Niraparib",
+        "mechanism": "PARP inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0003950",
+        "term": "NAD+ ADP-ribosyltransferase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006281",
+        "term": "DNA repair",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P42336",
+    "name": "Phosphatidylinositol 4,5-bisphosphate 3-kinase catalytic subunit alpha isoform",
+    "gene_name": "PIK3CA",
+    "organism": "Homo sapiens",
+    "function_description": "Catalytic subunit of PI3K that phosphorylates phosphatidylinositol lipids. Activates AKT signaling to regulate cell growth, survival, and metabolism.",
+    "function_category": "signaling",
+    "sequence_length": 1068,
+    "subcellular_location": "Cytoplasm",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P42336",
+    "umap_x": -8.5,
+    "umap_y": 1.2,
+    "umap_z": 2.0,
+    "diseases": [
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.92
+      },
+      {
+        "id": "disease:ovarian_cancer",
+        "name": "Ovarian cancer",
+        "association_score": 0.78
+      },
+      {
+        "id": "disease:endometrial_cancer",
+        "name": "Endometrial cancer",
+        "association_score": 0.75
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:alpelisib",
+        "name": "Alpelisib",
+        "mechanism": "PI3K alpha-selective inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0046934",
+        "term": "phosphatidylinositol-4,5-bisphosphate 3-kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0014065",
+        "term": "phosphatidylinositol 3-kinase signaling",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005829",
+        "term": "cytosol",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P49768",
+    "name": "Presenilin-1",
+    "gene_name": "PSEN1",
+    "organism": "Homo sapiens",
+    "function_description": "Catalytic core component of gamma-secretase that cleaves APP and multiple signaling receptors.",
+    "function_category": "enzyme",
+    "sequence_length": 467,
+    "subcellular_location": "Endoplasmic reticulum, Golgi apparatus, Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P49768",
+    "umap_x": -1.4,
+    "umap_y": 5.2,
+    "umap_z": 2.8,
+    "diseases": [
+      {
+        "id": "disease:alzheimer_s_disease",
+        "name": "Alzheimer's disease",
+        "association_score": 0.95
+      },
+      {
+        "id": "disease:familial_alzheimer_disease",
+        "name": "Familial Alzheimer disease",
+        "association_score": 0.99
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0004222",
+        "term": "metalloendopeptidase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0007219",
+        "term": "Notch signaling pathway",
+        "category": "biological_process"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P60484",
+    "name": "Phosphatidylinositol 3,4,5-trisphosphate 3-phosphatase and dual-specificity protein phosphatase PTEN",
+    "gene_name": "PTEN",
+    "organism": "Homo sapiens",
+    "function_description": "Tumor suppressor that antagonizes the PI3K/AKT signaling pathway by dephosphorylating PIP3. Loss of PTEN function leads to uncontrolled cell growth.",
+    "function_category": "signaling",
+    "sequence_length": 403,
+    "subcellular_location": "Cytoplasm, Nucleus",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P60484",
+    "umap_x": -5.8,
+    "umap_y": 0.5,
+    "umap_z": 2.8,
+    "diseases": [
+      {
+        "id": "disease:cowden_syndrome",
+        "name": "Cowden syndrome",
+        "association_score": 0.97
+      },
+      {
+        "id": "disease:glioblastoma",
+        "name": "Glioblastoma",
+        "association_score": 0.85
+      },
+      {
+        "id": "disease:prostate_cancer",
+        "name": "Prostate cancer",
+        "association_score": 0.82
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0004725",
+        "term": "protein tyrosine phosphatase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006470",
+        "term": "protein dephosphorylation",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005829",
+        "term": "cytosol",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "Q06609",
+    "name": "DNA repair protein RAD51 homolog 1",
+    "gene_name": "RAD51",
+    "organism": "Homo sapiens",
+    "function_description": "Recombinase that catalyzes strand transfer between a broken DNA molecule and its homologous template. Essential for homologous recombination repair of DNA double-strand breaks.",
+    "function_category": "dna_repair",
+    "sequence_length": 339,
+    "subcellular_location": "Nucleus",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q06609",
+    "umap_x": -8.6,
+    "umap_y": -6.5,
+    "umap_z": 3.8,
+    "diseases": [
+      {
+        "id": "disease:fanconi_anemia",
+        "name": "Fanconi anemia",
+        "association_score": 0.85
+      },
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.68
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0003697",
+        "term": "single-stranded DNA binding",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0000724",
+        "term": "double-strand break repair via homologous recombination",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P06400",
+    "name": "Retinoblastoma-associated protein",
+    "gene_name": "RB1",
+    "organism": "Homo sapiens",
+    "function_description": "Key regulator of the cell cycle that acts as a tumor suppressor. In its hypophosphorylated form, it binds E2F transcription factors to prevent G1/S transition.",
+    "function_category": "signaling",
+    "sequence_length": 928,
+    "subcellular_location": "Nucleus",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P06400",
+    "umap_x": -7.9,
+    "umap_y": 2.0,
+    "umap_z": 0.3,
+    "diseases": [
+      {
+        "id": "disease:retinoblastoma",
+        "name": "Retinoblastoma",
+        "association_score": 0.99
+      },
+      {
+        "id": "disease:osteosarcoma",
+        "name": "Osteosarcoma",
+        "association_score": 0.75
+      },
+      {
+        "id": "disease:small_cell_lung_cancer",
+        "name": "Small cell lung cancer",
+        "association_score": 0.72
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0003700",
+        "term": "DNA-binding transcription factor activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0000082",
+        "term": "G1/S transition of mitotic cell cycle",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "Q13621",
+    "name": "Solute carrier family 12 member 1",
+    "gene_name": "SLC12A1",
+    "organism": "Homo sapiens",
+    "function_description": "Sodium-potassium-chloride co-transporter expressed in the kidney thick ascending limb. Mediates reabsorption of sodium, potassium, and chloride from urine.",
+    "function_category": "transporter",
+    "sequence_length": 1099,
+    "subcellular_location": "Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q13621",
+    "umap_x": 1.0,
+    "umap_y": 11.5,
+    "umap_z": 2.3,
+    "diseases": [
+      {
+        "id": "disease:bartter_syndrome_type_1",
+        "name": "Bartter syndrome type 1",
+        "association_score": 0.97
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:furosemide",
+        "name": "Furosemide",
+        "mechanism": "Loop diuretic / NKCC2 inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0008511",
+        "term": "sodium:potassium:chloride symporter activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006814",
+        "term": "sodium ion transport",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0016324",
+        "term": "apical plasma membrane",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "O15245",
+    "name": "Solute carrier family 22 member 1",
+    "gene_name": "SLC22A1",
+    "organism": "Homo sapiens",
+    "function_description": "Organic cation transporter expressed primarily in the liver. Mediates hepatic uptake of various organic cations including metformin and other drugs.",
+    "function_category": "transporter",
+    "sequence_length": 554,
+    "subcellular_location": "Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/O15245",
+    "umap_x": 2.7,
+    "umap_y": 9.8,
+    "umap_z": 0.3,
+    "diseases": [
+      {
+        "id": "disease:altered_metformin_pharmacokinetics",
+        "name": "Altered metformin pharmacokinetics",
+        "association_score": 0.7
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:metformin",
+        "name": "Metformin",
+        "mechanism": "Substrate / OCT1-mediated hepatic uptake",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0015101",
+        "term": "organic cation transmembrane transporter activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0015695",
+        "term": "organic cation transport",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005886",
+        "term": "plasma membrane",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P11166",
+    "name": "Solute carrier family 2, facilitated glucose transporter member 1",
+    "gene_name": "SLC2A1",
+    "organism": "Homo sapiens",
+    "function_description": "Facilitative glucose transporter responsible for constitutive glucose uptake. Major glucose transporter in the blood-brain barrier and erythrocytes.",
+    "function_category": "transporter",
+    "sequence_length": 492,
+    "subcellular_location": "Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P11166",
+    "umap_x": 2.1,
+    "umap_y": 8.7,
+    "umap_z": 1.4,
+    "diseases": [
+      {
+        "id": "disease:glut1_deficiency_syndrome",
+        "name": "GLUT1 deficiency syndrome",
+        "association_score": 0.98
+      },
+      {
+        "id": "disease:epilepsy",
+        "name": "Epilepsy",
+        "association_score": 0.72
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0005355",
+        "term": "glucose transmembrane transporter activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0015758",
+        "term": "glucose transport",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005886",
+        "term": "plasma membrane",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "Q01959",
+    "name": "Sodium-dependent dopamine transporter",
+    "gene_name": "SLC6A3",
+    "organism": "Homo sapiens",
+    "function_description": "Transports dopamine from the synaptic cleft back into presynaptic neurons. Key regulator of dopaminergic neurotransmission and primary target for psychostimulants.",
+    "function_category": "transporter",
+    "sequence_length": 620,
+    "subcellular_location": "Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q01959",
+    "umap_x": 1.2,
+    "umap_y": 9.5,
+    "umap_z": 1.0,
+    "diseases": [
+      {
+        "id": "disease:attention_deficit_hyperactivity_disorder",
+        "name": "Attention deficit hyperactivity disorder",
+        "association_score": 0.78
+      },
+      {
+        "id": "disease:parkinson_disease",
+        "name": "Parkinson disease",
+        "association_score": 0.72
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:methylphenidate",
+        "name": "Methylphenidate",
+        "mechanism": "Dopamine reuptake inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0005329",
+        "term": "dopamine transmembrane transporter activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0015872",
+        "term": "dopamine transport",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005886",
+        "term": "plasma membrane",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P31645",
+    "name": "Sodium-dependent serotonin transporter",
+    "gene_name": "SLC6A4",
+    "organism": "Homo sapiens",
+    "function_description": "Transports serotonin from the synaptic cleft back into presynaptic neurons. Primary target for selective serotonin reuptake inhibitors (SSRIs) used to treat depression.",
+    "function_category": "transporter",
+    "sequence_length": 630,
+    "subcellular_location": "Cell membrane",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P31645",
+    "umap_x": 2.5,
+    "umap_y": 10.8,
+    "umap_z": 0.5,
+    "diseases": [
+      {
+        "id": "disease:major_depressive_disorder",
+        "name": "Major depressive disorder",
+        "association_score": 0.82
+      },
+      {
+        "id": "disease:obsessive_compulsive_disorder",
+        "name": "Obsessive-compulsive disorder",
+        "association_score": 0.75
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:fluoxetine",
+        "name": "Fluoxetine",
+        "mechanism": "Selective serotonin reuptake inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:sertraline",
+        "name": "Sertraline",
+        "mechanism": "Selective serotonin reuptake inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0005335",
+        "term": "serotonin transmembrane transporter activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006837",
+        "term": "serotonin transport",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005886",
+        "term": "plasma membrane",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P12931",
+    "name": "Proto-oncogene tyrosine-protein kinase Src",
+    "gene_name": "SRC",
+    "organism": "Homo sapiens",
+    "function_description": "Non-receptor tyrosine kinase that plays a role in the regulation of cell growth, differentiation, migration, and immune response. Involved in signaling pathways triggered by receptor tyrosine kinases.",
+    "function_category": "enzyme",
+    "sequence_length": 536,
+    "subcellular_location": "Cell membrane, Cytoplasm",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P12931",
+    "umap_x": 6.8,
+    "umap_y": 1.5,
+    "umap_z": 2.1,
+    "diseases": [
+      {
+        "id": "disease:colorectal_cancer",
+        "name": "Colorectal cancer",
+        "association_score": 0.75
+      },
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.7
+      }
+    ],
+    "drugs": [
+      {
+        "id": "drug:dasatinib",
+        "name": "Dasatinib",
+        "mechanism": "SRC/ABL kinase inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      },
+      {
+        "id": "drug:bosutinib",
+        "name": "Bosutinib",
+        "mechanism": "SRC/ABL kinase inhibitor",
+        "max_phase": 4,
+        "drug_type": "Therapeutic"
+      }
+    ],
+    "go_terms": [
+      {
+        "id": "GO:0004713",
+        "term": "protein tyrosine kinase activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0007169",
+        "term": "transmembrane receptor protein tyrosine kinase signaling pathway",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005925",
+        "term": "focal adhesion",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P04637",
+    "name": "Cellular tumor antigen p53",
+    "gene_name": "TP53",
+    "organism": "Homo sapiens",
+    "function_description": "Tumor suppressor that responds to diverse cellular stresses by regulating expression of target genes involved in cell cycle arrest, apoptosis, senescence, and DNA repair.",
+    "function_category": "signaling",
+    "sequence_length": 393,
+    "subcellular_location": "Nucleus, Cytoplasm",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P04637",
+    "umap_x": -6.5,
+    "umap_y": 4.5,
+    "umap_z": 1.9,
+    "diseases": [
+      {
+        "id": "disease:li_fraumeni_syndrome",
+        "name": "Li-Fraumeni syndrome",
+        "association_score": 0.99
+      },
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.9
+      },
+      {
+        "id": "disease:colorectal_cancer",
+        "name": "Colorectal cancer",
+        "association_score": 0.88
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0003700",
+        "term": "DNA-binding transcription factor activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006915",
+        "term": "apoptotic process",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "Q12888",
+    "name": "Tumor suppressor p53-binding protein 1",
+    "gene_name": "TP53BP1",
+    "organism": "Homo sapiens",
+    "function_description": "DNA damage response protein that promotes non-homologous end joining (NHEJ) repair. Rapidly recruited to sites of DNA double-strand breaks where it forms nuclear foci.",
+    "function_category": "dna_repair",
+    "sequence_length": 1972,
+    "subcellular_location": "Nucleus",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/Q12888",
+    "umap_x": -9.4,
+    "umap_y": -5.8,
+    "umap_z": 2.6,
+    "diseases": [
+      {
+        "id": "disease:breast_cancer",
+        "name": "Breast cancer",
+        "association_score": 0.65
+      },
+      {
+        "id": "disease:immunodeficiency",
+        "name": "Immunodeficiency",
+        "association_score": 0.6
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0003677",
+        "term": "DNA binding",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0006302",
+        "term": "double-strand break repair",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0005634",
+        "term": "nucleus",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P68363",
+    "name": "Tubulin alpha-1B chain",
+    "gene_name": "TUBA1B",
+    "organism": "Homo sapiens",
+    "function_description": "Major constituent of microtubules. Tubulin alpha/beta heterodimers polymerize to form microtubules essential for cell division, intracellular transport, and cell shape.",
+    "function_category": "structural",
+    "sequence_length": 451,
+    "subcellular_location": "Cytoplasm, Cytoskeleton",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P68363",
+    "umap_x": 2.5,
+    "umap_y": -8.3,
+    "umap_z": 2.7,
+    "diseases": [
+      {
+        "id": "disease:lissencephaly",
+        "name": "Lissencephaly",
+        "association_score": 0.72
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0005525",
+        "term": "GTP binding",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0007018",
+        "term": "microtubule-based movement",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0015630",
+        "term": "microtubule cytoskeleton",
+        "category": "cellular_component"
+      }
+    ]
+  },
+  {
+    "uniprot_id": "P08670",
+    "name": "Vimentin",
+    "gene_name": "VIM",
+    "organism": "Homo sapiens",
+    "function_description": "Type III intermediate filament protein expressed in mesenchymal cells. Plays a role in cell attachment, migration, and signaling. A marker of epithelial-mesenchymal transition.",
+    "function_category": "structural",
+    "sequence_length": 466,
+    "subcellular_location": "Cytoplasm, Cytoskeleton",
+    "alphafold_url": "https://alphafold.ebi.ac.uk/api/prediction/P08670",
+    "umap_x": 0.7,
+    "umap_y": -9.9,
+    "umap_z": 1.8,
+    "diseases": [
+      {
+        "id": "disease:cataract",
+        "name": "Cataract",
+        "association_score": 0.7
+      }
+    ],
+    "drugs": [],
+    "go_terms": [
+      {
+        "id": "GO:0005198",
+        "term": "structural molecule activity",
+        "category": "molecular_function"
+      },
+      {
+        "id": "GO:0045104",
+        "term": "intermediate filament cytoskeleton organization",
+        "category": "biological_process"
+      },
+      {
+        "id": "GO:0045111",
+        "term": "intermediate filament cytoskeleton",
+        "category": "cellular_component"
+      }
     ]
   }
 ]

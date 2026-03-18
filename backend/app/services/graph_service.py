@@ -1,65 +1,118 @@
-import json
-import os
+from __future__ import annotations
+
+from collections import deque
+
+from app.core.text import overlap_score
+from app.models.schemas import GraphData, GraphEdge, GraphNode, GraphPathResponse, GraphQueryRequest
+from app.repositories.fixture_repository import FixtureRepository
 
 
 class GraphService:
-    def __init__(self):
-        self.nodes = {}
-        self.edges = []
-        self._load_graph()
+    def __init__(self, repository: FixtureRepository):
+        self.repository = repository
 
-    def _load_graph(self):
-        data_path = os.path.join(
-            os.path.dirname(__file__), "..", "data", "knowledge_graph.json"
-        )
-        if os.path.exists(data_path):
-            with open(data_path) as f:
-                data = json.load(f)
-            self.nodes = {n["id"]: n for n in data.get("nodes", [])}
-            self.edges = data.get("edges", [])
+    def get_neighborhood(self, node_id: str, hops: int = 1) -> GraphData:
+        if node_id not in self.repository.nodes_by_id:
+            return GraphData()
 
-    def get_neighborhood(self, node_id: str, hops: int = 1) -> dict:
         visited = {node_id}
-        result_nodes = []
-        result_edges = []
+        frontier = {node_id}
+        collected_edges: dict[tuple[str, str, str], GraphEdge] = {}
 
-        current_ids = {node_id}
         for _ in range(hops):
-            next_ids = set()
-            for edge in self.edges:
-                if edge["source"] in current_ids:
-                    next_ids.add(edge["target"])
-                    result_edges.append(edge)
-                elif edge["target"] in current_ids:
-                    next_ids.add(edge["source"])
-                    result_edges.append(edge)
-            current_ids = next_ids - visited
-            visited |= next_ids
+            next_frontier: set[str] = set()
+            for current_id in frontier:
+                for neighbor_id, edge in self.repository.neighbors(current_id):
+                    collected_edges[(edge.source, edge.target, edge.label)] = edge
+                    if neighbor_id not in visited:
+                        next_frontier.add(neighbor_id)
+                        visited.add(neighbor_id)
+            frontier = next_frontier
+            if not frontier:
+                break
 
-        for nid in visited:
-            if nid in self.nodes:
-                result_nodes.append(self.nodes[nid])
+        nodes = [self.repository.nodes_by_id[node_id] for node_id in sorted(visited)]
+        edges = list(collected_edges.values())
+        return GraphData(nodes=nodes, edges=edges)
 
-        # Deduplicate edges
-        seen = set()
-        unique_edges = []
-        for e in result_edges:
-            key = (e["source"], e["target"], e["label"])
-            if key not in seen:
-                seen.add(key)
-                unique_edges.append(e)
+    def search_nodes(self, query: str, node_type: str | None = None, limit: int = 20) -> list[GraphNode]:
+        nodes = self.repository.list_nodes()
+        if node_type:
+            nodes = [node for node in nodes if node.type == node_type]
 
-        return {"nodes": result_nodes, "edges": unique_edges}
+        if not query.strip():
+            return sorted(nodes, key=lambda node: (node.type, node.label))[:limit]
 
-    def search_nodes(self, query: str, node_type: str = None) -> list:
-        results = []
-        q = query.lower()
-        for node in self.nodes.values():
-            if node_type and node["type"] != node_type:
-                continue
-            if q in node["label"].lower() or q in node.get("id", "").lower():
-                results.append(node)
-        return results[:20]
+        ranked: list[tuple[float, GraphNode]] = []
+        query_lower = query.lower()
+        for node in nodes:
+            haystacks = [node.label.lower(), node.id.lower()]
+            haystacks.extend(str(value).lower() for value in node.properties.values())
+            best = 0.0
+            for haystack in haystacks:
+                if query_lower in haystack:
+                    best = max(best, 1.0)
+                else:
+                    best = max(best, overlap_score(query_lower, haystack))
+            if best > 0:
+                ranked.append((best, node))
 
+        ranked.sort(key=lambda item: (-item[0], item[1].label))
+        return [node for _, node in ranked[:limit]]
 
-graph_service = GraphService()
+    def find_path(self, start_id: str, end_id: str) -> GraphPathResponse:
+        if start_id not in self.repository.nodes_by_id or end_id not in self.repository.nodes_by_id:
+            return GraphPathResponse()
+
+        queue: deque[str] = deque([start_id])
+        parents: dict[str, tuple[str | None, GraphEdge | None]] = {start_id: (None, None)}
+
+        while queue:
+            current = queue.popleft()
+            if current == end_id:
+                break
+
+            for neighbor_id, edge in self.repository.neighbors(current):
+                if neighbor_id in parents:
+                    continue
+                parents[neighbor_id] = (current, edge)
+                queue.append(neighbor_id)
+
+        if end_id not in parents:
+            return GraphPathResponse()
+
+        path_ids: list[str] = []
+        path_edges: list[GraphEdge] = []
+        cursor = end_id
+        while cursor is not None:
+            path_ids.append(cursor)
+            parent, edge = parents[cursor]
+            if edge is not None:
+                path_edges.append(edge)
+            cursor = parent
+
+        path_ids.reverse()
+        path_edges.reverse()
+        path_nodes = [self.repository.nodes_by_id[node_id] for node_id in path_ids]
+        return GraphPathResponse(nodes=path_nodes, edges=path_edges, path_ids=path_ids)
+
+    def query(self, request: GraphQueryRequest) -> GraphData:
+        if request.entity_id:
+            return self.get_neighborhood(request.entity_id, request.hops)
+
+        if request.search:
+            matches = self.search_nodes(request.search, request.node_type, request.limit)
+            if len(matches) == 1:
+                return self.get_neighborhood(matches[0].id, request.hops)
+            return GraphData(nodes=matches, edges=[])
+
+        if request.node_type:
+            return GraphData(
+                nodes=self.search_nodes("", request.node_type, request.limit),
+                edges=[],
+            )
+
+        return GraphData(
+            nodes=self.search_nodes("", None, request.limit),
+            edges=[],
+        )

@@ -1,0 +1,17 @@
+.DS_Store
+.claude
+.env
+.env.local
+.env.*.local
+.next
+.pytest_cache
+.venv
+node_modules
+dist
+coverage
+backend/venv
+backend/**/__pycache__
+frontend/.next
+frontend/node_modules
+frontend/coverage
+frontend/public/vendor/molstar-viewer
