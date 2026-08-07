@@ -13,7 +13,9 @@ import {
   ProteinStructureAsset,
   ProteinSummary,
   ProteinUniverseAsset,
+  RightRailSections,
   SelectedEntity,
+  ViewportPreset,
 } from "@/lib/types";
 import { inferEntityType, uniqueIds } from "@/lib/utils";
 
@@ -46,6 +48,11 @@ export type StoreSnapshot = {
   proteinDetails: Record<string, ProteinDetail>;
   chatSession: ChatMessage[];
   loading: LoadingState;
+  graphHops: 1 | 2;
+  graphSelectionId: string | null;
+  viewportPreset: ViewportPreset;
+  viewportRevision: number;
+  rightRailSections: RightRailSections;
 };
 
 type StoreState = StoreSnapshot & {
@@ -68,11 +75,15 @@ type StoreState = StoreSnapshot & {
   setPaletteOpen: (open: boolean) => void;
   setCameraTarget: (target: CameraTarget) => void;
   setLoading: (key: keyof LoadingState, value: boolean) => void;
+  setGraphHops: (hops: 1 | 2) => void;
+  setGraphSelectionId: (id: string | null) => void;
+  setViewportPreset: (preset: ViewportPreset) => void;
+  setRightRailSection: (section: keyof RightRailSections, open: boolean) => void;
   spotlightEntity: (entity: SelectedEntity) => void;
   focusProtein: (uniprotId: string) => void;
   leaveFocus: () => void;
   appendMessage: (message: ChatMessage) => void;
-  appendAssistantChunk: (messageId: string, chunk: string) => void;
+  appendAssistantChunk: (messageId: string, chunk: string, paragraph?: number) => void;
   attachSources: (messageId: string, sources: ChatSource[]) => void;
   appendCommand: (messageId: string, command: ChatCommand) => void;
   finalizeMessage: (messageId: string) => void;
@@ -96,8 +107,8 @@ export const initialStoreState: StoreSnapshot = {
   highlightedIds: [],
   graphRootId: null,
   universeFilter: "",
-  graphOpen: false,
-  guideOpen: false,
+  graphOpen: true,
+  guideOpen: true,
   paletteOpen: false,
   cameraTarget: {
     id: null,
@@ -110,6 +121,14 @@ export const initialStoreState: StoreSnapshot = {
     graph: false,
     chat: false,
     structure: false,
+  },
+  graphHops: 1,
+  graphSelectionId: null,
+  viewportPreset: "fit-all",
+  viewportRevision: 0,
+  rightRailSections: {
+    graph: true,
+    guide: true,
   },
 };
 
@@ -148,10 +167,40 @@ export const useGenomeCanvasStore = create<StoreState>((set) => ({
   setGraphRootId: (graphRootId) => set({ graphRootId }),
   setUniverseFilter: (universeFilter) => set({ universeFilter }),
   setHighlightedIds: (highlightedIds) => set({ highlightedIds: uniqueIds(highlightedIds) }),
-  setGraphOpen: (graphOpen) => set({ graphOpen }),
-  setGuideOpen: (guideOpen) => set({ guideOpen }),
+  setGraphOpen: (graphOpen) =>
+    set((state) => ({
+      graphOpen,
+      rightRailSections: {
+        ...state.rightRailSections,
+        graph: graphOpen,
+      },
+    })),
+  setGuideOpen: (guideOpen) =>
+    set((state) => ({
+      guideOpen,
+      rightRailSections: {
+        ...state.rightRailSections,
+        guide: guideOpen,
+      },
+    })),
   setPaletteOpen: (paletteOpen) => set({ paletteOpen }),
   setCameraTarget: (cameraTarget) => set({ cameraTarget }),
+  setGraphHops: (graphHops) => set({ graphHops }),
+  setGraphSelectionId: (graphSelectionId) => set({ graphSelectionId }),
+  setViewportPreset: (viewportPreset) =>
+    set((state) => ({
+      viewportPreset,
+      viewportRevision: state.viewportRevision + 1,
+    })),
+  setRightRailSection: (section, open) =>
+    set((state) => ({
+      rightRailSections: {
+        ...state.rightRailSections,
+        [section]: open,
+      },
+      graphOpen: section === "graph" ? open : state.graphOpen,
+      guideOpen: section === "guide" ? open : state.guideOpen,
+    })),
   setLoading: (key, value) =>
     set((state) => ({
       loading: {
@@ -163,6 +212,7 @@ export const useGenomeCanvasStore = create<StoreState>((set) => ({
     set((state) => ({
       selectedEntity: entity,
       graphRootId: entity.id,
+      graphSelectionId: entity.id,
       highlightedIds: uniqueIds([
         ...(entity.type === "protein" ? [entity.id] : []),
         ...state.highlightedIds,
@@ -172,18 +222,31 @@ export const useGenomeCanvasStore = create<StoreState>((set) => ({
         mode: "spotlight",
       },
       graphOpen: true,
+      viewportPreset: entity.type === "protein" ? "selection" : "fit-all",
+      viewportRevision: state.viewportRevision + 1,
+      rightRailSections: {
+        ...state.rightRailSections,
+        graph: true,
+      },
     })),
   focusProtein: (uniprotId) =>
     set((state) => ({
       selectedEntity: { id: uniprotId, type: "protein" },
       focusedProteinId: uniprotId,
       graphRootId: uniprotId,
+      graphSelectionId: uniprotId,
       experienceMode: "focus",
       highlightedIds: uniqueIds([uniprotId, ...state.highlightedIds]),
       graphOpen: true,
       cameraTarget: {
         id: uniprotId,
         mode: "focus",
+      },
+      viewportPreset: "focus",
+      viewportRevision: state.viewportRevision + 1,
+      rightRailSections: {
+        ...state.rightRailSections,
+        graph: true,
       },
     })),
   leaveFocus: () =>
@@ -194,23 +257,42 @@ export const useGenomeCanvasStore = create<StoreState>((set) => ({
         id: state.selectedEntity?.id ?? null,
         mode: state.selectedEntity ? "spotlight" : "wide",
       },
+      viewportPreset: state.selectedEntity ? "selection" : "fit-all",
+      viewportRevision: state.viewportRevision + 1,
     })),
   appendMessage: (message) =>
     set((state) => ({
       chatSession: [...state.chatSession, message],
       guideOpen: true,
+      rightRailSections: {
+        ...state.rightRailSections,
+        guide: true,
+      },
     })),
-  appendAssistantChunk: (messageId, chunk) =>
+  appendAssistantChunk: (messageId, chunk, paragraph = 0) =>
     set((state) => ({
-      chatSession: state.chatSession.map((message) =>
-        message.id === messageId
-          ? {
-              ...message,
-              content: `${message.content}${message.content ? " " : ""}${chunk}`.trim(),
-            }
-          : message,
-      ),
+      chatSession: state.chatSession.map((message) => {
+        if (message.id !== messageId) {
+          return message;
+        }
+
+        // Chunks inside one paragraph rejoin with a space; a paragraph change
+        // emits a blank line. Previously every chunk was joined with " ", which
+        // silently flattened the backend's two-paragraph responses into one.
+        const previousParagraph = message.paragraphCursor ?? paragraph;
+        const separator = !message.content ? "" : paragraph > previousParagraph ? "\n\n" : " ";
+
+        return {
+          ...message,
+          content: `${message.content}${separator}${chunk}`,
+          paragraphCursor: paragraph,
+        };
+      }),
       guideOpen: true,
+      rightRailSections: {
+        ...state.rightRailSections,
+        guide: true,
+      },
     })),
   attachSources: (messageId, sources) =>
     set((state) => ({
@@ -250,10 +332,13 @@ export const useGenomeCanvasStore = create<StoreState>((set) => ({
       if (command.type === "filter_universe" && command.query) {
         nextState.universeFilter = command.query;
         nextState.paletteOpen = false;
+        nextState.viewportPreset = "fit-all";
+        nextState.viewportRevision = state.viewportRevision + 1;
       }
 
       if ((command.type === "navigate" || command.type === "set_graph_root") && command.target_id) {
         nextState.graphRootId = command.target_id;
+        nextState.graphSelectionId = command.target_id;
         nextState.selectedEntity = {
           id: command.target_id,
           type: inferEntityType(command.target_id),
@@ -263,6 +348,12 @@ export const useGenomeCanvasStore = create<StoreState>((set) => ({
           id: command.target_id,
           mode: inferEntityType(command.target_id) === "protein" ? "spotlight" : state.cameraTarget.mode,
         };
+        nextState.rightRailSections = {
+          ...state.rightRailSections,
+          graph: true,
+        };
+        nextState.viewportPreset = inferEntityType(command.target_id) === "protein" ? "selection" : "fit-all";
+        nextState.viewportRevision = state.viewportRevision + 1;
       }
 
       if (command.type === "load_structure" && command.target_id) {
@@ -273,11 +364,18 @@ export const useGenomeCanvasStore = create<StoreState>((set) => ({
           type: "protein",
         };
         nextState.graphRootId = command.target_id;
+        nextState.graphSelectionId = command.target_id;
         nextState.graphOpen = true;
         nextState.cameraTarget = {
           id: command.target_id,
           mode: "focus",
         };
+        nextState.rightRailSections = {
+          ...state.rightRailSections,
+          graph: true,
+        };
+        nextState.viewportPreset = "focus";
+        nextState.viewportRevision = state.viewportRevision + 1;
       }
 
       if (command.type === "set_viewport" && command.viewport) {
@@ -288,21 +386,31 @@ export const useGenomeCanvasStore = create<StoreState>((set) => ({
             id: state.selectedEntity?.id ?? null,
             mode: state.selectedEntity ? "spotlight" : "wide",
           };
+          nextState.viewportPreset = state.selectedEntity ? "selection" : "fit-all";
+          nextState.viewportRevision = state.viewportRevision + 1;
         }
       }
 
       return nextState as StoreState;
     }),
-  resetChat: () => set({ chatSession: [], guideOpen: false }),
+  resetChat: () => set({ chatSession: [] }),
   resetExperience: () =>
-    set({
+    set((state) => ({
       experienceMode: "universe",
       focusedProteinId: null,
       hoveredEntityId: null,
       highlightedIds: [],
-      graphOpen: false,
-      guideOpen: false,
+      graphOpen: true,
+      guideOpen: true,
       paletteOpen: false,
       cameraTarget: { id: null, mode: "wide" },
-    }),
+      graphSelectionId: null,
+      viewportPreset: "fit-all",
+      viewportRevision: state.viewportRevision + 1,
+      rightRailSections: {
+        ...state.rightRailSections,
+        graph: true,
+        guide: true,
+      },
+    })),
 }));

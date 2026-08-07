@@ -20,10 +20,12 @@ import {
   searchGraph,
   searchProteins,
 } from "@/lib/api";
-import { STARTER_PROMPTS, ChatPanel } from "@/components/ChatPanel";
-import { GraphPanel } from "@/components/GraphPanel";
-import { ProteinUniverse } from "@/components/ProteinUniverse";
-import { StructurePanel } from "@/components/StructurePanel";
+import { CommandBar, CommandBarResult } from "@/components/CommandBar";
+import { GraphWorkspace } from "@/components/GraphWorkspace";
+import { GuideWorkspace } from "@/components/GuideWorkspace";
+import { StructureViewport } from "@/components/StructureViewport";
+import { UniverseViewport } from "@/components/UniverseViewport";
+import { WorkspaceShell } from "@/components/WorkspaceShell";
 import { useGenomeCanvasStore } from "@/lib/store";
 import { GraphNode, GraphNodeType, ProteinSearchResult, SimilarProteinResult } from "@/lib/types";
 import { inferEntityType, isProteinId } from "@/lib/utils";
@@ -35,6 +37,7 @@ type PaletteResult =
       key: string;
       label: string;
       subtitle: string;
+      meta: string;
       protein: ProteinSearchResult;
     }
   | {
@@ -42,9 +45,9 @@ type PaletteResult =
       key: string;
       label: string;
       subtitle: string;
+      meta: string;
       node: GraphNode;
     };
-
 
 export function GenomeCanvasApp() {
   const universe = useGenomeCanvasStore((state) => state.universe);
@@ -60,13 +63,15 @@ export function GenomeCanvasApp() {
   const highlightedIds = useGenomeCanvasStore((state) => state.highlightedIds);
   const graphRootId = useGenomeCanvasStore((state) => state.graphRootId);
   const universeFilter = useGenomeCanvasStore((state) => state.universeFilter);
-  const graphOpen = useGenomeCanvasStore((state) => state.graphOpen);
-  const guideOpen = useGenomeCanvasStore((state) => state.guideOpen);
   const paletteOpen = useGenomeCanvasStore((state) => state.paletteOpen);
   const cameraTarget = useGenomeCanvasStore((state) => state.cameraTarget);
   const proteinDetails = useGenomeCanvasStore((state) => state.proteinDetails);
-  const chatSession = useGenomeCanvasStore((state) => state.chatSession);
   const loading = useGenomeCanvasStore((state) => state.loading);
+  const graphHops = useGenomeCanvasStore((state) => state.graphHops);
+  const graphSelectionId = useGenomeCanvasStore((state) => state.graphSelectionId);
+  const viewportPreset = useGenomeCanvasStore((state) => state.viewportPreset);
+  const viewportRevision = useGenomeCanvasStore((state) => state.viewportRevision);
+  const rightRailSections = useGenomeCanvasStore((state) => state.rightRailSections);
   const setUniverse = useGenomeCanvasStore((state) => state.setUniverse);
   const upsertUniverseAssets = useGenomeCanvasStore((state) => state.upsertUniverseAssets);
   const upsertStructureAsset = useGenomeCanvasStore((state) => state.upsertStructureAsset);
@@ -74,16 +79,17 @@ export function GenomeCanvasApp() {
   const setGraphResults = useGenomeCanvasStore((state) => state.setGraphResults);
   const setGraphData = useGenomeCanvasStore((state) => state.setGraphData);
   const upsertProteinDetail = useGenomeCanvasStore((state) => state.upsertProteinDetail);
-  const setSelectedEntity = useGenomeCanvasStore((state) => state.setSelectedEntity);
   const setHoveredEntityId = useGenomeCanvasStore((state) => state.setHoveredEntityId);
   const setGraphRootId = useGenomeCanvasStore((state) => state.setGraphRootId);
   const setUniverseFilter = useGenomeCanvasStore((state) => state.setUniverseFilter);
   const setHighlightedIds = useGenomeCanvasStore((state) => state.setHighlightedIds);
-  const setGraphOpen = useGenomeCanvasStore((state) => state.setGraphOpen);
-  const setGuideOpen = useGenomeCanvasStore((state) => state.setGuideOpen);
   const setPaletteOpen = useGenomeCanvasStore((state) => state.setPaletteOpen);
   const setCameraTarget = useGenomeCanvasStore((state) => state.setCameraTarget);
   const setLoading = useGenomeCanvasStore((state) => state.setLoading);
+  const setGraphHops = useGenomeCanvasStore((state) => state.setGraphHops);
+  const setGraphSelectionId = useGenomeCanvasStore((state) => state.setGraphSelectionId);
+  const setViewportPreset = useGenomeCanvasStore((state) => state.setViewportPreset);
+  const setRightRailSection = useGenomeCanvasStore((state) => state.setRightRailSection);
   const spotlightEntity = useGenomeCanvasStore((state) => state.spotlightEntity);
   const focusProteinState = useGenomeCanvasStore((state) => state.focusProtein);
   const leaveFocus = useGenomeCanvasStore((state) => state.leaveFocus);
@@ -110,6 +116,7 @@ export function GenomeCanvasApp() {
       key: `protein-${protein.uniprot_id}`,
       label: protein.gene_name,
       subtitle: protein.name,
+      meta: protein.match_reason,
       protein,
     }));
 
@@ -121,6 +128,7 @@ export function GenomeCanvasApp() {
         key: `graph-${node.id}`,
         label: node.label,
         subtitle: node.type.replace("_", " "),
+        meta: node.id,
         node,
       }));
 
@@ -157,9 +165,10 @@ export function GenomeCanvasApp() {
       setSearchResults(results);
       setUniverseFilter(query);
       setHighlightedIds(results.map((result) => result.uniprot_id));
+      setViewportPreset("fit-all");
       setPaletteOpen(false);
     },
-    [setHighlightedIds, setPaletteOpen, setSearchResults, setUniverseFilter],
+    [setHighlightedIds, setPaletteOpen, setSearchResults, setUniverseFilter, setViewportPreset],
   );
 
   const spotlightProtein = useCallback(
@@ -177,10 +186,10 @@ export function GenomeCanvasApp() {
         await hydrateProtein(id);
       }
       spotlightEntity({ id, type });
-      setGraphOpen(true);
+      setGraphSelectionId(id);
       setPaletteOpen(false);
     },
-    [hydrateProtein, setGraphOpen, setPaletteOpen, spotlightEntity],
+    [hydrateProtein, setGraphSelectionId, setPaletteOpen, spotlightEntity],
   );
 
   const focusProtein = useCallback(
@@ -273,7 +282,8 @@ export function GenomeCanvasApp() {
   }, [deferredQuery, paletteOpen, setGraphResults, setSearchResults, startSearchTransition]);
 
   useEffect(() => {
-    if (!graphOpen || !graphRootId) {
+    if (!graphRootId) {
+      setGraphData(null);
       return;
     }
 
@@ -282,9 +292,10 @@ export function GenomeCanvasApp() {
     async function loadGraph() {
       setLoading("graph", true);
       try {
-        const graph = await fetchNeighborhood(currentGraphRoot, 1);
+        const graph = await fetchNeighborhood(currentGraphRoot, graphHops);
         if (!cancelled) {
           setGraphData(graph);
+          setGraphSelectionId(currentGraphRoot);
         }
       } catch (error) {
         if (!cancelled) {
@@ -302,7 +313,7 @@ export function GenomeCanvasApp() {
     return () => {
       cancelled = true;
     };
-  }, [graphOpen, graphRootId, setGraphData, setLoading]);
+  }, [graphHops, graphRootId, setGraphData, setGraphSelectionId, setLoading]);
 
   useEffect(() => {
     if (!focusedProteinId) {
@@ -340,22 +351,25 @@ export function GenomeCanvasApp() {
         setPaletteOpen(false);
         return;
       }
-      if (guideOpen) {
-        setGuideOpen(false);
-        return;
-      }
-      if (graphOpen) {
-        setGraphOpen(false);
-        return;
-      }
+
       if (experienceMode === "focus") {
         leaveFocus();
+        return;
+      }
+
+      if (rightRailSections.guide) {
+        setRightRailSection("guide", false);
+        return;
+      }
+
+      if (rightRailSections.graph) {
+        setRightRailSection("graph", false);
       }
     };
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [experienceMode, graphOpen, guideOpen, leaveFocus, paletteOpen, setGraphOpen, setGuideOpen, setPaletteOpen]);
+  }, [experienceMode, leaveFocus, paletteOpen, rightRailSections.graph, rightRailSections.guide, setPaletteOpen, setRightRailSection]);
 
   const handlePaletteSubmit = async (event?: FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
@@ -377,225 +391,207 @@ export function GenomeCanvasApp() {
     await highlightFilter(commandInput.trim());
   };
 
+  const commandBarResults = useMemo<CommandBarResult[]>(
+    () =>
+      paletteResults.map((result) => {
+        if (result.kind === "protein") {
+          return {
+            key: result.key,
+            kind: "protein",
+            label: result.label,
+            subtitle: result.subtitle,
+            meta: result.meta,
+            actions: [
+              {
+                label: "Spotlight",
+                onSelect: () => void spotlightProtein(result.protein.uniprot_id),
+              },
+              {
+                label: "Dive",
+                onSelect: () => void focusProtein(result.protein.uniprot_id),
+                tone: "primary",
+              },
+              {
+                label: "Filter",
+                onSelect: () => void highlightFilter(result.protein.gene_name),
+              },
+              {
+                label: "Graph",
+                onSelect: () => void openGraphContext(result.protein.uniprot_id, "protein"),
+              },
+            ],
+          };
+        }
+
+        return {
+          key: result.key,
+          kind: "graph",
+          label: result.label,
+          subtitle: result.subtitle,
+          meta: result.meta,
+          actions: [
+            {
+              label: "Open",
+              onSelect: () => void openGraphContext(result.node.id, result.node.type),
+              tone: "primary",
+            },
+            {
+              label: "Filter",
+              onSelect: () => void highlightFilter(result.node.label),
+            },
+          ],
+        };
+      }),
+    [focusProtein, highlightFilter, openGraphContext, paletteResults, spotlightProtein],
+  );
+
+  const selectionLabel = useMemo(() => {
+    if (!selectedEntity) {
+      return null;
+    }
+
+    const proteinTitle = selectedEntity.type === "protein"
+      ? proteinDetails[selectedEntity.id]?.gene_name ?? selectedEntity.id
+      : graphData?.nodes.find((node) => node.id === selectedEntity.id)?.label ?? selectedEntity.id;
+
+    return {
+      eyebrow: selectedEntity.type.replace("_", " "),
+      title: proteinTitle,
+    };
+  }, [graphData?.nodes, proteinDetails, selectedEntity]);
+
+  const countsLabel = `${universe.length} structures • ${Object.keys(universeAssets).length} traces`;
+  const modeLabel = experienceMode === "focus" ? "Focused structure" : "Exploration workspace";
+
   return (
     <div className="immersive-page">
-      <div className="scene-shell">
-        <ProteinUniverse
-          cameraTarget={cameraTarget}
-          experienceMode={experienceMode}
-          filter={universeFilter}
-          focusedProteinId={focusedProteinId}
-          highlightedIds={highlightedIds}
-          hoveredEntityId={hoveredEntityId}
-          loading={loading.universe}
-          onBackgroundClick={() => {
-            setHoveredEntityId(null);
-            if (experienceMode === "universe" && cameraTarget.mode !== "wide") {
-              setCameraTarget({ id: null, mode: "wide" });
-              setGraphOpen(false);
-            }
-          }}
-          onFocusProtein={(uniprotId) => void focusProtein(uniprotId)}
-          onHoverProtein={setHoveredEntityId}
-          onSpotlightProtein={(uniprotId) => void spotlightProtein(uniprotId)}
-          proteins={universe}
-          selectedProteinId={selectedProteinId}
-          universeAssets={universeAssets}
-        />
-
-        <header className="hud">
-          <div className="hud-brand">
-            <span className="hud-mark" />
-            <div>
-              <p className="hud-eyebrow">Protein universe</p>
-              <h1>GenomeCanvas</h1>
-            </div>
+      <WorkspaceShell
+        commandBar={(
+          <CommandBar
+            countsLabel={countsLabel}
+            graphVisible={rightRailSections.graph}
+            guideVisible={rightRailSections.guide}
+            isSearching={isSearching}
+            modeLabel={modeLabel}
+            onFocusInput={() => setPaletteOpen(true)}
+            onQueryChange={setCommandInput}
+            onSubmit={handlePaletteSubmit}
+            onToggleGraph={() => setRightRailSection("graph", !rightRailSections.graph)}
+            onToggleGuide={() => setRightRailSection("guide", !rightRailSections.guide)}
+            query={commandInput}
+            results={commandBarResults}
+            resultsOpen={paletteOpen && Boolean(commandInput.trim())}
+            selectionLabel={selectionLabel}
+          />
+        )}
+        graph={(
+          <GraphWorkspace
+            graphData={graphData}
+            graphHops={graphHops}
+            graphRootId={graphRootId}
+            graphSelectionId={graphSelectionId}
+            highlightedIds={highlightedIds}
+            loading={loading.graph}
+            onChangeHops={setGraphHops}
+            onClose={() => setRightRailSection("graph", !rightRailSections.graph)}
+            onSelectNode={(nodeId, nodeType) => {
+              setGraphSelectionId(nodeId);
+              if (nodeType === "protein") {
+                void spotlightProtein(nodeId);
+                return;
+              }
+              void openGraphContext(nodeId, nodeType);
+            }}
+            open={rightRailSections.graph}
+            selectedEntityId={selectedEntity?.id ?? null}
+          />
+        )}
+        guide={(
+          <GuideWorkspace
+            graphRootId={graphRootId}
+            highlightedIds={highlightedIds}
+            onClose={() => setRightRailSection("guide", !rightRailSections.guide)}
+            onCommand={handleCommand}
+            onPromptConsumed={() => setQueuedPrompt(null)}
+            open={rightRailSections.guide}
+            queuedPrompt={queuedPrompt}
+            selectedEntity={selectedEntity}
+            selectedProteinId={selectedProteinId}
+            universeFilter={universeFilter}
+          />
+        )}
+        stageFooter={(
+          <div className="stage-footnote-copy">
+            <span>Double-click a ribbon to open focused structure mode.</span>
+            <span>Use Fit all anytime after zooming deep into the universe.</span>
           </div>
-
-          <form className="palette-shell" onSubmit={handlePaletteSubmit}>
-            <input
-              className="palette-input"
-              onChange={(event) => setCommandInput(event.target.value)}
-              onFocus={() => setPaletteOpen(true)}
-              placeholder="Spotlight proteins, diseases, drugs, or pathways"
-              value={commandInput}
-            />
-            <button className="hud-button primary" type="submit">
-              {isSearching ? "Searching…" : "Explore"}
-            </button>
-
-            <div className={`palette-results ${paletteOpen ? "open" : ""}`}>
-              {paletteResults.length === 0 && commandInput.trim() ? (
-                <div className="palette-empty">No matches yet. Press explore to filter the universe.</div>
-              ) : (
-                paletteResults.map((result) => (
-                  <div className="palette-result" key={result.key}>
-                    <div>
-                      <strong>{result.label}</strong>
-                      <p>{result.subtitle}</p>
-                    </div>
-                    <div className="palette-actions">
-                      {result.kind === "protein" ? (
-                        <>
-                          <button
-                            className="result-chip"
-                            onClick={() => void spotlightProtein(result.protein.uniprot_id)}
-                            type="button"
-                          >
-                            Spotlight
-                          </button>
-                          <button
-                            className="result-chip"
-                            onClick={() => void focusProtein(result.protein.uniprot_id)}
-                            type="button"
-                          >
-                            Dive
-                          </button>
-                          <button
-                            className="result-chip"
-                            onClick={() => void highlightFilter(result.protein.gene_name)}
-                            type="button"
-                          >
-                            Filter
-                          </button>
-                          <button
-                            className="result-chip"
-                            onClick={() => void openGraphContext(result.protein.uniprot_id, "protein")}
-                            type="button"
-                          >
-                            Graph
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <button
-                            className="result-chip"
-                            onClick={() => void openGraphContext(result.node.id, result.node.type)}
-                            type="button"
-                          >
-                            Spotlight
-                          </button>
-                          <button
-                            className="result-chip"
-                            onClick={() => void highlightFilter(result.node.label)}
-                            type="button"
-                          >
-                            Filter
-                          </button>
-                          <button
-                            className="result-chip"
-                            onClick={() => void openGraphContext(result.node.id, result.node.type)}
-                            type="button"
-                          >
-                            Graph
-                          </button>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                ))
-              )}
+        )}
+        stageOverlay={(
+          <>
+            <div className="stage-context-card">
+              <span>{hoveredProtein ? hoveredProtein.function_category.replace("_", " ") : "Navigation"}</span>
+              <strong>{hoveredProtein ? hoveredProtein.gene_name : "Universe controls are now persistent"}</strong>
+              <p>
+                {hoveredProtein
+                  ? hoveredProtein.name
+                  : "Search from the command bar, inspect graph neighbors on the right, and keep the guide visible while you explore."}
+              </p>
             </div>
-          </form>
 
-          <div className="hud-actions">
             {selectedEntity ? (
-              <div className="selection-pill">
-                <span>{selectedEntity.type}</span>
-                <strong>{selectedEntity.id}</strong>
+              <div className="stage-context-card secondary">
+                <span>Selected entity</span>
+                <strong>{selectionLabel?.title ?? selectedEntity.id}</strong>
+                <p>{selectedEntity.id}</p>
               </div>
             ) : null}
-            <button
-              className={`hud-button ${graphOpen ? "active" : ""}`}
-              onClick={() => setGraphOpen(!graphOpen)}
-              type="button"
-            >
-              Graph
-            </button>
-            <button
-              className={`hud-button ${guideOpen ? "active" : ""}`}
-              onClick={() => setGuideOpen(!guideOpen)}
-              type="button"
-            >
-              Guide
-            </button>
-          </div>
-        </header>
-
-        {!guideOpen && chatSession.length === 0 ? (
-          <div className="floating-prompts">
-            {STARTER_PROMPTS.map((prompt) => (
-              <button
-                className="prompt-chip"
-                key={prompt}
-                onClick={() => {
-                  setGuideOpen(true);
-                  setCommandInput("");
-                  setQueuedPrompt(prompt);
-                }}
-                type="button"
-              >
-                {prompt}
-              </button>
-            ))}
-          </div>
-        ) : null}
-
-        {hoveredProtein ? (
-          <div className="hover-brief">
-            <span>{hoveredProtein.function_category.replace("_", " ")}</span>
-            <strong>{hoveredProtein.gene_name}</strong>
-            <p>{hoveredProtein.name}</p>
-          </div>
-        ) : null}
-
-        <GraphPanel
-          graphData={graphData}
-          graphRootId={graphRootId}
-          highlightedIds={highlightedIds}
-          loading={loading.graph}
-          onClose={() => setGraphOpen(false)}
-          onSelectNode={(nodeId, nodeType) => {
-            if (nodeType === "protein") {
-              void spotlightProtein(nodeId);
-              return;
-            }
-            void openGraphContext(nodeId, nodeType);
-          }}
-          open={graphOpen}
-          selectedEntityId={selectedEntity?.id ?? null}
-        />
-
-        <ChatPanel
-          graphRootId={graphRootId}
-          highlightedIds={highlightedIds}
-          onClose={() => setGuideOpen(false)}
-          onCommand={handleCommand}
-          onPromptConsumed={() => setQueuedPrompt(null)}
-          open={guideOpen}
-          queuedPrompt={queuedPrompt}
-          selectedEntity={selectedEntity}
-          selectedProteinId={selectedProteinId}
-          universeFilter={universeFilter}
-        />
-
-        {focusedProtein ? (
-          <StructurePanel
+          </>
+        )}
+        viewport={focusedProtein ? (
+          <StructureViewport
             onBack={leaveFocus}
             onSelectProtein={(uniprotId) => void focusProtein(uniprotId)}
-            open={experienceMode === "focus"}
             protein={focusedProtein}
             similarProteins={similarProteins}
             structureAsset={focusedStructureAsset}
           />
-        ) : null}
-
-        <div className="ambient-copy">
-          <span>{universe.length} structures</span>
-          <span>{Object.keys(universeAssets).length} trace assets</span>
-          <span>{experienceMode}</span>
-        </div>
-      </div>
+        ) : (
+          <UniverseViewport
+            cameraTarget={cameraTarget}
+            experienceMode={experienceMode}
+            filter={universeFilter}
+            focusedProteinId={focusedProteinId}
+            highlightedIds={highlightedIds}
+            hoveredEntityId={hoveredEntityId}
+            loading={loading.universe}
+            onBackgroundClick={() => {
+              setHoveredEntityId(null);
+              setCameraTarget({ id: null, mode: "wide" });
+              setViewportPreset("fit-all");
+            }}
+            onCenterSelection={() => setViewportPreset(selectedEntity ? "selection" : "fit-all")}
+            onFitAll={() => {
+              setCameraTarget({ id: null, mode: "wide" });
+              setViewportPreset("fit-all");
+            }}
+            onFocusProtein={(uniprotId) => void focusProtein(uniprotId)}
+            onHoverProtein={setHoveredEntityId}
+            onResetView={() => {
+              if (experienceMode === "focus") {
+                setViewportPreset("focus");
+                return;
+              }
+              setViewportPreset(selectedEntity ? "selection" : "fit-all");
+            }}
+            onSpotlightProtein={(uniprotId) => void spotlightProtein(uniprotId)}
+            proteins={universe}
+            selectedProteinId={selectedProteinId}
+            universeAssets={universeAssets}
+            viewportPreset={viewportPreset}
+            viewportRevision={viewportRevision}
+          />
+        )}
+      />
     </div>
   );
 }

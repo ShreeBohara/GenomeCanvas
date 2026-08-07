@@ -19,7 +19,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8
 type ChatHandlers = {
   onSources?: (sources: ChatSource[]) => void;
   onCommand?: (command: ChatCommand) => void | Promise<void>;
-  onChunk?: (payload: { text: string }) => void;
+  onChunk?: (payload: { text: string; paragraph?: number }) => void;
   onDone?: () => void;
   onError?: (payload: { detail: string }) => void;
 };
@@ -144,7 +144,7 @@ export async function streamChatMessage(
           await handlers.onCommand?.(data as ChatCommand);
         }
         if (parsed.event === "chunk") {
-          handlers.onChunk?.(data as { text: string });
+          handlers.onChunk?.(data as { text: string; paragraph?: number });
         }
         if (parsed.event === "done") {
           handlers.onDone?.();

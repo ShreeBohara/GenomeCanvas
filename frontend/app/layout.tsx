@@ -1,5 +1,19 @@
 import type { Metadata } from "next";
+import { Newsreader, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+
+const uiFont = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const displayFont = Newsreader({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  adjustFontFallback: false,
+});
 
 
 export const metadata: Metadata = {
@@ -15,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={`${uiFont.variable} ${displayFont.variable}`}>{children}</body>
     </html>
   );
 }

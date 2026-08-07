@@ -1,5 +1,18 @@
 import { initialStoreState, useGenomeCanvasStore } from "@/lib/store";
-import { ChatCommand } from "@/lib/types";
+import { ChatCommand, ChatMessage } from "@/lib/types";
+
+
+function seedAssistantMessage(id: string) {
+  const message: ChatMessage = {
+    id,
+    role: "assistant",
+    content: "",
+    status: "streaming",
+    commands: [],
+    sources: [],
+  };
+  useGenomeCanvasStore.getState().appendMessage(message);
+}
 
 
 function resetStore() {
@@ -40,6 +53,40 @@ describe("GenomeCanvas store", () => {
       id: "disease:breast_cancer",
       type: "disease",
     });
+  });
+
+  it("rebuilds paragraph breaks from streamed chunk indices", () => {
+    // Regression: every chunk used to be joined with " ", which flattened the
+    // backend's deliberate two-paragraph responses into a single block.
+    seedAssistantMessage("assistant-1");
+    const append = useGenomeCanvasStore.getState().appendAssistantChunk;
+
+    append("assistant-1", "BRCA1 is a tumor suppressor.", 0);
+    append("assistant-1", "It repairs double-strand breaks.", 0);
+    append("assistant-1", "The structure view is ready.", 1);
+
+    const message = useGenomeCanvasStore
+      .getState()
+      .chatSession.find((entry) => entry.id === "assistant-1");
+
+    expect(message?.content).toBe(
+      "BRCA1 is a tumor suppressor. It repairs double-strand breaks.\n\nThe structure view is ready.",
+    );
+    expect(message?.paragraphCursor).toBe(1);
+  });
+
+  it("defaults to single-paragraph joining when no index is sent", () => {
+    seedAssistantMessage("assistant-2");
+    const append = useGenomeCanvasStore.getState().appendAssistantChunk;
+
+    append("assistant-2", "First.");
+    append("assistant-2", "Second.");
+
+    const message = useGenomeCanvasStore
+      .getState()
+      .chatSession.find((entry) => entry.id === "assistant-2");
+
+    expect(message?.content).toBe("First. Second.");
   });
 
   it("switches into focus mode when the chat requests a structure load", () => {

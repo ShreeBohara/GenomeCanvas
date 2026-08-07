@@ -1,9 +1,27 @@
 import { expect, test } from "@playwright/test";
 
 
+test("desktop workspace renders split layout shell", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByText("GenomeCanvas")).toBeVisible();
+  await expect(page.getByText("Protein universe")).toBeVisible();
+  await expect(page.getByText("Graph constellation")).toBeVisible();
+  await expect(page.getByText("Guided exploration")).toBeVisible();
+});
+
+
+test("graph and guide panels can collapse from the command bar", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Hide graph" }).click();
+  await expect(page.getByText(/Expand the graph/i)).toBeVisible();
+
+  await page.getByRole("button", { name: "Hide guide" }).click();
+  await expect(page.getByText(/Expand the guide/i)).toBeVisible();
+});
+
+
 test("BRCA1 explanation flow", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Guide" }).click();
   await page.getByPlaceholder(/Ask the guide/i).fill("What does BRCA1 do?");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(page.getByText(/BRCA1/i)).toBeVisible();
@@ -12,7 +30,6 @@ test("BRCA1 explanation flow", async ({ page }) => {
 
 test("Alzheimer disease exploration flow", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Guide" }).click();
   await page.getByPlaceholder(/Ask the guide/i).fill(
     "Show me proteins involved in Alzheimer's disease",
   );
@@ -23,7 +40,6 @@ test("Alzheimer disease exploration flow", async ({ page }) => {
 
 test("EGFR drug-target exploration flow", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Guide" }).click();
   await page.getByPlaceholder(/Ask the guide/i).fill(
     "Find drugs targeting EGFR",
   );
