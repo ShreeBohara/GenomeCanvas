@@ -1,0 +1,21 @@
+# Render blueprint for the GenomeCanvas API.
+#
+# The frontend deploys separately on Vercel (see vercel.json) because it needs
+# Next.js edge/image handling; the API is a plain container with no attached
+# storage. After the first deploy, set NEXT_PUBLIC_API_BASE_URL in Vercel to this
+# service's public URL and GENOMECANVAS_CORS_ORIGINS here to the Vercel domain.
+services:
+  - type: web
+    name: genomecanvas-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: GENOMECANVAS_CORS_ORIGINS
+        sync: false # set to the deployed frontend origin
+      - key: ANTHROPIC_API_KEY
+        sync: false # optional — chat stays grounded and deterministic without it
+      - key: ANTHROPIC_MODEL
+        value: claude-sonnet-5

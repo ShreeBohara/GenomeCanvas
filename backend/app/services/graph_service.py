@@ -2,9 +2,17 @@ from __future__ import annotations
 
 from collections import deque
 
-from app.core.text import overlap_score
+from app.core.text import contains_term, overlap_score, significant_tokens, starts_term
 from app.models.schemas import GraphData, GraphEdge, GraphNode, GraphPathResponse, GraphQueryRequest
 from app.repositories.fixture_repository import FixtureRepository
+
+
+# Weak token overlap is not evidence. A single shared word between a long user
+# message and a long disease label used to clear the old `best > 0` bar, which is
+# how "show me the app" resolved to "Congenital bilateral absence of the vas
+# deferens" (shared token: "the"). 0.34 means roughly a third of the query's
+# meaningful tokens have to land.
+MIN_SEARCH_SCORE = 0.34
 
 
 class GraphService:
@@ -35,30 +43,54 @@ class GraphService:
         edges = list(collected_edges.values())
         return GraphData(nodes=nodes, edges=edges)
 
-    def search_nodes(self, query: str, node_type: str | None = None, limit: int = 20) -> list[GraphNode]:
+    def search_nodes(
+        self,
+        query: str,
+        node_type: str | None = None,
+        limit: int = 20,
+        min_score: float = MIN_SEARCH_SCORE,
+    ) -> list[GraphNode]:
+        return [node for _, node in self.rank_nodes(query, node_type, limit, min_score)]
+
+    def rank_nodes(
+        self,
+        query: str,
+        node_type: str | None = None,
+        limit: int = 20,
+        min_score: float = MIN_SEARCH_SCORE,
+    ) -> list[tuple[float, GraphNode]]:
+        """Score nodes against a query. Callers that need the confidence use this."""
         nodes = self.repository.list_nodes()
         if node_type:
             nodes = [node for node in nodes if node.type == node_type]
 
-        if not query.strip():
-            return sorted(nodes, key=lambda node: (node.type, node.label))[:limit]
+        trimmed = query.strip()
+        if not trimmed:
+            return [(0.0, node) for node in sorted(nodes, key=lambda n: (n.type, n.label))[:limit]]
+
+        # A query made only of stopwords carries no retrieval signal. Scoring it
+        # against every stringified property value used to return unrelated drugs
+        # at 1.0, because "the" is a substring of the property value "Therapeutic".
+        if not significant_tokens(trimmed):
+            return []
 
         ranked: list[tuple[float, GraphNode]] = []
-        query_lower = query.lower()
         for node in nodes:
-            haystacks = [node.label.lower(), node.id.lower()]
-            haystacks.extend(str(value).lower() for value in node.properties.values())
+            haystacks = [node.label, node.id, *(str(value) for value in node.properties.values())]
             best = 0.0
             for haystack in haystacks:
-                if query_lower in haystack:
-                    best = max(best, 1.0)
-                else:
-                    best = max(best, overlap_score(query_lower, haystack))
-            if best > 0:
+                if contains_term(haystack, trimmed):
+                    best = 1.0
+                    break
+                if starts_term(haystack, trimmed):
+                    best = max(best, 0.85)
+                    continue
+                best = max(best, overlap_score(trimmed, haystack))
+            if best >= min_score:
                 ranked.append((best, node))
 
         ranked.sort(key=lambda item: (-item[0], item[1].label))
-        return [node for _, node in ranked[:limit]]
+        return ranked[:limit]
 
     def find_path(self, start_id: str, end_id: str) -> GraphPathResponse:
         if start_id not in self.repository.nodes_by_id or end_id not in self.repository.nodes_by_id:

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Iterable
 
+from app.core.text import contains_term
 from app.models.schemas import (
     ChatCommand,
     ChatContext,
@@ -31,12 +32,23 @@ class ChatService:
 
     async def build_response(self, message: str, context: ChatContext) -> ChatEnvelope:
         lower_message = message.lower()
-        protein = self._resolve_protein(message, context)
-        disease = self._resolve_disease(message)
 
-        if disease and ("show" in lower_message or "involved" in lower_message or "disease" in lower_message):
+        # A gene symbol or accession written out in the message is the strongest
+        # signal available, and it outranks disease-shaped phrasing. Without this,
+        # "show me the app" matched the disease branch on the word "show" and
+        # answered about an unrelated disease instead of the APP protein.
+        named_protein = self._protein_named_in(message)
+        protein = named_protein or self._resolve_protein(message, context)
+        disease = None if named_protein else self._resolve_disease(message)
+
+        wants_drugs = "drug" in lower_message or "target" in lower_message
+        wants_disease = (
+            "show" in lower_message or "involved" in lower_message or "disease" in lower_message
+        )
+
+        if disease and wants_disease:
             grounded = self._build_disease_response(disease)
-        elif protein and ("drug" in lower_message or "target" in lower_message):
+        elif protein and wants_drugs:
             grounded = self._build_drug_response(protein)
         elif protein:
             grounded = self._build_protein_response(protein)
@@ -51,16 +63,29 @@ class ChatService:
         llm_response = await self.narrator.narrate(llm_payload)
         return llm_response or grounded
 
+    def _protein_named_in(self, message: str) -> ProteinDetail | None:
+        """Whole-term match on a gene symbol or UniProt accession.
+
+        Plain substring matching was matching gene APP inside "application" and
+        gene DES inside "describe". Gene symbols are short and alphanumeric, so
+        they need term boundaries or they collide with ordinary English.
+        """
+        for protein in self.repository.list_proteins():
+            if contains_term(message, protein.gene_name) or contains_term(
+                message, protein.uniprot_id
+            ):
+                return protein
+        return None
+
     def _resolve_protein(self, message: str, context: ChatContext) -> ProteinDetail | None:
+        named = self._protein_named_in(message)
+        if named is not None:
+            return named
+
         if context.selected_protein_id:
             selected = self.protein_service.get_protein(context.selected_protein_id)
             if selected is not None:
                 return selected
-
-        lower_message = message.lower()
-        for protein in self.repository.list_proteins():
-            if protein.gene_name.lower() in lower_message or protein.uniprot_id.lower() in lower_message:
-                return protein
 
         results = self.protein_service.search(message, limit=3)
         if results and results[0].score >= 0.75:
