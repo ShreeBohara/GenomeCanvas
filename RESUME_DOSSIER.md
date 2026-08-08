@@ -17,14 +17,15 @@ measured that was not actually measured.
 |---|---|
 | **What** | A navigable 3D universe of real AlphaFold protein structures, wired to a biomedical knowledge graph and an AI guide that drives the interface rather than talking beside it |
 | **Stack** | Next.js 14 · TypeScript · Three.js / react-three-fiber · Mol* · FastAPI · Pydantic v2 · Zustand · Claude API |
-| **Hand-written code** | ~7,650 lines across 71 files `[measured]` |
+| **Hand-written code + docs** | ~9,750 lines across 73 files `[measured]` |
 | **Generated data** | 1.72 MB of fixtures: 54 proteins, 187 graph nodes, 217 edges, 14,904 interpolated backbone vertices `[measured]` |
 | **Tests** | **38 passing** across 3 runners — 25 backend (unittest), 13 frontend (vitest), plus 5 Playwright specs `[measured]` |
 | **Backend suite runtime** | 0.092 s `[measured]` |
 | **Real AlphaFold structures** | 52 of 54; the 2 fallbacks are exactly the 2 proteins above AlphaFold DB's 2,700-residue ceiling `[measured]` |
 | **External calls at request time** | Zero. Everything is precomputed and in-memory. |
 | **Cost per AI turn** | ~$0.003 (Haiku 4.5) → ~$0.009 (Sonnet 5) `[estimated]` |
-| **Repo** | https://github.com/ShreeBohara/GenomeCanvas |
+| **Documentation** | 2,205 lines across three READMEs plus a 351-line product spec `[measured]` |
+| **Repo** | https://github.com/ShreeBohara/GenomeCanvas — `main` at `30f0d2c` |
 | **Live URL** | None yet — deploy config now in repo, not yet provisioned |
 
 **The one-sentence version:** *AlphaFold published 214 million protein structures and gave the
@@ -80,12 +81,12 @@ the vendored Mol* bundle:
 | Python `.py` | 28 | 2,186 |
 | TypeScript `.ts` | 13 | 1,311 |
 | CSS | 1 | 760 |
-| Markdown (README + spec) | 2 | 461 |
+| Markdown (3 READMEs + spec) | 4 | 2,556 |
 | JSON config | 6 | 117 |
 | YAML (CI + Render) | 2 | 114 |
 | Dockerfile | 1 | 30 |
 | JS `.mjs` | 2 | 27 |
-| **Hand-written total** | **71** | **~7,650** |
+| **Hand-written total** | **73** | **~9,750** |
 
 This dossier itself (1,300+ lines of Markdown) is excluded from that count.
 
@@ -120,28 +121,65 @@ Backend **6 pinned** — `fastapi`, `uvicorn`, `pydantic`, `anthropic`, `httpx`,
 2026-03-17  d4dedb0  Remove stale frontend scaffold after main merge
 ```
 
-- **First commit:** 2026-03-14. **Original active window:** 4 calendar days.
-- **Commits before 2026-04-01: 7.**
-- **Commits on or after 2026-04-01: 2** — both landed 2026-08-06, described below.
+**Commits on or after 2026-04-01** `[measured]`:
 
-**Two distinct pushes of work, four and a half months apart:**
+```
+2026-04-15  d218321  Document GenomeCanvas architecture and project layers
+2026-08-06  7e68873  Rebuild the frontend as a persistent workspace shell
+2026-08-06  5ff0b7d  Fix entity resolution returning confidently wrong answers
+2026-08-07  30f0d2c  Merge feat/workspace-shell-and-resolution-hardening into main
+```
+
+- **First commit:** 2026-03-14. **Original active window:** 4 calendar days.
+- **Commits before 2026-04-01: 7. On or after: 4.**
+- **Total change since the last pre-cutoff commit:** 42 files, **+6,946 / −1,631** `[measured]`.
+
+**Three distinct pushes of work:**
 
 | Phase | Dates | Shape |
 |---|---|---|
 | **Phase 1 — build** | 2026-03-14 → 03-17 | Spec, backend, data pipeline, first 3D universe, chat protocol. 7 commits. |
-| **Phase 1.5 — rewrite** | 2026-03-18 | A ~2,900-line frontend rewrite that was **never committed** — it sat uncommitted in the working tree for 141 days. Verified: it existed on no local or remote branch and in no stash `[measured]`. |
-| **Phase 2 — harden** | 2026-08-06 | The rewrite committed at last, plus three resolution bugs found and fixed, a streaming-protocol correction, dead-code removal, +13 tests, CI, and deploy config. |
+| **Phase 1.5 — rewrite** | 2026-03-18 | A ~2,900-line frontend rewrite that was **never committed** — it sat in the working tree for 141 days, on no branch and in no stash `[measured]`. |
+| **Phase 2 — document** | 2026-04-15 | 2,125 lines of architecture documentation across three READMEs: mermaid diagrams, per-layer file tables, fixture-count tables, the full API surface, and the chat command protocol. 1 commit. |
+| **Phase 3 — harden** | 2026-08-06 → 08-07 | The rewrite committed at last, three resolution bugs found and fixed, a streaming-protocol correction, dead-code removal, +13 tests, CI, deploy config, and a documentation reconciliation. 3 commits. |
 
-That 141-day gap is the honest shape of the project: an intense build, a rewrite that was finished
-but never landed, and a later pass that committed it and then went looking for what was actually
-broken.
+The shape is honest and slightly unusual: an intense build, a finished rewrite that never landed, a
+documentation pass written *against the pre-rewrite code*, and then a hardening pass that had to
+land the rewrite and reconcile the docs to it in the same merge.
 
 ---
 
 ## What is new since 2026-04-01
 
-Everything in this section is dated **2026-08-06** and is genuinely new. It splits into two very
-different kinds of work.
+Four commits, 42 files, **+6,946 / −1,631** `[measured]`. It splits into three kinds of work.
+
+### A0. Architecture documentation — 2026-04-15, commit `d218321`
+
+2,125 lines across three new or rewritten READMEs, and the largest single documentation artifact in
+the repo.
+
+- **`README.md`** (+694) — motivation, fixture-count tables (proteins, node types, edge labels,
+  structure-asset sources), a repository-layout tree, two mermaid diagrams (end-to-end architecture
+  and runtime data flow), the full API surface, the chat and UI command protocol table, environment
+  variables, scripts, testing, limitations, and a "how to extend" guide keyed to each extension
+  point.
+- **`backend/README.md`** (+748, new) — per-layer walkthrough of routers, services, repositories,
+  and the fixture builders.
+- **`frontend/README.md`** (+739, new) — directory map, runtime architecture, the state model as a
+  table of every store key and action, command-application semantics, and per-component detail.
+
+Two things make this worth calling out rather than filing under "wrote some docs."
+
+First, the **command-protocol table** is the clearest artifact of the design decision in WS-5 —
+it documents six typed commands and their exact frontend state effects, which is the contract the
+LLM writes against.
+
+Second, and more interesting in an interview: this documentation was written **against the
+pre-rewrite code**, because the 2026-03-18 rewrite was still sitting uncommitted. It therefore
+documented `GraphPanel` and an SVG radial graph layout, a `molstar-viewer.html` helper page, and
+`fetch-backbones.mjs` — a component that was already dead and two files that were already orphaned.
+That drift is not a criticism of the doc; it is the predictable cost of a rewrite that never landed,
+and reconciling it was part of the merge described in C below.
 
 ### A. The 2026-03-18 rewrite, finally committed
 
@@ -275,6 +313,34 @@ paragraph-rejoin behavior. Backend went 14 → **25**; frontend 11 → **13**.
 frontend typecheck + lint + vitest + production build; Playwright smoke behind both), plus
 `vercel.json`, `backend/Dockerfile` (non-root user, healthcheck, fixtures baked in), and
 `render.yaml`. Before this, 38 passing tests were run by nobody automatically.
+
+### C. Merge and documentation reconciliation — 2026-08-07, commit `30f0d2c`
+
+The rewrite branch was cut from `d4dedb0`, before the April documentation commit, so landing it was
+a real merge rather than a fast-forward — and the two sides had both rewritten the tail of
+`README.md`.
+
+**The conflict resolution is the interesting part.** The mechanical fix would have been to take one
+side. What was actually required was recognizing that the April docs described three files this
+branch *deletes*, so merging them unchanged would have shipped documentation that actively lied
+about the code:
+
+| Documented | Reality after the merge |
+|---|---|
+| `GraphPanel.tsx`, "a deterministic SVG radial layout, not a physics simulation" | Deleted. `GraphWorkspace` runs a canvas force simulation seeded from a type-stratified ring. |
+| `public/molstar-viewer.html`, "a standalone helper page" | Deleted. Replaced by runtime script injection with a `window`-memoized load promise. |
+| `scripts/fetch-backbones.mjs` listed under limitations | Deleted; the limitation no longer exists. |
+| `ANTHROPIC_MODEL` default `claude-sonnet-4-20250514` | Retired model; now `claude-sonnet-5` in both READMEs. |
+
+Resolution kept the April document's structure and folded the branch's additions into its existing
+sections — deployment under a new `## Deployment` heading, expanded coverage lists under `Testing`,
+the entity-resolution constraint under `Important Current Limitations` — then rewrote every stale
+passage to match the code, including adding the camera-framing math that postdates the docs
+entirely. Terminology follows the code: "graph drawer" became "graph rail" now that the panel is a
+grid sibling of the stage rather than an overlay.
+
+Both suites were re-run on the merged tree before the merge commit was created: **backend 25,
+frontend 13, all passing** `[measured]`.
 
 ---
 
