@@ -33,5 +33,5 @@ def get_settings() -> Settings:
         api_version="2.0.0",
         cors_origins=_parse_origins(os.getenv("GENOMECANVAS_CORS_ORIGINS")),
         data_dir=DATA_DIR,
-        chat_model=os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-20250514"),
+        chat_model=os.getenv("ANTHROPIC_MODEL", "claude-sonnet-5"),
     )

@@ -1,17 +1,25 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Line, OrbitControls, Sparkles, Stars } from "@react-three/drei";
+import { Float, Line, OrbitControls, Sparkles, Stars, Text } from "@react-three/drei";
 import { Color, Group, Vector3 } from "three";
 
-import { CameraTarget, ExperienceMode, ProteinSummary, ProteinUniverseAsset } from "@/lib/types";
 import {
+  CameraTarget,
+  ExperienceMode,
+  ProteinSummary,
+  ProteinUniverseAsset,
+  ViewportPreset,
+} from "@/lib/types";
+import {
+  CATEGORY_COLORS,
   matchesUniverseFilter,
   proteinPosition,
   proteinScale,
   traceVertexColors,
 } from "@/lib/utils";
+import { buildCameraFrame, computeSelectionBounds, computeUniverseBounds } from "@/lib/viewport";
 
 
 type ProteinUniverseProps = {
@@ -25,62 +33,195 @@ type ProteinUniverseProps = {
   hoveredEntityId: string | null;
   experienceMode: ExperienceMode;
   cameraTarget: CameraTarget;
+  viewportPreset: ViewportPreset;
+  viewportRevision: number;
   onHoverProtein: (uniprotId: string | null) => void;
   onSpotlightProtein: (uniprotId: string) => void;
   onFocusProtein: (uniprotId: string) => void;
   onBackgroundClick: () => void;
 };
 
+type AnimationState = {
+  duration: number;
+  progress: number;
+  fromPosition: Vector3;
+  toPosition: Vector3;
+  fromTarget: Vector3;
+  toTarget: Vector3;
+};
+
+function easeInOutCubic(value: number) {
+  return value < 0.5
+    ? 4 * value * value * value
+    : 1 - (Math.pow(-2 * value + 2, 3) / 2);
+}
 
 function CameraRig({
+  proteins,
   proteinsById,
+  highlightedIds,
+  selectedProteinId,
+  focusedProteinId,
+  experienceMode,
   cameraTarget,
+  viewportPreset,
+  viewportRevision,
 }: {
+  proteins: ProteinSummary[];
   proteinsById: Map<string, ProteinSummary>;
+  highlightedIds: string[];
+  selectedProteinId: string | null;
+  focusedProteinId: string | null;
+  experienceMode: ExperienceMode;
   cameraTarget: CameraTarget;
+  viewportPreset: ViewportPreset;
+  viewportRevision: number;
 }) {
   const controlsRef = useRef<any>(null);
-  const { camera } = useThree();
-  const focusTarget = useRef(new Vector3(0, 0, 0));
-  const desiredPosition = useRef(new Vector3(0, 6, 34));
+  const animationRef = useRef<AnimationState | null>(null);
+  const initialisedRef = useRef(false);
+  const limitRef = useRef({ minDistance: 2, maxDistance: 72 });
+  const { camera, size } = useThree();
+
+  const sceneBounds = useMemo(() => computeUniverseBounds(proteins), [proteins]);
+
+  const selectionIds = useMemo(() => {
+    const ids: string[] = [];
+
+    if (focusedProteinId) {
+      ids.push(focusedProteinId);
+    }
+    if (selectedProteinId) {
+      ids.push(selectedProteinId);
+    }
+    if (cameraTarget.id && proteinsById.has(cameraTarget.id)) {
+      ids.push(cameraTarget.id);
+    }
+    ids.push(...highlightedIds.filter((id) => proteinsById.has(id)));
+
+    return Array.from(new Set(ids));
+  }, [cameraTarget.id, focusedProteinId, highlightedIds, proteinsById, selectedProteinId]);
+
+  const selectionBounds = useMemo(
+    () => computeSelectionBounds(proteins, selectionIds),
+    [proteins, selectionIds],
+  );
+
+  useEffect(() => {
+    if (!controlsRef.current) {
+      return;
+    }
+
+    const aspect = size.width / Math.max(size.height, 1);
+    let nextFrame = buildCameraFrame(sceneBounds, aspect, {
+      framing: 1.12,
+      elevation: 0.14,
+      lateralOffset: 0.16,
+    });
+
+    if (experienceMode === "focus" && focusedProteinId && selectionBounds) {
+      nextFrame = buildCameraFrame(selectionBounds, aspect, {
+        framing: 0.72,
+        elevation: 0.09,
+        lateralOffset: 0.06,
+      });
+    } else if (viewportPreset === "selection" && selectionBounds) {
+      nextFrame = buildCameraFrame(selectionBounds, aspect, {
+        framing: 0.92,
+        elevation: 0.15,
+        lateralOffset: 0.12,
+      });
+    }
+
+    limitRef.current = {
+      minDistance:
+        experienceMode === "focus"
+          ? Math.max(1.6, nextFrame.minDistance * 0.7)
+          : nextFrame.minDistance,
+      maxDistance:
+        experienceMode === "focus"
+          ? Math.max(18, nextFrame.maxDistance * 0.45)
+          : nextFrame.maxDistance,
+    };
+
+    const target = new Vector3(...nextFrame.target);
+    const position = new Vector3(...nextFrame.position);
+
+    if (!initialisedRef.current) {
+      camera.position.copy(position);
+      controlsRef.current.target.copy(target);
+      controlsRef.current.minDistance = limitRef.current.minDistance;
+      controlsRef.current.maxDistance = limitRef.current.maxDistance;
+      controlsRef.current.update();
+      initialisedRef.current = true;
+      return;
+    }
+
+    animationRef.current = {
+      duration: experienceMode === "focus" ? 0.75 : 0.95,
+      progress: 0,
+      fromPosition: camera.position.clone(),
+      toPosition: position,
+      fromTarget: controlsRef.current.target.clone(),
+      toTarget: target,
+    };
+  }, [
+    camera,
+    experienceMode,
+    focusedProteinId,
+    sceneBounds,
+    selectionBounds,
+    size.height,
+    size.width,
+    viewportPreset,
+    viewportRevision,
+  ]);
 
   useFrame((_state, delta) => {
-    let nextTarget = new Vector3(0, 0, 0);
-    let nextPosition = new Vector3(0, 6, 34);
+    if (!controlsRef.current) {
+      return;
+    }
 
-    if (cameraTarget.id) {
-      const protein = proteinsById.get(cameraTarget.id);
-      if (protein) {
-        const [x, y, z] = proteinPosition(protein);
-        const scale = proteinScale(protein.bounds_radius);
-        nextTarget = new Vector3(x, y, z);
-        if (cameraTarget.mode === "focus") {
-          nextPosition = new Vector3(x + 0.2, y + 0.35, z + (3.8 * scale));
-        } else {
-          nextPosition = new Vector3(x + 0.25, y + 0.65, z + (8.4 * scale));
-        }
+    controlsRef.current.minDistance = limitRef.current.minDistance;
+    controlsRef.current.maxDistance = limitRef.current.maxDistance;
+
+    if (animationRef.current) {
+      animationRef.current.progress = Math.min(
+        animationRef.current.progress + (delta / animationRef.current.duration),
+        1,
+      );
+      const eased = easeInOutCubic(animationRef.current.progress);
+      camera.position.lerpVectors(
+        animationRef.current.fromPosition,
+        animationRef.current.toPosition,
+        eased,
+      );
+      controlsRef.current.target.lerpVectors(
+        animationRef.current.fromTarget,
+        animationRef.current.toTarget,
+        eased,
+      );
+
+      if (animationRef.current.progress >= 1) {
+        animationRef.current = null;
       }
     }
 
-    focusTarget.current.lerp(nextTarget, 1 - Math.exp(-delta * 2.7));
-    desiredPosition.current.lerp(nextPosition, 1 - Math.exp(-delta * 2.2));
-    camera.position.lerp(desiredPosition.current, 1 - Math.exp(-delta * 2.2));
-    controlsRef.current?.target.copy(focusTarget.current);
-    controlsRef.current?.update();
+    controlsRef.current.update();
   });
 
   return (
     <OrbitControls
       ref={controlsRef}
-      enablePan={false}
+      enableDamping
+      enablePan={experienceMode === "universe"}
       enableZoom
-      maxDistance={48}
-      minDistance={2.8}
-      rotateSpeed={0.72}
+      zoomSpeed={0.9}
+      dampingFactor={0.08}
+      rotateSpeed={0.56}
     />
   );
 }
-
 
 function ClusterMist({
   proteins,
@@ -90,9 +231,56 @@ function ClusterMist({
   const clusters = useMemo(() => {
     const grouped = new Map<string, ProteinSummary[]>();
     proteins.forEach((protein) => {
-      const current = grouped.get(protein.cluster_id) ?? [];
+      const current = grouped.get(protein.function_category) ?? [];
       current.push(protein);
-      grouped.set(protein.cluster_id, current);
+      grouped.set(protein.function_category, current);
+    });
+
+    return Array.from(grouped.entries()).map(([clusterId, entries]) => {
+      const centroid = entries.reduce(
+        (acc, protein) => {
+          const [x, y, z] = proteinPosition(protein);
+          return [acc[0] + x, acc[1] + y, acc[2] + z];
+        },
+        [0, 0, 0],
+      );
+
+      return {
+        clusterId,
+        color: CATEGORY_COLORS[clusterId] ?? "#7de7dc",
+        position: [
+          centroid[0] / entries.length,
+          centroid[1] / entries.length,
+          centroid[2] / entries.length,
+        ] as [number, number, number],
+        radius: Math.max(4.6, Math.sqrt(entries.length) * 2.6),
+      };
+    });
+  }, [proteins]);
+
+  return (
+    <>
+      {clusters.map((cluster) => (
+        <mesh key={cluster.clusterId} position={cluster.position}>
+          <sphereGeometry args={[cluster.radius, 24, 24]} />
+          <meshBasicMaterial color={cluster.color} opacity={0.045} transparent />
+        </mesh>
+      ))}
+    </>
+  );
+}
+
+function ClusterLabels({
+  proteins,
+}: {
+  proteins: ProteinSummary[];
+}) {
+  const labels = useMemo(() => {
+    const grouped = new Map<string, ProteinSummary[]>();
+    proteins.forEach((protein) => {
+      const current = grouped.get(protein.function_category) ?? [];
+      current.push(protein);
+      grouped.set(protein.function_category, current);
     });
 
     return Array.from(grouped.entries()).map(([clusterId, entries]) => {
@@ -105,10 +293,11 @@ function ClusterMist({
       );
       return {
         clusterId,
-        color: entries[0]?.halo_color ?? "#7de7dc",
+        label: clusterId.replace(/_/g, " "),
+        color: CATEGORY_COLORS[clusterId] ?? "#7de7dc",
         position: [
           centroid[0] / entries.length,
-          centroid[1] / entries.length,
+          (centroid[1] / entries.length) + 3.8,
           centroid[2] / entries.length,
         ] as [number, number, number],
       };
@@ -117,16 +306,24 @@ function ClusterMist({
 
   return (
     <>
-      {clusters.map((cluster) => (
-        <mesh key={cluster.clusterId} position={cluster.position}>
-          <sphereGeometry args={[4.2, 18, 18]} />
-          <meshBasicMaterial color={cluster.color} opacity={0.035} transparent />
-        </mesh>
+      {labels.map((item) => (
+        <Float key={item.clusterId} speed={0.55} floatIntensity={0.35}>
+          <Text
+            anchorX="center"
+            anchorY="middle"
+            color={item.color}
+            fontSize={0.72}
+            outlineColor="#020913"
+            outlineWidth={0.045}
+            position={item.position}
+          >
+            {item.label}
+          </Text>
+        </Float>
       ))}
     </>
   );
 }
-
 
 function ProteinRibbon({
   protein,
@@ -178,17 +375,17 @@ function ProteinRibbon({
   const opacity = experienceMode === "focus"
     ? focused
       ? 1
-      : 0.12
+      : 0.08
     : dimmedByFilter
       ? 0.12
       : selected || hovered
         ? 1
         : highlighted
-          ? 0.9
-          : 0.68;
+          ? 0.94
+          : 0.62;
 
-  const haloOpacity = selected || focused ? 0.46 : highlighted ? 0.26 : hovered ? 0.22 : 0.1;
-  const lineWidth = focused ? 3.9 : selected ? 2.8 : hovered ? 2.2 : highlighted ? 1.8 : 1.25;
+  const haloOpacity = focused ? 0.56 : selected ? 0.44 : highlighted ? 0.3 : hovered ? 0.24 : 0.08;
+  const lineWidth = focused ? 4.2 : selected ? 3.2 : hovered ? 2.5 : highlighted ? 2 : 1.22;
   const pulseSeed = useMemo(
     () => protein.uniprot_id.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) * 0.017,
     [protein.uniprot_id],
@@ -198,15 +395,17 @@ function ProteinRibbon({
     if (!groupRef.current) {
       return;
     }
-    groupRef.current.rotation.y = (Math.sin(state.clock.elapsedTime * 0.22 + pulseSeed) * 0.12);
-    groupRef.current.rotation.x = (Math.cos(state.clock.elapsedTime * 0.16 + pulseSeed) * 0.05);
+    groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.22 + pulseSeed) * 0.11;
+    groupRef.current.rotation.x = Math.cos(state.clock.elapsedTime * 0.16 + pulseSeed) * 0.05;
   });
+
+  const showLabel = focused || selected || hovered || highlighted;
 
   return (
     <group position={worldPosition} ref={groupRef}>
       <Line
         color={protein.halo_color}
-        lineWidth={lineWidth + 2.2}
+        lineWidth={lineWidth + 2.4}
         opacity={haloOpacity}
         points={points}
         transparent
@@ -236,10 +435,23 @@ function ProteinRibbon({
         transparent
         vertexColors={vertexColors}
       />
+
+      {showLabel ? (
+        <Text
+          anchorX="center"
+          anchorY="bottom"
+          color="#f3f8ff"
+          fontSize={focused ? 0.82 : 0.62}
+          outlineColor="#02111a"
+          outlineWidth={0.04}
+          position={[0, (baseScale * 2.2) + 0.7, 0]}
+        >
+          {protein.gene_name}
+        </Text>
+      ) : null}
     </group>
   );
 }
-
 
 export function ProteinUniverse({
   proteins,
@@ -252,6 +464,8 @@ export function ProteinUniverse({
   hoveredEntityId,
   experienceMode,
   cameraTarget,
+  viewportPreset,
+  viewportRevision,
   onHoverProtein,
   onSpotlightProtein,
   onFocusProtein,
@@ -263,33 +477,36 @@ export function ProteinUniverse({
   );
 
   if (loading && proteins.length === 0) {
-    return <div className="overlay-empty">Loading the protein universe…</div>;
+    return <div className="viewport-empty-state">Loading the protein universe…</div>;
   }
 
   return (
-    <div className="universe-shell">
+    <div className="universe-canvas-shell">
       <Canvas
         camera={{ position: [0, 6, 34], fov: 42 }}
         dpr={[1, 2]}
         onPointerMissed={onBackgroundClick}
       >
-        <color attach="background" args={["#030b12"]} />
-        <ambientLight intensity={1.3} />
-        <pointLight color="#74dfff" intensity={120} position={[12, 18, 12]} />
-        <pointLight color="#ff9a6a" intensity={80} position={[-14, -10, 10]} />
-        <fog attach="fog" args={["#06111d", 16, 58]} />
-        <Stars depth={30} factor={2.4} count={1600} fade radius={80} saturation={0} />
+        <color attach="background" args={["#06101a"]} />
+        <ambientLight intensity={1.25} />
+        <pointLight color="#86e9ff" intensity={115} position={[16, 20, 14]} />
+        <pointLight color="#ffb47c" intensity={62} position={[-18, -8, 10]} />
+        <pointLight color="#6eb7ff" intensity={48} position={[0, 10, -18]} />
+        <fog attach="fog" args={["#07111b", 20, 92]} />
+
+        <Stars depth={48} factor={2.8} count={1800} fade radius={96} saturation={0} />
         <Sparkles
-          color="#e7fbff"
-          count={85}
-          noise={2.2}
-          opacity={0.28}
-          scale={[56, 42, 56]}
-          size={1.8}
-          speed={0.2}
+          color="#dff8ff"
+          count={64}
+          noise={2.1}
+          opacity={0.18}
+          scale={[66, 52, 64]}
+          size={2.2}
+          speed={0.18}
         />
 
         <ClusterMist proteins={proteins} />
+        {experienceMode === "universe" ? <ClusterLabels proteins={proteins} /> : null}
 
         {proteins.map((protein) => {
           const asset = universeAssets[protein.uniprot_id];
@@ -315,7 +532,17 @@ export function ProteinUniverse({
           );
         })}
 
-        <CameraRig cameraTarget={cameraTarget} proteinsById={proteinsById} />
+        <CameraRig
+          cameraTarget={cameraTarget}
+          experienceMode={experienceMode}
+          focusedProteinId={focusedProteinId}
+          highlightedIds={highlightedIds}
+          proteins={proteins}
+          proteinsById={proteinsById}
+          selectedProteinId={selectedProteinId}
+          viewportPreset={viewportPreset}
+          viewportRevision={viewportRevision}
+        />
       </Canvas>
     </div>
   );

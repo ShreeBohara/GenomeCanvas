@@ -1,6 +1,6 @@
 # GenomeCanvas Frontend
 
-The frontend is a Next.js 14, React 18, and TypeScript app that renders the GenomeCanvas exploratory workspace. It turns backend protein, graph, structure, and chat contracts into an immersive UI with a full-screen 3D universe, search palette, graph drawer, structure focus overlay, and chat guide.
+The frontend is a Next.js 14, React 18, and TypeScript app that renders the GenomeCanvas exploratory workspace. It turns backend protein, graph, structure, and chat contracts into an immersive UI with a full-screen 3D universe, search palette, graph rail, structure focus view, and chat guide.
 
 ## Table Of Contents
 
@@ -12,7 +12,7 @@ The frontend is a Next.js 14, React 18, and TypeScript app that renders the Geno
 - [API Client](#api-client)
 - [Component Details](#component-details)
 - [3D Protein Universe](#3d-protein-universe)
-- [Graph Drawer](#graph-drawer)
+- [Graph Rail](#graph-rail)
 - [Structure Focus And Molstar](#structure-focus-and-molstar)
 - [Chat Guide](#chat-guide)
 - [Styling](#styling)
@@ -59,8 +59,13 @@ frontend/
 |   `-- globals.css
 |-- components/
 |   |-- GenomeCanvasApp.tsx
+|   |-- WorkspaceShell.tsx
+|   |-- CommandBar.tsx
+|   |-- UniverseViewport.tsx
 |   |-- ProteinUniverse.tsx
-|   |-- GraphPanel.tsx
+|   |-- GraphWorkspace.tsx
+|   |-- GuideWorkspace.tsx
+|   |-- StructureViewport.tsx
 |   |-- StructurePanel.tsx
 |   |-- MolstarViewport.tsx
 |   `-- ChatPanel.tsx
@@ -68,16 +73,17 @@ frontend/
 |   |-- api.ts
 |   |-- store.ts
 |   |-- types.ts
-|   `-- utils.ts
-|-- public/
-|   `-- molstar-viewer.html
+|   |-- utils.ts
+|   `-- viewport.ts
 |-- scripts/
-|   |-- copy-molstar-assets.mjs
-|   `-- fetch-backbones.mjs
+|   `-- copy-molstar-assets.mjs
 |-- __tests__/
 |   |-- api.test.ts
 |   |-- chat-panel.test.tsx
-|   `-- store.test.ts
+|   |-- graph-workspace.test.tsx
+|   |-- store.test.ts
+|   |-- viewport.test.ts
+|   `-- workspace-shell.test.tsx
 `-- e2e/
     `-- genomecanvas.spec.ts
 ```
@@ -93,10 +99,10 @@ flowchart LR
   Types["lib/types.ts"]
   Utils["lib/utils.ts"]
   Universe["ProteinUniverse"]
-  Graph["GraphPanel"]
-  Structure["StructurePanel"]
+  Graph["GraphWorkspace"]
+  Structure["StructureViewport"]
   Molstar["MolstarViewport"]
-  Chat["ChatPanel"]
+  Chat["GuideWorkspace"]
   Backend["FastAPI backend"]
 
   Page --> App
@@ -141,7 +147,7 @@ When the app loads:
 5. Clicking a protein spotlights it.
 6. Double-clicking a protein opens focus mode.
 7. The search palette can find proteins, diseases, drugs, and other graph entities.
-8. The graph drawer shows the selected entity's neighborhood.
+8. The graph rail shows the selected entity's neighborhood.
 9. The guide can narrate and issue commands that reframe the canvas.
 
 ## State Model
@@ -172,7 +178,7 @@ State lives in `frontend/lib/store.ts` using Zustand.
 | `highlightedIds` | IDs that should be visually highlighted. |
 | `graphRootId` | Entity ID used as graph neighborhood root. |
 | `universeFilter` | Text filter applied to the universe. |
-| `graphOpen` | Whether graph drawer is open. |
+| `graphOpen` | Mirror of `rightRailSections.graph`; whether the graph rail is expanded. |
 | `guideOpen` | Whether chat guide is open. |
 | `paletteOpen` | Whether search results are open. |
 | `cameraTarget` | Camera target ID and mode. |
@@ -252,10 +258,10 @@ It:
 - searches proteins and graph nodes as the palette query changes
 - hydrates protein details only when needed
 - hydrates full structure assets only when needed
-- loads graph neighborhoods when the graph drawer opens
+- loads graph neighborhoods when the graph rail opens
 - loads similar proteins when focus mode changes
 - manages Escape key behavior
-- composes the universe, HUD, palette, graph drawer, chat panel, and structure focus overlay
+- composes the workspace shell slots: command bar, stage, graph rail, and guide rail
 
 Key local helpers:
 
@@ -281,22 +287,24 @@ Main internal pieces:
 
 - `CameraRig`
 - `ClusterMist`
+- `ClusterLabels`
 - `ProteinRibbon`
 
-### `GraphPanel.tsx`
+### `GraphWorkspace.tsx`
 
-Renders the graph drawer.
+Renders the graph rail panel on an HTML5 canvas via `react-force-graph-2d`.
 
 It:
 
-- builds a radial SVG layout locally
-- places the root node at the center
-- groups other nodes by type-specific rings
-- draws edges between nodes
-- labels active or highlighted nodes
-- exposes click handlers to select nodes
+- seeds a deterministic type-stratified ring layout before the simulation starts
+- pins the root node with `fx`/`fy` so it never drifts
+- tunes charge, link distance, and link strength so root-incident edges sit further out
+- refits the view once the simulation settles, on a short deferred timer
+- paints nodes with a custom canvas painter, scaling label size against zoom
+- tracks canvas width with a `ResizeObserver`
+- exposes a 1-hop / 2-hop budget and click handlers to select nodes
 
-### `StructurePanel.tsx`
+### `StructureViewport.tsx`
 
 Renders focus mode for one protein.
 
@@ -400,23 +408,36 @@ Click behavior:
 
 `CameraRig` uses frame-by-frame interpolation:
 
-- wide mode positions the camera at `[0, 6, 34]`
-- spotlight mode moves near the selected protein
-- focus mode moves much closer to the selected protein
-- OrbitControls keep the camera target synchronized
+Camera framing is solved from scene geometry rather than from fixed positions. `lib/viewport.ts` builds an axis-aligned bounding box over the visible proteins, then solves the camera distance against the *limiting* field of view:
 
-## Graph Drawer
+```
+horizontal = 2 * atan(tan(vertical / 2) * max(aspect, 0.75))
+limiting   = min(vertical, horizontal)
+distance   = radius * framing / tan(limiting / 2)
+```
 
-The graph drawer is an SVG view, not `react-force-graph-2d` at runtime.
+Taking the minimum of the two is what keeps framing correct on portrait and square windows, where solving against the vertical field of view alone clips the scene horizontally.
 
-`GraphPanel` creates a deterministic radial layout:
+Three framing presets drive the three modes:
 
-- root node at `(360, 360)`
-- other nodes grouped by type
-- each type has a ring radius
-- nodes are sorted by type order and label
-- highlighted and selected nodes get larger radii
-- labels are shown for active story points
+- `fit-all` frames every protein
+- `selection` frames the current selection and highlight set
+- `focus` frames a single protein tightly
+
+`CameraRig` eases camera position and orbit target together through `easeInOutCubic`; animating position alone makes the scene swing, because the look-at point jumps. OrbitControls distance clamps are re-asserted each frame from the active bounds. A monotonically increasing `viewportRevision` accompanies every preset change so repeating the same action still re-fires the effect.
+
+## Graph Rail
+
+The graph rail renders to an HTML5 canvas through `react-force-graph-2d`.
+
+`GraphWorkspace` seeds the simulation with a deterministic layout so it settles the same way every load:
+
+- root node pinned at the origin with `fx`/`fy`
+- other nodes seeded on type-specific rings at radius `135 + typeIndex * 42`
+- charge, link distance, and link strength tuned so root-incident edges sit further out and hold more firmly
+- a deferred refit after the simulation settles, rather than an immediate fit onto the seed ring
+- highlighted and selected nodes get larger radii and rings
+- labels appear for active or highlighted nodes, and for everything past a zoom threshold
 
 Type ring radii:
 
@@ -476,7 +497,7 @@ frontend/public/vendor/molstar-viewer
 - `/vendor/molstar-viewer/molstar.css`
 - `/vendor/molstar-viewer/molstar.js`
 
-There is also a standalone helper page at `frontend/public/molstar-viewer.html` that can load a structure URL through query parameters.
+The bundle is never `import`ed. `MolstarViewport` injects the stylesheet and script tags at runtime and memoizes the load promise on `window`, so several simultaneous mounts share one request and Molstar contributes no bytes to the Next.js bundle.
 
 ## Chat Guide
 
@@ -532,7 +553,7 @@ Major styled regions:
 - floating starter prompts
 - hover summary
 - ambient status strip
-- graph drawer
+- graph rail
 - chat guide deck
 - structure focus overlay
 - Molstar focus viewer shell
@@ -732,8 +753,7 @@ Frontend palette behavior is in:
 - The frontend depends on the backend being available for live data.
 - It does not persist UI state across reloads.
 - It does not use route-level navigation for selected proteins or graph nodes.
-- The graph drawer uses a deterministic SVG radial layout, not a physics simulation.
-- `react-force-graph-2d` is listed as a dependency, but the active graph UI is SVG-based.
-- `frontend/scripts/fetch-backbones.mjs` is not part of the current runtime data path.
+- The graph rail runs a physics simulation on canvas, seeded from a deterministic ring layout so results are reproducible across loads.
+- Graph neighborhood expansion is capped at two hops by the backend request schema.
 - The Molstar vendor assets must exist under `public/vendor/molstar-viewer`; run `npm install` or `npm run postinstall` if the viewer script is missing.
 - This UI is an exploratory prototype over fixture data, not a clinical tool.

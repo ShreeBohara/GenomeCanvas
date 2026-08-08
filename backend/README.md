@@ -138,7 +138,7 @@ Environment variables:
 | --- | --- | --- | --- |
 | `GENOMECANVAS_CORS_ORIGINS` | `http://localhost:3000,http://localhost:3001` | No | Comma-separated frontend origins. |
 | `ANTHROPIC_API_KEY` | empty | No | Enables optional LLM narration. |
-| `ANTHROPIC_MODEL` | `claude-sonnet-4-20250514` | No | Anthropic model used by `LLMNarrator`. |
+| `ANTHROPIC_MODEL` | `claude-sonnet-5` | No | Anthropic model used by `LLMNarrator`. |
 
 Settings are cached with `@lru_cache(maxsize=1)`, so code that needs changed environment values in the same Python process should clear the cache or restart the process.
 

@@ -60,7 +60,7 @@ GenomeCanvas currently supports these user-facing capabilities:
    - Search results can spotlight, dive into focus mode, filter the universe, or open graph context.
 
 3. Shows graph neighborhoods.
-   - The graph drawer centers on a selected root node.
+   - The graph rail centers on a selected root node.
    - Nodes are grouped visually by type: protein, disease, drug, pathway, GO term, and trial.
    - Edges show relationships such as `ASSOCIATED_WITH`, `TARGETS`, `INTERACTS_WITH`, `INVESTIGATED_IN`, and `STUDIES`.
 
@@ -193,9 +193,9 @@ flowchart LR
   UI["Next.js App<br/>GenomeCanvasApp"]
   Store["Zustand Store<br/>shared UI state"]
   Universe["3D Protein Universe<br/>react-three-fiber"]
-  Graph["Graph Drawer<br/>SVG radial layout"]
+  Graph["Graph Rail<br/>canvas force graph"]
   Focus["Structure Focus<br/>Molstar viewer"]
-  Chat["Chat Panel<br/>SSE client"]
+  Chat["Guide Rail<br/>SSE client"]
   API["FastAPI Backend"]
   ProteinSvc["ProteinService"]
   GraphSvc["GraphService"]
@@ -257,11 +257,11 @@ The architecture is deliberately simple:
    - open graph context
 5. The store updates `selectedEntity`, `graphRootId`, `highlightedIds`, `cameraTarget`, and sometimes `focusedProteinId`.
 
-### Graph drawer
+### Graph rail
 
-1. Opening graph context sets `graphOpen` and `graphRootId`.
-2. `GenomeCanvasApp` calls `/api/graph/neighborhood/{node_id}`.
-3. `GraphPanel` builds a deterministic radial layout from returned nodes and edges.
+1. Opening graph context sets `rightRailSections.graph` and `graphRootId`.
+2. `GenomeCanvasApp` calls `/api/graph/neighborhood/{node_id}` with the current hop budget.
+3. `GraphWorkspace` seeds a deterministic type-stratified ring layout, pins the root, then hands the result to a `react-force-graph-2d` canvas simulation and refits once it settles.
 4. Clicking graph nodes updates the same shared selection state used by the universe and chat.
 
 ### Structure focus
@@ -291,7 +291,7 @@ The architecture is deliberately simple:
    - `done`
 5. The frontend appends streamed text into the chat session.
 6. The frontend applies each command to the shared store.
-7. The canvas, graph drawer, and focus view update from the same command-driven state.
+7. The stage, graph rail, and guide rail update from the same command-driven state.
 
 ## Backend Summary
 
@@ -336,7 +336,7 @@ Primary responsibilities:
 - fetch typed backend data
 - keep synchronized app state in Zustand
 - render protein traces with Three.js and `@react-three/fiber`
-- render graph neighborhoods as an SVG radial layout
+- render graph neighborhoods as a seeded canvas force simulation
 - load Molstar viewer assets for AlphaFold structures
 - parse chat SSE streams
 - apply backend chat commands to UI state
@@ -347,17 +347,23 @@ Important frontend files:
 | --- | --- |
 | `frontend/app/page.tsx` | Renders `GenomeCanvasApp`. |
 | `frontend/app/layout.tsx` | Defines metadata and global layout. |
-| `frontend/app/globals.css` | Styles the immersive canvas, HUD, palette, graph drawer, chat deck, and focus overlay. |
-| `frontend/components/GenomeCanvasApp.tsx` | Main orchestrator for data fetching, state transitions, and panel composition. |
-| `frontend/components/ProteinUniverse.tsx` | Full-screen Three.js protein universe. |
-| `frontend/components/GraphPanel.tsx` | Root-centered radial graph drawer. |
-| `frontend/components/StructurePanel.tsx` | Protein focus overlay and confidence/details panel. |
-| `frontend/components/MolstarViewport.tsx` | Loads local Molstar assets and mounts the viewer. |
-| `frontend/components/ChatPanel.tsx` | Chat session UI, prompt handling, and streamed response display. |
+| `frontend/app/globals.css` | Design tokens plus styles for the workspace shell, command bar, stage, and rail panels. |
+| `frontend/components/GenomeCanvasApp.tsx` | Wires store slices and async hydration into workspace slots. |
+| `frontend/components/WorkspaceShell.tsx` | Stateless layout: command bar, stage, and right rail as slots. |
+| `frontend/components/CommandBar.tsx` | Controlled search bar with per-result action verbs and rail toggles. |
+| `frontend/components/UniverseViewport.tsx` | Universe stage wrapper: camera toolbar and status row. |
+| `frontend/components/ProteinUniverse.tsx` | Three.js protein universe, camera rig, and LOD ribbons. |
+| `frontend/components/GraphWorkspace.tsx` | Canvas force-graph rail panel with hop control and node inspection. |
+| `frontend/components/GuideWorkspace.tsx` | Chat rail panel: prompts, streamed response, action and source chips. |
+| `frontend/components/StructureViewport.tsx` | Focus-mode layout: Molstar stage and protein detail sidebar. |
+| `frontend/components/StructurePanel.tsx` | Thin adapter retained over `StructureViewport`. |
+| `frontend/components/ChatPanel.tsx` | Thin re-export retained over `GuideWorkspace`. |
+| `frontend/components/MolstarViewport.tsx` | Side-loads local Molstar assets and mounts the viewer. |
 | `frontend/lib/api.ts` | Backend API client and SSE parser. |
 | `frontend/lib/store.ts` | Zustand store and command application logic. |
 | `frontend/lib/types.ts` | TypeScript contracts mirroring backend Pydantic schemas. |
 | `frontend/lib/utils.ts` | Entity inference, colors, filtering, confidence colors, and 3D transforms. |
+| `frontend/lib/viewport.ts` | Scene bounds and FOV-limited camera framing math. |
 
 Read the detailed frontend documentation in [frontend/README.md](frontend/README.md).
 
@@ -436,7 +442,7 @@ Supported command types:
 | `navigate` | Selects an entity, opens graph context, and updates camera target when applicable. |
 | `filter_universe` | Sets the universe filter query and highlights matching proteins. |
 | `load_structure` | Switches to focus mode and loads protein detail/structure assets. |
-| `set_graph_root` | Centers the graph drawer on a target ID. |
+| `set_graph_root` | Centers the graph rail on a target ID. |
 | `set_viewport` | Switches between `universe` and `focus` viewport modes. |
 
 ## Local Development
@@ -516,7 +522,7 @@ Variables:
 | `NEXT_PUBLIC_API_BASE_URL` | `http://localhost:8000` | Frontend | Base URL for API requests. |
 | `GENOMECANVAS_CORS_ORIGINS` | `http://localhost:3000,http://localhost:3001` | Backend | Comma-separated allowed CORS origins. |
 | `ANTHROPIC_API_KEY` | empty | Backend | Enables optional LLM narration for chat. |
-| `ANTHROPIC_MODEL` | `claude-sonnet-4-20250514` | Backend | Anthropic model name used by `LLMNarrator`. |
+| `ANTHROPIC_MODEL` | `claude-sonnet-5` | Backend | Anthropic model name used by `LLMNarrator`. |
 
 If `ANTHROPIC_API_KEY` is empty, chat remains functional and deterministic. It uses the local grounded response built by `ChatService`.
 
@@ -565,6 +571,7 @@ Coverage areas:
 - fixture consistency
 - protein similarity behavior
 - Alzheimer fixture coverage
+- adversarial entity resolution (`test_resolution.py`), where each case pins an input that previously returned a confidently wrong answer
 
 Frontend unit/component tests:
 
@@ -575,8 +582,11 @@ npm run test:frontend
 Coverage areas:
 
 - SSE parsing in `streamChatMessage`
-- Zustand command application
+- Zustand command application, including paragraph reassembly from streamed chunk indices
 - chat panel rendering and streamed assistant content
+- camera bounds and FOV-fit math in `lib/viewport.ts`
+- workspace shell slot composition
+- graph workspace layout refit and node selection
 
 Frontend Playwright tests:
 
@@ -590,8 +600,20 @@ The Playwright config starts the frontend on `http://127.0.0.1:3005`. The curren
 - BRCA1 explanation
 - Alzheimer disease exploration
 - EGFR drug-target exploration
+- workspace shell layout
+- graph and guide rail collapse
 
 For the E2E chat flows to fully work against the real backend, run the backend separately on `http://localhost:8000` or set `NEXT_PUBLIC_API_BASE_URL` to a reachable backend.
+
+Continuous integration runs everything above on every push: `.github/workflows/ci.yml` runs the backend suite, then frontend typecheck, lint, Vitest, and a production build, then Playwright behind both.
+
+## Deployment
+
+Configuration is in the repo. Neither target has been provisioned yet, so there is no live URL.
+
+- **Frontend on Vercel.** `vercel.json` sets `frontend/` as the root directory. After the first deploy, set `NEXT_PUBLIC_API_BASE_URL` to the API's public origin.
+- **API on Render or any container host.** `render.yaml` builds `backend/Dockerfile`, which runs as a non-root user and bakes the fixtures into the image, since the repository is read-only at runtime and there is no database or volume. Set `GENOMECANVAS_CORS_ORIGINS` to the deployed frontend origin.
+- `ANTHROPIC_API_KEY` is optional in both environments. Without it, chat stays grounded and deterministic.
 
 ## Important Current Limitations
 
@@ -601,7 +623,7 @@ For the E2E chat flows to fully work against the real backend, run the backend s
 - The graph is in memory, not Neo4j or another persistent graph store.
 - Chat is grounded by local fixture logic; the optional LLM narrator is not allowed to invent facts according to its system prompt, but it is still best treated as explanatory text over fixture data.
 - `GraphNodeType` includes `go_term` and `pathway`, but the current generated graph fixture contains disease, protein, drug, and trial nodes.
-- `frontend/scripts/fetch-backbones.mjs` is an older utility that writes to `frontend/src/data/backbones.json`, but the current app uses backend-generated `protein_structure_assets.json` instead.
+- Entity resolution in chat requires whole-term matches on gene symbols and accessions, and scores graph queries only on non-stopword tokens above a `0.34` floor. Both guards exist because plain substring matching resolved "describe" to gene `DES` and "show me the app" to an unrelated disease. Loosening either reintroduces confidently wrong answers; `backend/tests/test_resolution.py` pins the behavior.
 - This project is not intended for medical diagnosis, treatment selection, or clinical decision-making.
 
 ## How To Extend The Project

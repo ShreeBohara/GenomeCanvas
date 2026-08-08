@@ -1,0 +1,93 @@
+# No step in this workflow interpolates untrusted input. There are no
+# `${{ github.event.* }}` expressions anywhere: every `run:` is a fixed command
+# string, and the only expressions used are static `secrets`-free config values.
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend (unittest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - name: Install dependencies
+        run: pip install -r backend/requirements.txt
+      - name: Run tests
+        run: python -m unittest discover -s backend/tests -v
+
+  frontend:
+    name: Frontend (typecheck + lint + vitest + build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+      - name: Typecheck
+        working-directory: frontend
+        run: npx tsc --noEmit
+      - name: Lint
+        working-directory: frontend
+        run: npm run lint
+      - name: Unit tests
+        working-directory: frontend
+        run: npm run test
+      - name: Production build
+        working-directory: frontend
+        run: npm run build
+
+  e2e:
+    name: Playwright smoke
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install backend dependencies
+        run: pip install -r backend/requirements.txt
+      - name: Start backend and wait for health
+        working-directory: backend
+        run: |
+          python -m uvicorn app.main:app --port 8000 &
+          for _ in $(seq 1 30); do
+            if curl -sf http://localhost:8000/api/health; then exit 0; fi
+            sleep 1
+          done
+          echo "backend did not become healthy" >&2
+          exit 1
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+      - name: Install Chromium
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+      - name: Run Playwright
+        working-directory: frontend
+        run: npx playwright test
+        env:
+          NEXT_PUBLIC_API_BASE_URL: http://localhost:8000

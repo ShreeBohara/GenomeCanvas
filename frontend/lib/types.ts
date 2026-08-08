@@ -1,5 +1,11 @@
 export type GraphNodeType = "protein" | "disease" | "drug" | "trial" | "go_term" | "pathway";
 export type ExperienceMode = "universe" | "focus";
+export type ViewportPreset = "fit-all" | "selection" | "focus";
+
+export interface RightRailSections {
+  graph: boolean;
+  guide: boolean;
+}
 
 export interface ProteinSummary {
   uniprot_id: string;
@@ -162,6 +168,12 @@ export interface ChatMessage {
   status: "streaming" | "complete";
   commands: ChatCommand[];
   sources: ChatSource[];
+  /**
+   * Index of the last streamed paragraph. The backend chunks a response on word
+   * boundaries and tags each chunk with its source paragraph; this is how the
+   * client knows to insert a blank line rather than a space between two chunks.
+   */
+  paragraphCursor?: number;
 }
 
 export interface SelectedEntity {

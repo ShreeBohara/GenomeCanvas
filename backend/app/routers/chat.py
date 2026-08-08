@@ -29,7 +29,7 @@ async def chat_message(
             for command in envelope.commands:
                 yield _event("command", command.model_dump())
             for chunk in chunk_text(envelope.response):
-                yield _event("chunk", {"text": chunk})
+                yield _event("chunk", {"text": chunk.text, "paragraph": chunk.paragraph})
             yield _event("done", {"status": "ok"})
         except Exception as exc:
             yield _event("error", {"detail": str(exc)})
