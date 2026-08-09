@@ -1,5 +1,22 @@
 import { initialStoreState, useGenomeCanvasStore } from "@/lib/store";
-import { ChatCommand, ChatMessage } from "@/lib/types";
+import { ChatCommand, ChatMessage, ProteinUniverseAsset } from "@/lib/types";
+
+
+function asset(overrides: Partial<ProteinUniverseAsset>): ProteinUniverseAsset {
+  return {
+    uniprot_id: "P38398",
+    cluster_id: "dna_repair",
+    halo_color: "#7de7dc",
+    lod_key: "P38398",
+    bounds_radius: 42,
+    low_trace: null,
+    mid_trace: null,
+    ...overrides,
+  };
+}
+
+const LOW = { points: [[0, 0, 0]] as Array<[number, number, number]>, confidence: [90] };
+const MID = { points: [[1, 1, 1]] as Array<[number, number, number]>, confidence: [80] };
 
 
 function seedAssistantMessage(id: string) {
@@ -18,6 +35,50 @@ function seedAssistantMessage(id: string) {
 function resetStore() {
   useGenomeCanvasStore.setState({ ...initialStoreState });
 }
+
+
+describe("universe asset tiers", () => {
+  beforeEach(() => {
+    resetStore();
+  });
+
+  it("merges a later tier into an asset that already has the other one", () => {
+    // The two tiers arrive as separate responses, each carrying only what was
+    // requested. Replacing rather than merging would discard whichever landed
+    // first, and ribbons would lose their geometry the moment `mid` arrived.
+    const store = useGenomeCanvasStore.getState();
+    store.upsertUniverseAssets([asset({ low_trace: LOW })]);
+    store.upsertUniverseAssets([asset({ mid_trace: MID })]);
+
+    const merged = useGenomeCanvasStore.getState().universeAssets.P38398;
+    expect(merged.low_trace).toEqual(LOW);
+    expect(merged.mid_trace).toEqual(MID);
+  });
+
+  it("does not let an absent tier erase one already present", () => {
+    const store = useGenomeCanvasStore.getState();
+    store.upsertUniverseAssets([asset({ low_trace: LOW, mid_trace: MID })]);
+    store.upsertUniverseAssets([asset({ low_trace: null, mid_trace: null })]);
+
+    const merged = useGenomeCanvasStore.getState().universeAssets.P38398;
+    expect(merged.low_trace).toEqual(LOW);
+    expect(merged.mid_trace).toEqual(MID);
+  });
+
+  it("keeps assets for other proteins untouched", () => {
+    const store = useGenomeCanvasStore.getState();
+    store.upsertUniverseAssets([
+      asset({ uniprot_id: "P38398", low_trace: LOW }),
+      asset({ uniprot_id: "P00533", low_trace: LOW }),
+    ]);
+    store.upsertUniverseAssets([asset({ uniprot_id: "P38398", mid_trace: MID })]);
+
+    const all = useGenomeCanvasStore.getState().universeAssets;
+    expect(Object.keys(all).sort()).toEqual(["P00533", "P38398"]);
+    expect(all.P00533.low_trace).toEqual(LOW);
+    expect(all.P00533.mid_trace).toBeNull();
+  });
+});
 
 
 describe("GenomeCanvas store", () => {

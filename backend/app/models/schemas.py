@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field
 
 GraphNodeType = Literal["protein", "disease", "drug", "trial", "go_term", "pathway"]
 ViewportType = Literal["universe", "focus"]
+UniverseAssetTier = Literal["low", "mid", "all"]
 ChatCommandType = Literal[
     "highlight",
     "navigate",
@@ -120,8 +121,12 @@ class ProteinUniverseAsset(BaseModel):
     halo_color: str
     lod_key: str
     bounds_radius: float
-    low_trace: StructureTrace
-    mid_trace: StructureTrace
+    # Both tiers are optional so a caller can ask for one of them. mid_trace is
+    # 71.5% of the universe payload but only renders on hover, select, or focus,
+    # so shipping it in the first response delays the frame the user is waiting
+    # for. The client fetches `low` to paint, then `mid` in the background.
+    low_trace: StructureTrace | None = None
+    mid_trace: StructureTrace | None = None
 
 
 class ProteinStructureAsset(ProteinUniverseAsset):

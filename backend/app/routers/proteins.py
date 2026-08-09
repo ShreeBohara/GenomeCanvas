@@ -11,6 +11,7 @@ from app.models.schemas import (
     ProteinSummary,
     ProteinUniverseAsset,
     SimilarProteinResult,
+    UniverseAssetTier,
 )
 from app.services.protein_service import ProteinService
 
@@ -26,9 +27,18 @@ async def get_universe(
 
 @router.get("/universe-assets", response_model=list[ProteinUniverseAsset])
 async def get_universe_assets(
+    tier: UniverseAssetTier = Query(
+        default="all",
+        description=(
+            "Which LOD tier to return. 'low' is the 24-vertex trace used for the "
+            "first paint; 'mid' is the 72-vertex trace used on hover and "
+            "selection; 'all' returns both. The tiers are disjoint, so a client "
+            "can request them separately without transferring the same bytes twice."
+        ),
+    ),
     protein_service: ProteinService = Depends(get_protein_service),
 ) -> list[ProteinUniverseAsset]:
-    return protein_service.get_universe_assets()
+    return protein_service.get_universe_assets(tier)
 
 
 @router.get("/search", response_model=list[ProteinSearchResult])

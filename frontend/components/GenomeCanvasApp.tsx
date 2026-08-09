@@ -232,16 +232,33 @@ export function GenomeCanvasApp() {
     async function bootstrap() {
       setLoading("universe", true);
       try {
-        const [proteins, assets] = await Promise.all([fetchUniverse(), fetchUniverseAssets()]);
+        // First paint needs the 24-vertex tier only. The 72-vertex tier is 71.5%
+        // of the full payload and renders only on hover, selection, or focus, so
+        // it is fetched after the scene is on screen rather than ahead of it.
+        const [proteins, lowAssets] = await Promise.all([
+          fetchUniverse(),
+          fetchUniverseAssets("low"),
+        ]);
         if (cancelled) {
           return;
         }
         setUniverse(proteins);
-        upsertUniverseAssets(assets);
+        upsertUniverseAssets(lowAssets);
       } finally {
         if (!cancelled) {
           setLoading("universe", false);
         }
+      }
+
+      // Backfill. A failure here costs detail on hover, not the scene, so it
+      // stays out of the loading flag and is swallowed rather than surfaced.
+      try {
+        const midAssets = await fetchUniverseAssets("mid");
+        if (!cancelled) {
+          upsertUniverseAssets(midAssets);
+        }
+      } catch (error) {
+        console.error("mid-tier universe assets failed to load", error);
       }
     }
 

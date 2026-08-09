@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 
 from app.core.config import get_settings
 from app.models.schemas import HealthResponse
@@ -42,6 +43,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Every response body here is JSON, and the largest one is a wall of rounded
+# decimal coordinates -- text with heavy digit reuse, which compresses about
+# 2.7x. The universe-assets payload alone goes from 177.6 KiB to 65.4 KiB.
+#
+# Registered after CORS so it sits closer to the application: CORS runs first on
+# the way in and last on the way out, which keeps its headers off the compressed
+# body. minimum_size skips the small detail/graph responses, where the framing
+# overhead is not worth the CPU.
+#
+# The chat endpoint streams; GZipMiddleware does not buffer streaming responses,
+# so SSE keeps flushing per event.
+app.add_middleware(GZipMiddleware, minimum_size=1024)
 
 
 app.include_router(proteins.router, prefix="/api/proteins", tags=["proteins"])

@@ -136,13 +136,25 @@ export const initialStoreState: StoreSnapshot = {
 export const useGenomeCanvasStore = create<StoreState>((set) => ({
   ...initialStoreState,
   setUniverse: (universe) => set({ universe }),
+  // Merges per asset rather than replacing. The universe traces arrive as two
+  // separate tier responses, and each carries only the tier it was asked for;
+  // a wholesale replace would drop the tier that landed first.
   upsertUniverseAssets: (assets) =>
-    set((state) => ({
-      universeAssets: {
-        ...state.universeAssets,
-        ...Object.fromEntries(assets.map((asset) => [asset.uniprot_id, asset])),
-      },
-    })),
+    set((state) => {
+      const universeAssets = { ...state.universeAssets };
+      assets.forEach((asset) => {
+        const existing = universeAssets[asset.uniprot_id];
+        universeAssets[asset.uniprot_id] = existing
+          ? {
+              ...existing,
+              ...asset,
+              low_trace: asset.low_trace ?? existing.low_trace,
+              mid_trace: asset.mid_trace ?? existing.mid_trace,
+            }
+          : asset;
+      });
+      return { universeAssets };
+    }),
   upsertStructureAsset: (asset) =>
     set((state) => ({
       structureAssets: {

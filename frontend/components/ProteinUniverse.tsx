@@ -354,20 +354,25 @@ function ProteinRibbon({
   const lastClickRef = useRef(0);
   const worldPosition = useMemo(() => proteinPosition(protein), [protein]);
   const baseScale = proteinScale(protein.bounds_radius);
+  // Prefer the denser tier when this ribbon is prominent, but fall back to
+  // whichever tier has actually arrived: the two are fetched separately, so
+  // during the first moments after load only `low` exists.
+  const wantsDetail = selected || hovered || highlighted || focused;
   const trace =
-    selected || hovered || highlighted || focused ? asset.mid_trace : asset.low_trace;
+    (wantsDetail ? asset.mid_trace ?? asset.low_trace : asset.low_trace ?? asset.mid_trace) ??
+    null;
 
   const points = useMemo(
     () =>
-      trace.points.map(
+      (trace?.points ?? []).map(
         ([x, y, z]) =>
           [x * baseScale, y * baseScale, z * baseScale] as [number, number, number],
       ),
-    [baseScale, trace.points],
+    [baseScale, trace],
   );
   const vertexColors = useMemo(
-    () => traceVertexColors(trace.confidence).map((value) => new Color(value)),
-    [trace.confidence],
+    () => traceVertexColors(trace?.confidence ?? []).map((value) => new Color(value)),
+    [trace],
   );
 
   const matchesFilter = matchesUniverseFilter(protein, filter);
@@ -400,6 +405,12 @@ function ProteinRibbon({
   });
 
   const showLabel = focused || selected || hovered || highlighted;
+
+  // Placed after every hook so the hook order stays stable. A line needs two
+  // points; with neither tier loaded there is nothing to draw yet.
+  if (points.length < 2) {
+    return null;
+  }
 
   return (
     <group position={worldPosition} ref={groupRef}>

@@ -82,14 +82,19 @@ export interface CameraHint {
   fov: number;
 }
 
+export type UniverseAssetTier = "low" | "mid" | "all";
+
 export interface ProteinUniverseAsset {
   uniprot_id: string;
   cluster_id: string;
   halo_color: string;
   lod_key: string;
   bounds_radius: number;
-  low_trace: StructureTrace;
-  mid_trace: StructureTrace;
+  // Nullable because the tiers are fetched separately: `low` paints the first
+  // frame, `mid` arrives afterwards and is merged in. Anything reading these
+  // must tolerate the tier it wants not having landed yet.
+  low_trace: StructureTrace | null;
+  mid_trace: StructureTrace | null;
 }
 
 export interface ProteinStructureAsset extends ProteinUniverseAsset {

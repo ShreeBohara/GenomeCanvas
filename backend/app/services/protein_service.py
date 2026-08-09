@@ -10,6 +10,7 @@ from app.models.schemas import (
     ProteinStructureAsset,
     ProteinUniverseAsset,
     SimilarProteinResult,
+    UniverseAssetTier,
 )
 from app.repositories.fixture_repository import FixtureRepository
 
@@ -28,11 +29,19 @@ class ProteinService:
             return None
         return ProteinDetail.model_validate(self._with_visual_metadata(protein))
 
-    def get_universe_assets(self) -> list[ProteinUniverseAsset]:
+    def get_universe_assets(self, tier: UniverseAssetTier = "all") -> list[ProteinUniverseAsset]:
+        """Universe-tier traces, optionally restricted to one LOD.
+
+        The tiers are disjoint so a client can request them separately without
+        paying for the same bytes twice: `low` paints the first frame, `mid`
+        backfills the geometry used on hover and selection.
+        """
         assets = sorted(
             self.repository.structure_assets_by_id.values(),
             key=lambda asset: asset.uniprot_id,
         )
+        include_low = tier in ("low", "all")
+        include_mid = tier in ("mid", "all")
         return [
             ProteinUniverseAsset.model_validate(
                 {
@@ -41,21 +50,32 @@ class ProteinService:
                     "halo_color": asset.halo_color,
                     "lod_key": asset.lod_key,
                     "bounds_radius": asset.bounds_radius,
-                    "low_trace": asset.low_trace.model_dump(),
-                    "mid_trace": asset.mid_trace.model_dump(),
+                    "low_trace": asset.low_trace.model_dump() if include_low else None,
+                    "mid_trace": asset.mid_trace.model_dump() if include_mid else None,
                 }
             )
             for asset in assets
         ]
 
     def get_structure_asset(self, uniprot_id: str) -> ProteinStructureAsset | None:
+        """Focus-tier asset for one protein.
+
+        low_trace and mid_trace are deliberately omitted: any client asking for
+        a focus asset has already loaded the universe tiers, and re-sending them
+        was a third of this response for no new information.
+
+        similar_ids is likewise dropped. Populating it re-ran the full ranking a
+        second time per request -- the client calls /similar for that -- and no
+        caller ever read the field.
+        """
         asset = self.repository.get_structure_asset(uniprot_id)
         if asset is None:
             return None
 
-        similar_ids = [candidate.uniprot_id for candidate in self.similar(uniprot_id, limit=5)]
         payload = asset.model_dump()
-        payload["similar_ids"] = similar_ids
+        payload["low_trace"] = None
+        payload["mid_trace"] = None
+        payload["similar_ids"] = []
         return ProteinStructureAsset.model_validate(payload)
 
     def search(self, query: str, limit: int) -> list[ProteinSearchResult]:

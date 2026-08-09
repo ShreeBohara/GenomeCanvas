@@ -11,6 +11,7 @@ import {
   ProteinSummary,
   ProteinUniverseAsset,
   SimilarProteinResult,
+  UniverseAssetTier,
 } from "@/lib/types";
 
 
@@ -53,8 +54,13 @@ export async function fetchProteinDetail(uniprotId: string): Promise<ProteinDeta
   return requestJson<ProteinDetail>(`/api/proteins/${uniprotId}`);
 }
 
-export async function fetchUniverseAssets(): Promise<ProteinUniverseAsset[]> {
-  return requestJson<ProteinUniverseAsset[]>("/api/proteins/universe-assets");
+export async function fetchUniverseAssets(
+  tier: UniverseAssetTier = "all",
+): Promise<ProteinUniverseAsset[]> {
+  const params = new URLSearchParams({ tier });
+  return requestJson<ProteinUniverseAsset[]>(
+    `/api/proteins/universe-assets?${params.toString()}`,
+  );
 }
 
 export async function fetchStructureAsset(uniprotId: string): Promise<ProteinStructureAsset> {
