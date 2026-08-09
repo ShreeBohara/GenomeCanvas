@@ -17,16 +17,17 @@ measured that was not actually measured.
 |---|---|
 | **What** | A navigable 3D universe of real AlphaFold protein structures, wired to a biomedical knowledge graph and an AI guide that drives the interface rather than talking beside it |
 | **Stack** | Next.js 14 · TypeScript · Three.js / react-three-fiber · Mol* · FastAPI · Pydantic v2 · Zustand · Claude API |
-| **Hand-written code + docs** | ~9,750 lines across 73 files `[measured]` |
-| **Generated data** | 1.72 MB of fixtures: 54 proteins, 187 graph nodes, 217 edges, 14,904 interpolated backbone vertices `[measured]` |
-| **Tests** | **38 passing** across 3 runners — 25 backend (unittest), 13 frontend (vitest), plus 5 Playwright specs `[measured]` |
-| **Backend suite runtime** | 0.092 s `[measured]` |
-| **Real AlphaFold structures** | 52 of 54; the 2 fallbacks are exactly the 2 proteins above AlphaFold DB's 2,700-residue ceiling `[measured]` |
+| **Hand-written code + docs** | ~11,800 lines across 70 tracked files `[measured]` |
+| **Generated data** | 1.79 MB of fixtures: 54 proteins, 187 graph nodes, 217 edges, 14,904 interpolated backbone vertices `[measured]` |
+| **Tests** | **69 passing** across 3 runners — 48 backend (unittest), 16 frontend (vitest), plus 5 Playwright specs `[measured]` |
+| **Backend suite runtime** | 0.170 s `[measured]` |
+| **Real AlphaFold structures** | 52 of 54. The 2 substitutions are labelled as such in the API and the UI, and are excluded from structural similarity `[measured]` |
+| **First-paint payload** | 18.2 KiB gzipped, down from 177.6 KiB uncompressed `[measured]` |
 | **External calls at request time** | Zero. Everything is precomputed and in-memory. |
 | **Cost per AI turn** | ~$0.003 (Haiku 4.5) → ~$0.009 (Sonnet 5) `[estimated]` |
 | **Documentation** | 2,205 lines across three READMEs plus a 351-line product spec `[measured]` |
-| **Repo** | https://github.com/ShreeBohara/GenomeCanvas — `main` at `30f0d2c` |
-| **Live URL** | None yet — deploy config now in repo, not yet provisioned |
+| **Repo** | https://github.com/ShreeBohara/GenomeCanvas — `main` at `f7c059b` |
+| **Live URL** | None yet — deploy config in repo, not yet provisioned |
 
 **The one-sentence version:** *AlphaFold published 214 million protein structures and gave the
 world a file browser; GenomeCanvas is an attempt at a cockpit.*
@@ -69,26 +70,29 @@ answer ships unchanged and the user never learns anything went wrong.
 `render.yaml`, and a three-job GitHub Actions workflow — but neither target has been provisioned.
 Say this plainly: *the deployment is configured, not executed.*
 
-**Current status:** working local full-stack MVP with CI defined. All **38 tests pass**
-`[measured]`.
+**Current status:** working local full-stack MVP with CI defined. All **69 tests pass**
+`[measured]` — 48 backend, 16 frontend, 5 Playwright specs. CI additionally builds the container
+image, boots it, and asserts the fixture counts it serves.
 
 **Languages and size** `[measured]` — excludes `node_modules`, `.next`, `.venv`, lockfiles, and
 the vendored Mol* bundle:
 
+Counted with `git ls-files`, so only tracked files — this excludes `node_modules`, `.next`,
+`.venv`, lockfiles, the vendored Mol* bundle, and the untracked worktree copies under `.claude/`.
+
 | Language | Files | Lines |
 |---|---:|---:|
-| TypeScript `.tsx` | 16 | 2,645 |
-| Python `.py` | 28 | 2,186 |
-| TypeScript `.ts` | 13 | 1,311 |
+| Markdown (3 READMEs + spec + this dossier) | 5 | 3,963 |
+| Python `.py` | 31 | 2,816 |
+| TypeScript `.tsx` | 16 | 2,691 |
+| TypeScript `.ts` | 13 | 1,401 |
 | CSS | 1 | 760 |
-| Markdown (3 READMEs + spec) | 4 | 2,556 |
-| JSON config | 6 | 117 |
-| YAML (CI + Render) | 2 | 114 |
-| Dockerfile | 1 | 30 |
+| YAML (CI + Render) | 2 | 152 |
 | JS `.mjs` | 2 | 27 |
-| **Hand-written total** | **73** | **~9,750** |
+| **Hand-written total** | **70** | **~11,810** |
 
-This dossier itself (1,300+ lines of Markdown) is excluded from that count.
+Generated data is tracked separately: 9 JSON files, 102,039 lines, dominated by
+`protein_structure_assets.json` at 1.63 MB.
 
 Generated / fixture data, tracked in git `[measured]`:
 
@@ -142,6 +146,7 @@ Backend **6 pinned** — `fastapi`, `uvicorn`, `pydantic`, `anthropic`, `httpx`,
 | **Phase 1.5 — rewrite** | 2026-03-18 | A ~2,900-line frontend rewrite that was **never committed** — it sat in the working tree for 141 days, on no branch and in no stash `[measured]`. |
 | **Phase 2 — document** | 2026-04-15 | 2,125 lines of architecture documentation across three READMEs: mermaid diagrams, per-layer file tables, fixture-count tables, the full API surface, and the chat command protocol. 1 commit. |
 | **Phase 3 — harden** | 2026-08-06 → 08-07 | The rewrite committed at last, three resolution bugs found and fixed, a streaming-protocol correction, dead-code removal, +13 tests, CI, deploy config, and a documentation reconciliation. 3 commits. |
+| **Phase 4 — audit** | 2026-08-09 | A technology-evaluation exercise run as six parallel research agents, which surfaced four defects instead: a container that could not start, a similarity endpoint that was circular, fabricated confidence presented as real, and a first-paint payload 90% larger than it needed to be. All four fixed. +21 tests. 4 commits. |
 
 The shape is honest and slightly unusual: an intense build, a finished rewrite that never landed, a
 documentation pass written *against the pre-rewrite code*, and then a hardening pass that had to
@@ -341,6 +346,46 @@ grid sibling of the stage rather than an overlay.
 
 Both suites were re-run on the merged tree before the merge commit was created: **backend 25,
 frontend 13, all passing** `[measured]`.
+
+### D. Audit and correction — 2026-08-09, commits `1a38472` → `f7c059b`
+
+This phase started as a different question. The brief was to evaluate fifteen technologies —
+Kubernetes, Terraform, Jenkins, DynamoDB, Go, GraphQL, Kafka, Rust, Kotlin, Swift, Airflow, Spark,
+gRPC, Neo4j, Azure — for whether any could be added to the project. Six research agents ran in
+parallel, each reading the actual source and measuring rather than reasoning from the README.
+
+**They found four defects, and those turned out to be worth more than the technology answer.**
+
+**D1 — The container could not start.** `1a38472`. `config.py` resolved the fixture directory by
+walking up to a repository root and back down through `backend/`. That only holds when the package
+sits at `<repo>/backend/app/`. The image copies `app/` to `/srv/app/`, so the walk landed on
+`/backend/app/data`, and `FixtureRepository.refresh()` raised `FileNotFoundError` inside the FastAPI
+lifespan — uvicorn started, the app never served, the healthcheck never passed. **Every deployment
+path in the repo shipped this image.** It survived because all 25 backend tests ran against the
+repo checkout, where the wrong path is accidentally right. Fixed by anchoring to the package
+(`parents[1] / "data"`), made overridable via `GENOMECANVAS_DATA_DIR`, pinned by `test_config.py`,
+and — the part that actually matters — a **new CI job that builds the image, boots it, and asserts
+the fixture counts it serves**, because a green unit suite provably could not catch this.
+
+**D2 — First paint was 90% larger than necessary.** `bc113d2`. `mid_trace` is 71.5% of the universe
+payload and renders only on hover, selection, or focus, yet shipped in the first response. There was
+also no `GZipMiddleware`, so 177.6 KiB of rounded decimal text — which compresses 2.7× — went out
+raw. Added gzip, made the LOD tiers independently selectable so the client paints with `low` and
+backfills `mid`, and dropped the two universe tiers from `structure-asset`, which had been
+re-sending bytes the client already held. **177.6 KiB → 18.2 KiB, 89.7%.**
+
+**D3 — Substituted structures were presented as predictions.** `eabbb5b`. Covered above.
+
+**D4 — The similarity endpoint was circular.** `f7c059b`. Covered at length under WS-3; the short
+version is that the `umap_*` coordinates are hand-authored, so ranking by distance between them
+could only return what the layout already asserted. Replaced with optimal superposition of the real
+alpha-carbon traces via Horn's quaternion method. Zero dependencies added.
+
+**On the original question.** Of the fifteen, roughly eight fit a coherent architecture and the rest
+are better as reasoned rejections than as dependencies — *"I evaluated Kafka for the ingestion
+pipeline and rejected it: upstream sources refresh every 8 weeks and AlphaFold DB is a 4.9 GB tar,
+not a stream"* is a stronger interview sentence than a Kafka dependency nobody can justify. The
+detail lives in **Technology evaluation** near the end of this document.
 
 ---
 
@@ -580,11 +625,17 @@ cursor, so confidence coloring stays spatially aligned with geometry after resam
 **Scale demonstrably handled** `[measured]`:
 
 - 54 proteins, sequence lengths **189 – 3,418 aa** (mean 1,014).
-- **52 real AlphaFold traces, 2 procedural.** The two fallbacks are BRCA2 (3,418 aa) and ATM
-  (3,056 aa) — **and that is not a parser bug.** AlphaFold DB only publishes single full-length
-  models up to **2,700 residues**; longer Swiss-Prot entries are released as overlapping 1,400-aa
-  fragments (F1, F2, …) instead. ATR at 2,644 aa succeeds; BRCA2 and ATM sit just over the line.
-  The fallback triggers precisely at a real external constraint.
+- **52 real AlphaFold traces, 2 substituted.** The two are BRCA2 (3,418 aa) and ATM (3,056 aa) —
+  **and that is not a parser bug.** AlphaFold DB only publishes single full-length models up to
+  **2,700 residues**; longer Swiss-Prot entries are released as overlapping 1,400-aa fragments
+  (F1, F2, …) instead. ATR at 2,644 aa succeeds; BRCA2 and ATM sit just over the line.
+  Two refinements to how this was described earlier: the **proximate** cause is that both
+  accessions return **HTTP 404** from the AlphaFold prediction API (verified live) — the residue
+  ceiling is *why* they 404, not the mechanism the code sees. And the substitute traces were
+  originally reported through the same `structure_source` field as real ones, with **synthetic
+  pLDDT values flowing into `confidence_palette` and rendering as genuine confidence**. Commit
+  `eabbb5b` separates the two: the API now distinguishes a real prediction from a substitute, the
+  UI labels it, and `f7c059b` excludes both from structural similarity.
 - **14,904** interpolated vertices across all LOD tiers; **9,720** in the focus tier.
 - Total normalized backbone contour length rendered: **1,268.3 units across 54 chains** `[measured]`.
 
@@ -602,11 +653,26 @@ very-low mass with a thin middle — is the real signature of the human proteome
 domains plus genuinely disordered regions. The visualization renders that split directly, which is
 the whole point of coloring per vertex rather than per protein.
 
-- Payloads: `universe-assets` (low + mid tiers) serializes to **198.7 KB**; one `structure-asset`
-  is **10.6 KB** `[measured]`.
-- `[estimated]` A cold rebuild is network-bound: 54 API calls + 54 PDB downloads at observed
-  AlphaFold response times of ~0.5–2 s ⇒ roughly **2–4 minutes wall clock**. CPU time is negligible
-  against it.
+- Payloads `[measured]`, corrected — an earlier draft of this dossier reported these from
+  `json.dumps()` with default separators, which is not what FastAPI emits. The real wire body is
+  compact-separated, and since `bc113d2` it is also gzipped and tier-selectable:
+
+  | Response | Raw | On the wire |
+  |---|---:|---:|
+  | `universe-assets?tier=low` — the first paint | 52,078 B | **18,683 B (18.2 KiB)** |
+  | `universe-assets?tier=mid` — background backfill | 137,777 B | 51,254 B |
+  | `universe-assets?tier=all` — both, the old default | 181,852 B | 66,984 B |
+  | one `structure-asset` | ~6,550 B | — |
+
+  First paint went from 177.6 KiB uncompressed to **18.2 KiB, a 89.7% cut**, by not shipping the
+  72-vertex tier that only renders on hover. `structure-asset` fell 9,794 → ~6,550 B by dropping the
+  two universe tiers the client already holds (6,560 for P00533, 6,542 for P38398 — it varies with
+  the protein's metadata).
+
+- Rebuild wall clock is **~45 s**, not the 2–4 minutes an earlier draft estimated. Measured at
+  0.83 s/protein across sampled fetches. It is ~99.5% network wait: the entire CPU cost of parsing
+  and resampling all 54 proteins is **220 ms** — 3.1 ms to parse a 1,210-atom PDB and 0.91 ms for
+  all three resampling passes.
 
 **Proposed lenses (PROPOSED):** backend **5/5** (external API integration, fixed-format parsing,
 numerical resampling, honest degradation) · ai 2/5 (consumes an ML model's output; trains nothing)
@@ -622,7 +688,7 @@ Pydantic v2 model. The contract is the deliverable — `frontend/lib/types.ts` m
 `models/schemas.py`, and the generated OpenAPI document is itself asserted in tests.
 
 **Files.** `main.py`, `core/config.py`, `dependencies.py`, `models/schemas.py` (199 lines,
-22 models), `routers/*.py`, `services/protein_service.py`, `frontend/lib/{types,api}.ts`,
+24 models), `routers/*.py`, `services/protein_service.py`, `frontend/lib/{types,api}.ts`,
 `tests/test_api.py`.
 
 **Dates.** 2026-03-14 → 03-17. **New since 2026-04-01:** No.
@@ -633,10 +699,18 @@ is `lambda request: request.app.state.…`. Nothing is constructed per request �
 graph with an explicit build order, and `Request`-based getters keep routers free of module-level
 globals, which is what makes `TestClient(app)` work cleanly as a context manager.
 
-Schema modelling worth naming: `ProteinSearchResult`, `SimilarProteinResult`, and `ProteinDetail`
-all **inherit** `ProteinSummary`, so the universe payload's field set is structurally guaranteed to
-be a subset of the detail payload's. `ProteinStructureAsset` inherits `ProteinUniverseAsset` and
-adds `focus_trace` / `camera` / `confidence_palette` — one type hierarchy expressing the LOD tiers.
+Schema modelling worth naming — and one correction. `ProteinSearchResult` and
+`SimilarProteinResult` inherit `ProteinSummary`, adding only the fields that describe the *match*
+rather than the protein. `ProteinStructureAsset` inherits `ProteinUniverseAsset` and adds
+`focus_trace` / `camera` / `confidence_palette`, one type hierarchy expressing the LOD tiers.
+
+**`ProteinDetail` does not inherit `ProteinSummary`** — an earlier draft of this dossier claimed it
+did. It is a standalone `BaseModel` that redeclares the shared fields, and it declares
+`cluster_id` / `halo_color` / `lod_key` / `bounds_radius` as optional where `ProteinSummary` has
+them required. That divergence is invisible today because `_with_visual_metadata` always populates
+them, but it is real: the two models could drift, and it would rule out expressing them as a single
+interface if this ever grew a GraphQL layer. Worth knowing before claiming the hierarchy is tidier
+than it is.
 `ChatCommandType` and `GraphNodeType` are `Literal` unions, so an invalid command type is a
 serialization error, not a silent browser no-op.
 
@@ -645,10 +719,45 @@ Two ranking algorithms live here:
   candidate fields at descending base weights (gene 0.95, name 0.90, disease 0.72, drug 0.68,
   description 0.60), substring hit awarding the base weight and otherwise base × token overlap.
   Ties break on gene name, so results are stable.
-- **Similarity** — Euclidean distance in the stored 3D UMAP space converted by `1 / (1 + d)`.
-  **Honest caveat:** this is proximity in the *reduced* embedding, not cosine similarity over the
-  full ESM-2 vector the spec calls for. UMAP preserves local neighborhoods but not global
-  distances, so this is a visual-neighborhood metric, not a biological one. Volunteer this.
+- **Similarity** — a precomputed structural-shape table, replacing what used to be Euclidean
+  distance between the `umap_*` coordinates. **This is the most important correction in this
+  document, because the earlier version of it was wrong in my favour.**
+
+  An earlier draft described the old metric as "proximity in the *reduced* embedding" and told you
+  to volunteer that caveat. That framing implied the coordinates came from a real UMAP over real
+  embeddings. They did not. The evidence is conclusive: every coordinate is one decimal place
+  (51/54 x-values have exactly one), `dna_repair` occupies a 2.4 × 3.0 box with all ten of its
+  proteins inside, and `z` spans 4.6 units against 19 and 23 for `x` and `y`, with only 32 distinct
+  values across 54 proteins. Real UMAP emits float64 and does not produce boxes that tidy. **The
+  coordinates were hand-authored** — a drawn layout, not a computed one.
+
+  Which made the endpoint circular: `/{id}/similar` ranked by distance between numbers someone
+  typed, and could only ever return what the layout already asserted.
+
+  Commit `f7c059b` replaces it with a metric derived from the geometry the app actually has.
+  Every focus trace is exactly 180 alpha-carbon positions, arc-length resampled and normalized to
+  a unit sphere, so equal length gives direct point correspondence and the normalization makes it
+  scale-invariant. Optimal superposition uses **Horn's quaternion method**: build the 4×4 key
+  matrix from the cross-covariance, take its largest eigenvalue by Jacobi rotation, and the minimum
+  RMSD follows directly. No rotation matrix is ever formed and no SVD is needed, which is why this
+  adds **zero dependencies** — `requirements.txt` is still six lines.
+
+  The rankings changed completely: BRCA1's top five went from `CHEK2, MSH2, PARP1, ATR, MLH1` to
+  `SLC22A1, MTOR, RAD51, PTEN, NRAS` — **zero overlap** `[measured]`, which is what you would expect
+  when the old answer was circular. 1,431 pairs; 52 of 54 proteins ranked, with the two procedural
+  substitutes excluded because a neighbour computed from a synthetic helix describes the generator,
+  not the protein. Request-time cost is a table lookup: all 54 lookups take **1.88 ms** `[measured]`.
+
+  **The caveat that is still true, and now the honest one to volunteer.** This fixes circularity,
+  not biological validity. Correspondence is by arc-length position along the chain, not sequence
+  alignment, so it measures gross backbone shape rather than fold — and comparing a 189-residue
+  protein to a 3,418-residue one after both are resampled to 180 points and normalized to a unit
+  sphere flattens a lot of real difference. The numbers show it: RMSD across all ranked pairs spans
+  only 0.054–0.691 with a median of 0.485, and BRCA1's top five sit in a band of 0.608–0.630 — very
+  little discriminative power at the top. RAD51 appearing there is genuinely encouraging, since it
+  is a real BRCA1 interactor, but SLC22A1 ranking first is not biologically meaningful. Call it a
+  shape distance. TM-align with real sequence alignment is the thing that would make it a
+  structural-similarity claim.
 
 **Hardest part.** Making `"alzheimer"` work as a query when the term appears in no gene symbol and
 no protein name — only inside nested disease objects. `proteins_for_disease` strips generic tokens
@@ -657,8 +766,8 @@ without that, `"Alzheimer's disease"` matches every protein that has *any* disea
 the shared token `disease`. Pinned by `test_api.py`: `search?q=alzheimer&limit=4` must contain both
 `P05067` and `P49768`.
 
-**Scale demonstrably handled** `[measured]`: 11 endpoints, 22 models, 25 backend tests green in
-0.092 s. Search and similarity are O(N) linear scans — exactly the code path a vector index
+**Scale demonstrably handled** `[measured]`: 11 endpoints, 24 models, 48 backend tests green in
+0.170 s. Search and similarity are O(N) linear scans — exactly the code path a vector index
 replaces at the spec's target. `[estimated]` The same scan over 10,000 records is ~15–40 ms
 single-threaded; the real motivation for pgvector at that scale is the 768-dimensional embedding,
 not the row count.
@@ -820,7 +929,7 @@ two-line detail, invisible when correct and a hard crash when wrong.
 
 **Scale demonstrably handled** `[measured]`: 54 proteins × 2 line primitives = **108 line objects**
 per frame, plus 5 fog spheres, 5 text labels, 1,800 stars, 64 sparkles. Vertex budget **1,296** at
-all-low, **7,776** at the theoretical all-mid worst case. Payload to get there: **198.7 KB**.
+all-low, **7,776** at the theoretical all-mid worst case. Payload to get there: **18.2 KiB gzipped** (low tier).
 
 `[estimated]` Comfortable 60 fps on integrated graphics — the scene is geometry-trivial and the
 cost is per-object draw calls, not vertices. **Where it stops scaling is the interesting answer:**
@@ -1054,7 +1163,7 @@ tests including the paragraph-rejoin regression.
 
 ### WS-12: Test and verification harness
 
-**What and why.** 38 tests across three runners covering data invariants, service behavior, API
+**What and why.** 69 tests across three runners covering data invariants, service behavior, API
 contract, SSE protocol, adversarial entity resolution, store transitions, camera math, and component
 rendering.
 
@@ -1085,7 +1194,7 @@ client without a server — `api.test.ts` builds a `ReadableStream` and enqueues
 as one encoded chunk, which specifically exercises the `\n\n` buffer-splitting loop rather than the
 easy one-event-per-read case.
 
-**Scale demonstrably handled** `[measured]`: **38 tests, all green.** Backend 25 in 0.092 s;
+**Scale demonstrably handled** `[measured]`: **69 tests, all green.** Backend 48 in 0.170 s;
 frontend 13. Now executed by CI on every push.
 
 **Proposed lenses (PROPOSED):** swe **5/5** (five deliberate layers, an OpenAPI assertion, an
@@ -1136,7 +1245,7 @@ actually trustworthy — a containment design that resolves the wrong entity is 
 
 ### WS-14: CI and deployment configuration
 
-**What and why.** 38 passing tests that nothing runs automatically are 38 tests one commit from
+**What and why.** 69 passing tests that nothing runs automatically are 69 tests one commit from
 rotting. And the spec plans a deployment (§13) that had no configuration at all.
 
 **Files.** `.github/workflows/ci.yml` (3 jobs), `backend/Dockerfile`, `render.yaml`, `vercel.json`.
@@ -1316,7 +1425,7 @@ associations, and real drug links, so no demo path hits a hole. Coverage over co
 
 **"Where does it break?"**
 Three ceilings in order. **Rendering:** 108 draw calls today; the wall is ~1,000–2,000 objects, and
-the fix is a different strategy, not a bigger version of this one. **Payload:** 198.7 KB for 54
+the fix is a different strategy, not a bigger version of this one. **Payload:** 18.2 KiB gzipped at the low tier for 54
 proteins ⇒ ~37 MB at 10,000, so you need viewport culling or streaming LOD, not one big fetch.
 **Search:** linear scan over 10,000 is still tens of milliseconds; the real reason for pgvector at
 that scale is searching 768 dimensions, not the row count.
@@ -1361,10 +1470,15 @@ mode, but it is undefended.
 
 ## Small things that are actually interesting
 
-- **The 2,700-residue boundary is visible in the data.** Exactly two of 54 proteins fall back to
-  procedural traces — BRCA2 (3,418 aa) and ATM (3,056 aa) — while ATR at 2,644 aa succeeds.
-  AlphaFold DB publishes single full-length models only up to 2,700 residues. The fallback triggers
-  precisely at a real external constraint, and the UI says so rather than pretending.
+- **The 2,700-residue boundary is visible in the data.** Exactly two of 54 proteins get substitute
+  traces — BRCA2 (3,418 aa) and ATM (3,056 aa) — while ATR at 2,644 aa succeeds. AlphaFold DB
+  publishes single full-length models only up to 2,700 residues, so both accessions 404. The
+  fallback triggers precisely at a real external constraint, and the UI now says so rather than
+  presenting a synthetic helix and fabricated confidence as a prediction.
+- **A bare `except Exception` was a data-integrity bug, not a style nit.** That one clause turned a
+  404 into a silent substitution. At 54 proteins it produced 2 labelled fakes. At the spec's 10,000
+  behind rate limits it would have fabricated a large fraction of the dataset *and reported
+  success* — the failure mode where the tool is confidently wrong and nothing surfaces it.
 - **The confidence histogram is bimodal, and that's biology.** 44.9% of residues are very high
   confidence and 22.6% are very low, with a thin middle — well-folded domains plus genuinely
   disordered regions. Per-vertex coloring renders that split directly.
@@ -1392,8 +1506,49 @@ mode, but it is undefended.
 
 ---
 
-*Generated 2026-08-06. Every `[measured]` figure is reproducible from this repo at the commit that
-contains this file; every `[estimated]` figure shows its arithmetic or names its comparable.*
+## Technology evaluation — 2026-08-09
+
+Fifteen technologies assessed against the actual codebase by six parallel research agents, each
+measuring rather than reasoning from the README. Verdicts below are the findings, not preferences.
+**The rejections are more useful in an interview than the adoptions**, because each one comes with
+a number.
+
+### Fits, in a coherent order
+
+| Tech | Verdict | The honest justification |
+|---|---|---|
+| **Terraform** | Strong | Genuinely good fit even at this size. Container Apps + Cosmos + Key Vault + registry + role assignments is exactly the surface you don't want to click through twice. |
+| **Azure** | Strong | An all-Azure version costs **~$13–15/mo** on Container Apps versus **~$98/mo** on AKS and **~$116/mo** on EKS. Azure for Students gives $100 over 12 months — the ACA design fits, the AKS design burns the year's credit in 31 days. |
+| **Cosmos DB** *(over DynamoDB)* | Strong | Chat has no persistence today: reload the page and the conversation is gone. `PK=conversation, SK=sequence` is the textbook single-table access pattern, and Cosmos' free tier — 1000 RU/s + 25 GB **for the account's lifetime** — covers the whole workload. On Azure, DynamoDB would add a cross-cloud round trip to a cache whose entire purpose is being fast. |
+| **Neo4j** | Moderate, behind a flag | **Not on performance** — at 187 nodes it is three orders of magnitude slower than the dict lookup, forever. On *expressiveness*: the drug-repurposing query is four hops with a join back onto the start node — five lines of Cypher against three nested loops rewritten per question. |
+| **Airflow** | Moderate | The ETL is genuinely DAG-shaped, and the real dependency graph is a **diamond**, not the spec's linear four phases: embeddings depend only on Phase 1 sequences, so Phases 2 and 3 run in parallel. Target 3.x — Airflow 2 hit EOL 2026-04-22. |
+| **GraphQL** | Deferred, with a trigger | The over-fetching is real and measured (10 round trips across four interactions, 33–37% of a dive already in the store), but **one query parameter recovered more bytes than the whole migration would** — which is what `bc113d2` did. The trigger to revisit: a second consumer with divergent field needs. |
+| **Rust** | Conditional | Not for the parser — 20× on a 0.24 s job saves 0.228 s. The real fit is structural alignment at scale: 20,000 proteins is 200 M pairs, ~2.5 h in Python versus ~8 min in Rust. |
+| **Swift** | Separate deliverable | An iOS client is the one option that adds a capability rather than relocating one, and the API already serves it — 18.2 KiB cold start, 6.5 KiB per protein. Caveat: this agent's platform claims were explicitly unverified. |
+
+### Rejections, each with its number
+
+| Tech | Why not |
+|---|---|
+| **Kafka** | Weakest fit. The ETL has no event stream to consume: UniProt refreshes every ~8 weeks, Open Targets ~3×/year, and AlphaFold DB is a **single 4.9 GB tar**, not a firehose. Replay-from-offset buys nothing over re-reading the tar. Defensible only at the serving edge, for on-demand accessions outside the catalog. |
+| **Spark** | The full human proteome mean-pooled embeds to **104 MB** — 500–1000× under Spark's break-even. The ESM-2 model is 2.5 GB, so broadcasting it moves **24× more bytes than the entire output**. A single GPU does the job in ~9 minutes. Spark becomes right at the 58 GB per-residue variant, and that boundary is the thing worth being able to name. |
+| **Kubernetes** | Only justified if Neo4j and Kafka are self-hosted. With managed services it orchestrates two stateless containers at ~7× the cost of Container Apps. |
+| **Jenkins** | GitHub Actions already covers 100% of current CI, free, correctly — and Airflow already occupies the batch-DAG slot. Two of four proposed justifications survive (spot-GPU arbitrage on ESM-2; the fixture rebuild exceeding hosted runners' 6-hour and ~14 GB limits) and both are batch data jobs, not CI. **Do not adopt Jenkins and Airflow together.** |
+| **Go + gRPC** | The payload argument runs *backwards*: packed-float protobuf is **8% larger than gzipped JSON**, because IEEE-754 mantissa bits are near-maximum-entropy while rounded decimal text compresses 2.7×. And there is no CPU bottleneck to port — total pipeline CPU is **220 ms for all 54 proteins**, 99.5% of the rebuild being network wait. `ThreadPoolExecutor(8)` gets a measured **6.0×** for five lines. |
+| **Kotlin** | A JVM backend deletes 2,816 lines of tested working Python to arrive at identical behavior. An Android client is the same app as the Swift one, learned twice. |
+| **DynamoDB** | Right shape, wrong cloud — see Cosmos above. Worth knowing the equivalence, and worth saying that mixing AWS storage with Azure compute is defensible *only* as a cross-cloud identity-federation demo, not on latency or cost. |
+
+**The meta-point.** The exercise was framed as "which of these can I add," and the answer that
+actually improved the project was "four things are broken, and here are the measurements." That
+inversion — measuring before adopting, and being willing to argue against your own tool — is worth
+more in an interview than any single item in the top table.
+
+---
+
+*Generated 2026-08-06, corrected and extended 2026-08-09. Every `[measured]` figure is reproducible
+from this repo at the commit that contains this file; every `[estimated]` figure shows its
+arithmetic or names its comparable. Where an earlier draft was wrong, the correction is stated
+inline rather than silently edited — those passages are marked "an earlier draft."*
 
 **Sources for external figures:**
 [AlphaFold DB in 2024 (Nucleic Acids Research)](https://academic.oup.com/nar/article/52/D1/D368/7337620) ·
