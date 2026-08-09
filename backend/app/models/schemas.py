@@ -69,7 +69,12 @@ class ProteinSearchResult(ProteinSummary):
 
 
 class SimilarProteinResult(ProteinSummary):
+    # Derived from optimal superposition of the two backbone traces, not from
+    # proximity in the layout coordinates. 1.0 is identical shape.
     similarity_score: float
+    # The underlying RMSD, in units of the normalised trace, so a caller can see
+    # the raw quantity rather than only the mapped score.
+    shape_rmsd: float | None = None
 
 
 class ProteinDetail(BaseModel):

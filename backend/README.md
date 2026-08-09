@@ -513,7 +513,7 @@ Mounted at `/api/proteins`.
 | `GET` | `/search` | `list[ProteinSearchResult]` | Search proteins with `q` and `limit`. |
 | `GET` | `/{uniprot_id}/structure-asset` | `ProteinStructureAsset` | Full structure asset for focus mode. |
 | `GET` | `/{uniprot_id}` | `ProteinDetail` | Full protein detail. |
-| `GET` | `/{uniprot_id}/similar` | `list[SimilarProteinResult]` | Similar proteins by coordinate distance. |
+| `GET` | `/{uniprot_id}/similar` | `list[SimilarProteinResult]` | Nearest proteins by backbone shape (Kabsch superposition RMSD), from a table precomputed at build time. |
 
 404 behavior:
 
@@ -645,7 +645,7 @@ Covers:
 Covers:
 
 - Alzheimer disease lookup
-- coordinate-distance similarity ordering
+- structural similarity ordering, and its exclusion of substituted structures
 - structure asset traces and procedural fallback source
 - graph path for direct drug-target links
 - graph search for Alzheimer node

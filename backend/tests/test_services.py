@@ -27,10 +27,39 @@ class ServiceBehaviorTests(unittest.TestCase):
         ids = {protein.uniprot_id for protein in proteins}
         self.assertTrue({"P02649", "P05067", "P10636", "P49768"}.issubset(ids))
 
-    def test_similarity_is_distance_based(self) -> None:
+    def test_similarity_is_ordered_and_carries_the_raw_distance(self) -> None:
         results = self.protein_service.similar("P38398", limit=5)
         self.assertEqual(len(results), 5)
         self.assertGreaterEqual(results[0].similarity_score, results[-1].similarity_score)
+        # The mapped score is monotonic in the underlying RMSD, so the raw
+        # quantity must move the opposite way.
+        self.assertIsNotNone(results[0].shape_rmsd)
+        assert results[0].shape_rmsd is not None and results[-1].shape_rmsd is not None
+        self.assertLessEqual(results[0].shape_rmsd, results[-1].shape_rmsd)
+
+    def test_similarity_ranks_a_known_homolog_first(self) -> None:
+        """KRAS and NRAS are RAS-family homologs with near-identical folds.
+
+        This is the test that distinguishes a real structural metric from the
+        coordinate-proximity one it replaced: under the old implementation the
+        answer was whatever the hand-authored layout happened to place nearby.
+        """
+        results = self.protein_service.similar("P01116", limit=3)  # KRAS
+        self.assertTrue(results, "KRAS should have structural neighbours")
+        self.assertEqual(results[0].gene_name, "NRAS")
+        # Well clear of the ~0.47 median for unrelated pairs in this set.
+        self.assertGreater(results[0].similarity_score, 0.8)
+
+    def test_similarity_is_empty_for_substituted_structures(self) -> None:
+        """A procedural trace is a seeded sine curve, so any neighbour computed
+        from it would describe the generator rather than the protein."""
+        for uniprot_id in ("P51587", "Q13315"):  # BRCA2, ATM
+            self.assertEqual(self.protein_service.similar(uniprot_id, limit=5), [])
+
+    def test_similarity_never_returns_the_query_protein(self) -> None:
+        for uniprot_id in ("P38398", "P01116", "P00533"):
+            returned = {r.uniprot_id for r in self.protein_service.similar(uniprot_id, 10)}
+            self.assertNotIn(uniprot_id, returned)
 
     def test_structure_asset_service_returns_traces_and_fallbacks(self) -> None:
         asset = self.protein_service.get_structure_asset("P38398")

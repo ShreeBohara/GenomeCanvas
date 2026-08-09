@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "proteins": {
     "O15245": {
       "uniprot_id": "O15245",
@@ -92163,5 +92163,3231 @@
       "structure_error": null,
       "similar_ids": []
     }
+  },
+  "structural_neighbours": {
+    "O15245": [
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.607831,
+        "rmsd": 0.322597
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.596411,
+        "rmsd": 0.338348
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.594141,
+        "rmsd": 0.34155
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.545628,
+        "rmsd": 0.416376
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.544113,
+        "rmsd": 0.418927
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.535078,
+        "rmsd": 0.434444
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.530145,
+        "rmsd": 0.443139
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.529273,
+        "rmsd": 0.444691
+      },
+      {
+        "uniprot_id": "P08670",
+        "similarity": 0.523151,
+        "rmsd": 0.455746
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.521338,
+        "rmsd": 0.45907
+      },
+      {
+        "uniprot_id": "P17661",
+        "similarity": 0.518411,
+        "rmsd": 0.464486
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.517105,
+        "rmsd": 0.466921
+      }
+    ],
+    "O60674": [
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.56944,
+        "rmsd": 0.378055
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.552835,
+        "rmsd": 0.404429
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.525401,
+        "rmsd": 0.451654
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.518997,
+        "rmsd": 0.463397
+      },
+      {
+        "uniprot_id": "P42345",
+        "similarity": 0.518819,
+        "rmsd": 0.463726
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.516275,
+        "rmsd": 0.468477
+      },
+      {
+        "uniprot_id": "P09874",
+        "similarity": 0.516264,
+        "rmsd": 0.468496
+      },
+      {
+        "uniprot_id": "P11802",
+        "similarity": 0.516222,
+        "rmsd": 0.468576
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.512827,
+        "rmsd": 0.474987
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.509366,
+        "rmsd": 0.481613
+      },
+      {
+        "uniprot_id": "Q14654",
+        "similarity": 0.508678,
+        "rmsd": 0.482941
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.505131,
+        "rmsd": 0.489841
+      }
+    ],
+    "O96017": [
+      {
+        "uniprot_id": "P12931",
+        "similarity": 0.553166,
+        "rmsd": 0.403888
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.53399,
+        "rmsd": 0.436348
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.533231,
+        "rmsd": 0.437679
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.531923,
+        "rmsd": 0.439985
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.528177,
+        "rmsd": 0.446653
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.526987,
+        "rmsd": 0.44879
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.526326,
+        "rmsd": 0.449981
+      },
+      {
+        "uniprot_id": "Q14654",
+        "similarity": 0.52128,
+        "rmsd": 0.459177
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.519472,
+        "rmsd": 0.462516
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.516969,
+        "rmsd": 0.467175
+      },
+      {
+        "uniprot_id": "Q02750",
+        "similarity": 0.516155,
+        "rmsd": 0.468701
+      },
+      {
+        "uniprot_id": "P68133",
+        "similarity": 0.506527,
+        "rmsd": 0.487115
+      }
+    ],
+    "P00519": [
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.502318,
+        "rmsd": 0.495386
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.500031,
+        "rmsd": 0.499938
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.488023,
+        "rmsd": 0.524541
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.487507,
+        "rmsd": 0.525626
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.483135,
+        "rmsd": 0.534907
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.479257,
+        "rmsd": 0.543282
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.478859,
+        "rmsd": 0.544149
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.476026,
+        "rmsd": 0.550363
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.470873,
+        "rmsd": 0.561857
+      },
+      {
+        "uniprot_id": "P05783",
+        "similarity": 0.469412,
+        "rmsd": 0.565161
+      },
+      {
+        "uniprot_id": "P43246",
+        "similarity": 0.465352,
+        "rmsd": 0.574455
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.463775,
+        "rmsd": 0.57811
+      }
+    ],
+    "P00533": [
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.519572,
+        "rmsd": 0.46233
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.516131,
+        "rmsd": 0.468746
+      },
+      {
+        "uniprot_id": "P40692",
+        "similarity": 0.515769,
+        "rmsd": 0.469427
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.505888,
+        "rmsd": 0.488362
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.504422,
+        "rmsd": 0.491234
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.499352,
+        "rmsd": 0.501298
+      },
+      {
+        "uniprot_id": "P31749",
+        "similarity": 0.496898,
+        "rmsd": 0.506243
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.494192,
+        "rmsd": 0.511752
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.493164,
+        "rmsd": 0.513861
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.491296,
+        "rmsd": 0.517716
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.491117,
+        "rmsd": 0.518088
+      },
+      {
+        "uniprot_id": "P05067",
+        "similarity": 0.489841,
+        "rmsd": 0.52074
+      }
+    ],
+    "P01111": [
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.902712,
+        "rmsd": 0.053886
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.623063,
+        "rmsd": 0.302487
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.607831,
+        "rmsd": 0.322597
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.585963,
+        "rmsd": 0.353297
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.583813,
+        "rmsd": 0.356439
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.582251,
+        "rmsd": 0.358736
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.564289,
+        "rmsd": 0.386071
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.558127,
+        "rmsd": 0.395853
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.544826,
+        "rmsd": 0.417724
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.541918,
+        "rmsd": 0.422648
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.53883,
+        "rmsd": 0.427937
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.53865,
+        "rmsd": 0.428247
+      }
+    ],
+    "P01116": [
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.902712,
+        "rmsd": 0.053886
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.618043,
+        "rmsd": 0.309006
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.594141,
+        "rmsd": 0.34155
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.58309,
+        "rmsd": 0.357501
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.575235,
+        "rmsd": 0.36921
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.574701,
+        "rmsd": 0.370017
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.557034,
+        "rmsd": 0.397611
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.553953,
+        "rmsd": 0.402604
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.537867,
+        "rmsd": 0.429597
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.534663,
+        "rmsd": 0.435168
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.53413,
+        "rmsd": 0.436101
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.533287,
+        "rmsd": 0.437582
+      }
+    ],
+    "P02452": [
+      {
+        "uniprot_id": "P05067",
+        "similarity": 0.461759,
+        "rmsd": 0.582817
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.456676,
+        "rmsd": 0.594867
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.456024,
+        "rmsd": 0.596434
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.454795,
+        "rmsd": 0.599396
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.453993,
+        "rmsd": 0.601337
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.453918,
+        "rmsd": 0.60152
+      },
+      {
+        "uniprot_id": "P40692",
+        "similarity": 0.453817,
+        "rmsd": 0.601766
+      },
+      {
+        "uniprot_id": "P12883",
+        "similarity": 0.451977,
+        "rmsd": 0.60625
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.450177,
+        "rmsd": 0.610674
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.447282,
+        "rmsd": 0.617862
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.445575,
+        "rmsd": 0.622146
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.445399,
+        "rmsd": 0.622589
+      }
+    ],
+    "P02458": [
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.453609,
+        "rmsd": 0.602271
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.453092,
+        "rmsd": 0.603528
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.452111,
+        "rmsd": 0.605922
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.447717,
+        "rmsd": 0.616778
+      },
+      {
+        "uniprot_id": "P05067",
+        "similarity": 0.446577,
+        "rmsd": 0.619626
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.444354,
+        "rmsd": 0.62523
+      },
+      {
+        "uniprot_id": "P08670",
+        "similarity": 0.441381,
+        "rmsd": 0.632808
+      },
+      {
+        "uniprot_id": "P00533",
+        "similarity": 0.44095,
+        "rmsd": 0.633916
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.439734,
+        "rmsd": 0.637052
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.439579,
+        "rmsd": 0.637453
+      },
+      {
+        "uniprot_id": "P02452",
+        "similarity": 0.438091,
+        "rmsd": 0.641314
+      },
+      {
+        "uniprot_id": "P05783",
+        "similarity": 0.436168,
+        "rmsd": 0.646347
+      }
+    ],
+    "P02545": [
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.571965,
+        "rmsd": 0.374179
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.562106,
+        "rmsd": 0.389512
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.550052,
+        "rmsd": 0.409004
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.543391,
+        "rmsd": 0.420148
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.542041,
+        "rmsd": 0.42244
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.542,
+        "rmsd": 0.42251
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.53883,
+        "rmsd": 0.427937
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.534663,
+        "rmsd": 0.435168
+      },
+      {
+        "uniprot_id": "P13569",
+        "similarity": 0.525369,
+        "rmsd": 0.451713
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.519458,
+        "rmsd": 0.462542
+      },
+      {
+        "uniprot_id": "P12931",
+        "similarity": 0.516591,
+        "rmsd": 0.467883
+      },
+      {
+        "uniprot_id": "P08183",
+        "similarity": 0.516345,
+        "rmsd": 0.468346
+      }
+    ],
+    "P02649": [
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.623063,
+        "rmsd": 0.302487
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.618043,
+        "rmsd": 0.309006
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.599332,
+        "rmsd": 0.334262
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.565363,
+        "rmsd": 0.384388
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.563319,
+        "rmsd": 0.387596
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.562106,
+        "rmsd": 0.389512
+      },
+      {
+        "uniprot_id": "P13569",
+        "similarity": 0.55409,
+        "rmsd": 0.40238
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.550382,
+        "rmsd": 0.408459
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.550294,
+        "rmsd": 0.408605
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.540948,
+        "rmsd": 0.424304
+      },
+      {
+        "uniprot_id": "P11802",
+        "similarity": 0.539841,
+        "rmsd": 0.426198
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.535526,
+        "rmsd": 0.433661
+      }
+    ],
+    "P02751": [
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.48471,
+        "rmsd": 0.531544
+      },
+      {
+        "uniprot_id": "P46531",
+        "similarity": 0.474829,
+        "rmsd": 0.553011
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.474339,
+        "rmsd": 0.554098
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.470858,
+        "rmsd": 0.561892
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.465753,
+        "rmsd": 0.57353
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.465288,
+        "rmsd": 0.574604
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.463908,
+        "rmsd": 0.5778
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.463404,
+        "rmsd": 0.578973
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.462504,
+        "rmsd": 0.581072
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.460916,
+        "rmsd": 0.584797
+      },
+      {
+        "uniprot_id": "P42345",
+        "similarity": 0.460589,
+        "rmsd": 0.585565
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.460276,
+        "rmsd": 0.586305
+      }
+    ],
+    "P04626": [
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.524509,
+        "rmsd": 0.453272
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.508939,
+        "rmsd": 0.482435
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.504201,
+        "rmsd": 0.491668
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.502957,
+        "rmsd": 0.49412
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.501612,
+        "rmsd": 0.496786
+      },
+      {
+        "uniprot_id": "P06400",
+        "similarity": 0.497643,
+        "rmsd": 0.504737
+      },
+      {
+        "uniprot_id": "P42345",
+        "similarity": 0.497291,
+        "rmsd": 0.505447
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.497265,
+        "rmsd": 0.505501
+      },
+      {
+        "uniprot_id": "P40692",
+        "similarity": 0.49366,
+        "rmsd": 0.512842
+      },
+      {
+        "uniprot_id": "Q13621",
+        "similarity": 0.490122,
+        "rmsd": 0.520155
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.48985,
+        "rmsd": 0.520721
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.489302,
+        "rmsd": 0.521864
+      }
+    ],
+    "P04637": [
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.52779,
+        "rmsd": 0.447347
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.527597,
+        "rmsd": 0.447692
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.518027,
+        "rmsd": 0.465201
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.515146,
+        "rmsd": 0.470598
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.515031,
+        "rmsd": 0.470816
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.50939,
+        "rmsd": 0.481565
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.505897,
+        "rmsd": 0.488344
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.503244,
+        "rmsd": 0.493553
+      },
+      {
+        "uniprot_id": "P68133",
+        "similarity": 0.497582,
+        "rmsd": 0.504859
+      },
+      {
+        "uniprot_id": "O60674",
+        "similarity": 0.496107,
+        "rmsd": 0.507848
+      },
+      {
+        "uniprot_id": "O96017",
+        "similarity": 0.495717,
+        "rmsd": 0.508639
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.489284,
+        "rmsd": 0.521902
+      }
+    ],
+    "P05067": [
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.522017,
+        "rmsd": 0.457823
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.515197,
+        "rmsd": 0.470502
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.511055,
+        "rmsd": 0.478368
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.504826,
+        "rmsd": 0.49044
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.498731,
+        "rmsd": 0.502545
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.493589,
+        "rmsd": 0.512988
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.490209,
+        "rmsd": 0.519974
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.48986,
+        "rmsd": 0.5207
+      },
+      {
+        "uniprot_id": "P00533",
+        "similarity": 0.489841,
+        "rmsd": 0.52074
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.489037,
+        "rmsd": 0.522417
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.486113,
+        "rmsd": 0.528567
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.485686,
+        "rmsd": 0.529471
+      }
+    ],
+    "P05783": [
+      {
+        "uniprot_id": "P17661",
+        "similarity": 0.746009,
+        "rmsd": 0.170233
+      },
+      {
+        "uniprot_id": "P08670",
+        "similarity": 0.744865,
+        "rmsd": 0.171263
+      },
+      {
+        "uniprot_id": "P43246",
+        "similarity": 0.521667,
+        "rmsd": 0.458466
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.515239,
+        "rmsd": 0.470423
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.511694,
+        "rmsd": 0.477146
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.507998,
+        "rmsd": 0.484255
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.500364,
+        "rmsd": 0.499272
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.497686,
+        "rmsd": 0.504649
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.49277,
+        "rmsd": 0.514673
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.485415,
+        "rmsd": 0.530047
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.484806,
+        "rmsd": 0.531341
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.484127,
+        "rmsd": 0.532787
+      }
+    ],
+    "P06400": [
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.5366,
+        "rmsd": 0.431792
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.52037,
+        "rmsd": 0.460855
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.516079,
+        "rmsd": 0.468845
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.515755,
+        "rmsd": 0.469452
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.509447,
+        "rmsd": 0.481457
+      },
+      {
+        "uniprot_id": "Q14654",
+        "similarity": 0.50843,
+        "rmsd": 0.48342
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.505034,
+        "rmsd": 0.490033
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.504695,
+        "rmsd": 0.490697
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.503509,
+        "rmsd": 0.493031
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.50134,
+        "rmsd": 0.497326
+      },
+      {
+        "uniprot_id": "P04626",
+        "similarity": 0.497643,
+        "rmsd": 0.504737
+      },
+      {
+        "uniprot_id": "P12931",
+        "similarity": 0.495232,
+        "rmsd": 0.509628
+      }
+    ],
+    "P08183": [
+      {
+        "uniprot_id": "P13569",
+        "similarity": 0.544801,
+        "rmsd": 0.417766
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.529848,
+        "rmsd": 0.443666
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.527763,
+        "rmsd": 0.447396
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.526925,
+        "rmsd": 0.448902
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.521433,
+        "rmsd": 0.458896
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.516345,
+        "rmsd": 0.468346
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.513386,
+        "rmsd": 0.473926
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.501415,
+        "rmsd": 0.497178
+      },
+      {
+        "uniprot_id": "P40692",
+        "similarity": 0.498179,
+        "rmsd": 0.503654
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.497848,
+        "rmsd": 0.504323
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.49775,
+        "rmsd": 0.50452
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.495741,
+        "rmsd": 0.50859
+      }
+    ],
+    "P08670": [
+      {
+        "uniprot_id": "P17661",
+        "similarity": 0.752102,
+        "rmsd": 0.164803
+      },
+      {
+        "uniprot_id": "P05783",
+        "similarity": 0.744865,
+        "rmsd": 0.171263
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.523151,
+        "rmsd": 0.455746
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.507272,
+        "rmsd": 0.485665
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.495445,
+        "rmsd": 0.509194
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.495228,
+        "rmsd": 0.509636
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.493672,
+        "rmsd": 0.512818
+      },
+      {
+        "uniprot_id": "P43246",
+        "similarity": 0.492967,
+        "rmsd": 0.514266
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.491499,
+        "rmsd": 0.517297
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.490035,
+        "rmsd": 0.520335
+      },
+      {
+        "uniprot_id": "P68133",
+        "similarity": 0.474884,
+        "rmsd": 0.55289
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.473925,
+        "rmsd": 0.555019
+      }
+    ],
+    "P09874": [
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.52563,
+        "rmsd": 0.45124
+      },
+      {
+        "uniprot_id": "O60674",
+        "similarity": 0.516264,
+        "rmsd": 0.468496
+      },
+      {
+        "uniprot_id": "P42345",
+        "similarity": 0.513311,
+        "rmsd": 0.474068
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.509962,
+        "rmsd": 0.480466
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.502059,
+        "rmsd": 0.4959
+      },
+      {
+        "uniprot_id": "P11802",
+        "similarity": 0.497723,
+        "rmsd": 0.504576
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.496643,
+        "rmsd": 0.50676
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.495861,
+        "rmsd": 0.508347
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.492193,
+        "rmsd": 0.515862
+      },
+      {
+        "uniprot_id": "Q14654",
+        "similarity": 0.484527,
+        "rmsd": 0.531934
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.483598,
+        "rmsd": 0.533917
+      },
+      {
+        "uniprot_id": "P43246",
+        "similarity": 0.480917,
+        "rmsd": 0.53968
+      }
+    ],
+    "P10636": [
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.47731,
+        "rmsd": 0.547536
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.4766,
+        "rmsd": 0.549097
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.475663,
+        "rmsd": 0.551164
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.474364,
+        "rmsd": 0.554042
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.473496,
+        "rmsd": 0.555976
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.47203,
+        "rmsd": 0.559256
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.471855,
+        "rmsd": 0.559649
+      },
+      {
+        "uniprot_id": "P40692",
+        "similarity": 0.47156,
+        "rmsd": 0.56031
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.470956,
+        "rmsd": 0.561671
+      },
+      {
+        "uniprot_id": "P42345",
+        "similarity": 0.467588,
+        "rmsd": 0.569319
+      },
+      {
+        "uniprot_id": "P04626",
+        "similarity": 0.466734,
+        "rmsd": 0.571274
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.465471,
+        "rmsd": 0.57418
+      }
+    ],
+    "P11166": [
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.517101,
+        "rmsd": 0.466929
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.50814,
+        "rmsd": 0.48398
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.506208,
+        "rmsd": 0.487737
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.49344,
+        "rmsd": 0.513295
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.488355,
+        "rmsd": 0.523845
+      },
+      {
+        "uniprot_id": "Q14654",
+        "similarity": 0.480874,
+        "rmsd": 0.539773
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.479838,
+        "rmsd": 0.542019
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.479678,
+        "rmsd": 0.542366
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.479199,
+        "rmsd": 0.543409
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.477719,
+        "rmsd": 0.54664
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.47768,
+        "rmsd": 0.546726
+      },
+      {
+        "uniprot_id": "P42345",
+        "similarity": 0.477487,
+        "rmsd": 0.547148
+      }
+    ],
+    "P11802": [
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.593451,
+        "rmsd": 0.342529
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.549911,
+        "rmsd": 0.409238
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.539841,
+        "rmsd": 0.426198
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.53459,
+        "rmsd": 0.435296
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.530096,
+        "rmsd": 0.443226
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.526353,
+        "rmsd": 0.449934
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.522293,
+        "rmsd": 0.457316
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.521409,
+        "rmsd": 0.458939
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.518781,
+        "rmsd": 0.463798
+      },
+      {
+        "uniprot_id": "O60674",
+        "similarity": 0.516222,
+        "rmsd": 0.468576
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.504188,
+        "rmsd": 0.491694
+      },
+      {
+        "uniprot_id": "P40692",
+        "similarity": 0.502821,
+        "rmsd": 0.494389
+      }
+    ],
+    "P12883": [
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.508575,
+        "rmsd": 0.483139
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.503499,
+        "rmsd": 0.493051
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.502025,
+        "rmsd": 0.495967
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.500724,
+        "rmsd": 0.498554
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.499446,
+        "rmsd": 0.501109
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.498127,
+        "rmsd": 0.50376
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.493385,
+        "rmsd": 0.513407
+      },
+      {
+        "uniprot_id": "P06400",
+        "similarity": 0.491044,
+        "rmsd": 0.518239
+      },
+      {
+        "uniprot_id": "P40692",
+        "similarity": 0.490597,
+        "rmsd": 0.519167
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.48843,
+        "rmsd": 0.523688
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.484483,
+        "rmsd": 0.532027
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.483954,
+        "rmsd": 0.533157
+      }
+    ],
+    "P12931": [
+      {
+        "uniprot_id": "O96017",
+        "similarity": 0.553166,
+        "rmsd": 0.403888
+      },
+      {
+        "uniprot_id": "Q14654",
+        "similarity": 0.517386,
+        "rmsd": 0.466396
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.516591,
+        "rmsd": 0.467883
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.510862,
+        "rmsd": 0.478738
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.509465,
+        "rmsd": 0.481421
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.508529,
+        "rmsd": 0.483228
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.507091,
+        "rmsd": 0.486016
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.50689,
+        "rmsd": 0.486408
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.504712,
+        "rmsd": 0.490664
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.501749,
+        "rmsd": 0.496515
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.50146,
+        "rmsd": 0.497088
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.499783,
+        "rmsd": 0.500435
+      }
+    ],
+    "P13569": [
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.55409,
+        "rmsd": 0.40238
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.545896,
+        "rmsd": 0.415926
+      },
+      {
+        "uniprot_id": "P08183",
+        "similarity": 0.544801,
+        "rmsd": 0.417766
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.534913,
+        "rmsd": 0.434731
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.531695,
+        "rmsd": 0.440388
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.525974,
+        "rmsd": 0.450617
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.525369,
+        "rmsd": 0.451713
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.513397,
+        "rmsd": 0.473905
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.500156,
+        "rmsd": 0.499689
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.499561,
+        "rmsd": 0.500878
+      },
+      {
+        "uniprot_id": "P12931",
+        "similarity": 0.49862,
+        "rmsd": 0.502768
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.493386,
+        "rmsd": 0.513405
+      }
+    ],
+    "P15056": [
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.511615,
+        "rmsd": 0.477297
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.492666,
+        "rmsd": 0.514886
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.492623,
+        "rmsd": 0.514976
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.490853,
+        "rmsd": 0.518635
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.490123,
+        "rmsd": 0.520151
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.486039,
+        "rmsd": 0.528723
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.480384,
+        "rmsd": 0.540835
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.479648,
+        "rmsd": 0.54243
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.47869,
+        "rmsd": 0.544518
+      },
+      {
+        "uniprot_id": "P13569",
+        "similarity": 0.476693,
+        "rmsd": 0.548893
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.472576,
+        "rmsd": 0.55803
+      },
+      {
+        "uniprot_id": "P12931",
+        "similarity": 0.465505,
+        "rmsd": 0.574102
+      }
+    ],
+    "P17661": [
+      {
+        "uniprot_id": "P08670",
+        "similarity": 0.752102,
+        "rmsd": 0.164803
+      },
+      {
+        "uniprot_id": "P05783",
+        "similarity": 0.746009,
+        "rmsd": 0.170233
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.518411,
+        "rmsd": 0.464486
+      },
+      {
+        "uniprot_id": "P43246",
+        "similarity": 0.513096,
+        "rmsd": 0.474476
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.496006,
+        "rmsd": 0.508052
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.493064,
+        "rmsd": 0.514067
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.491687,
+        "rmsd": 0.516907
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.490004,
+        "rmsd": 0.520401
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.487641,
+        "rmsd": 0.525344
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.479548,
+        "rmsd": 0.54265
+      },
+      {
+        "uniprot_id": "P40692",
+        "similarity": 0.475617,
+        "rmsd": 0.551266
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.472609,
+        "rmsd": 0.557957
+      }
+    ],
+    "P31645": [
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.597052,
+        "rmsd": 0.337449
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.544826,
+        "rmsd": 0.417724
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.53413,
+        "rmsd": 0.436101
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.526042,
+        "rmsd": 0.450495
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.520695,
+        "rmsd": 0.460256
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.517174,
+        "rmsd": 0.466792
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.517105,
+        "rmsd": 0.466921
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.507207,
+        "rmsd": 0.48579
+      },
+      {
+        "uniprot_id": "P12931",
+        "similarity": 0.501749,
+        "rmsd": 0.496515
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.500119,
+        "rmsd": 0.499761
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.499815,
+        "rmsd": 0.50037
+      },
+      {
+        "uniprot_id": "P08183",
+        "similarity": 0.49775,
+        "rmsd": 0.50452
+      }
+    ],
+    "P31749": [
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.513564,
+        "rmsd": 0.473589
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.51106,
+        "rmsd": 0.478358
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.497152,
+        "rmsd": 0.505728
+      },
+      {
+        "uniprot_id": "P00533",
+        "similarity": 0.496898,
+        "rmsd": 0.506243
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.496832,
+        "rmsd": 0.506376
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.496707,
+        "rmsd": 0.50663
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.496596,
+        "rmsd": 0.506855
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.48625,
+        "rmsd": 0.528277
+      },
+      {
+        "uniprot_id": "P68133",
+        "similarity": 0.483235,
+        "rmsd": 0.534694
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.482664,
+        "rmsd": 0.535918
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.481999,
+        "rmsd": 0.537347
+      },
+      {
+        "uniprot_id": "P40692",
+        "similarity": 0.478012,
+        "rmsd": 0.546
+      }
+    ],
+    "P35222": [
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.573694,
+        "rmsd": 0.371545
+      },
+      {
+        "uniprot_id": "O60674",
+        "similarity": 0.56944,
+        "rmsd": 0.378055
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.55642,
+        "rmsd": 0.398602
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.550382,
+        "rmsd": 0.408459
+      },
+      {
+        "uniprot_id": "P11802",
+        "similarity": 0.549911,
+        "rmsd": 0.409238
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.546751,
+        "rmsd": 0.414493
+      },
+      {
+        "uniprot_id": "Q14654",
+        "similarity": 0.54045,
+        "rmsd": 0.425155
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.53865,
+        "rmsd": 0.428247
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.537632,
+        "rmsd": 0.430004
+      },
+      {
+        "uniprot_id": "P06400",
+        "similarity": 0.5366,
+        "rmsd": 0.431792
+      },
+      {
+        "uniprot_id": "P42345",
+        "similarity": 0.535671,
+        "rmsd": 0.433409
+      },
+      {
+        "uniprot_id": "O96017",
+        "similarity": 0.53399,
+        "rmsd": 0.436348
+      }
+    ],
+    "P35670": [
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.501305,
+        "rmsd": 0.497396
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.50072,
+        "rmsd": 0.498563
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.499005,
+        "rmsd": 0.501994
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.489491,
+        "rmsd": 0.52147
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.48791,
+        "rmsd": 0.524779
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.482918,
+        "rmsd": 0.535373
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.482783,
+        "rmsd": 0.535662
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.481152,
+        "rmsd": 0.539172
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.481047,
+        "rmsd": 0.5394
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.478632,
+        "rmsd": 0.544643
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.477586,
+        "rmsd": 0.546933
+      },
+      {
+        "uniprot_id": "P08183",
+        "similarity": 0.47658,
+        "rmsd": 0.549142
+      }
+    ],
+    "P38398": [
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.451205,
+        "rmsd": 0.608143
+      },
+      {
+        "uniprot_id": "P42345",
+        "similarity": 0.448413,
+        "rmsd": 0.615042
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.445957,
+        "rmsd": 0.621183
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.445572,
+        "rmsd": 0.622153
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.442315,
+        "rmsd": 0.630415
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.440252,
+        "rmsd": 0.635713
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.440242,
+        "rmsd": 0.635738
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.437327,
+        "rmsd": 0.643308
+      },
+      {
+        "uniprot_id": "P02751",
+        "similarity": 0.437168,
+        "rmsd": 0.643725
+      },
+      {
+        "uniprot_id": "P46531",
+        "similarity": 0.436495,
+        "rmsd": 0.64549
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.434491,
+        "rmsd": 0.650772
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.432815,
+        "rmsd": 0.655227
+      }
+    ],
+    "P40692": [
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.528974,
+        "rmsd": 0.445227
+      },
+      {
+        "uniprot_id": "P00533",
+        "similarity": 0.515769,
+        "rmsd": 0.469427
+      },
+      {
+        "uniprot_id": "P42345",
+        "similarity": 0.507631,
+        "rmsd": 0.484967
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.507436,
+        "rmsd": 0.485345
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.504655,
+        "rmsd": 0.490777
+      },
+      {
+        "uniprot_id": "P11802",
+        "similarity": 0.502821,
+        "rmsd": 0.494389
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.501,
+        "rmsd": 0.498004
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.499447,
+        "rmsd": 0.501107
+      },
+      {
+        "uniprot_id": "P08183",
+        "similarity": 0.498179,
+        "rmsd": 0.503654
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.498162,
+        "rmsd": 0.503689
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.497514,
+        "rmsd": 0.504998
+      },
+      {
+        "uniprot_id": "P43246",
+        "similarity": 0.496183,
+        "rmsd": 0.507692
+      }
+    ],
+    "P42336": [
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.502319,
+        "rmsd": 0.495383
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.502133,
+        "rmsd": 0.495753
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.501638,
+        "rmsd": 0.496734
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.496967,
+        "rmsd": 0.506104
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.495905,
+        "rmsd": 0.508258
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.492397,
+        "rmsd": 0.515441
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.491193,
+        "rmsd": 0.517931
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.487186,
+        "rmsd": 0.526302
+      },
+      {
+        "uniprot_id": "P04626",
+        "similarity": 0.484079,
+        "rmsd": 0.532889
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.482339,
+        "rmsd": 0.536616
+      },
+      {
+        "uniprot_id": "P08183",
+        "similarity": 0.482078,
+        "rmsd": 0.537176
+      },
+      {
+        "uniprot_id": "P05067",
+        "similarity": 0.479035,
+        "rmsd": 0.543764
+      }
+    ],
+    "P42345": [
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.549806,
+        "rmsd": 0.409412
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.546518,
+        "rmsd": 0.414883
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.535671,
+        "rmsd": 0.433409
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.522904,
+        "rmsd": 0.456199
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.519726,
+        "rmsd": 0.462045
+      },
+      {
+        "uniprot_id": "O60674",
+        "similarity": 0.518819,
+        "rmsd": 0.463726
+      },
+      {
+        "uniprot_id": "P09874",
+        "similarity": 0.513311,
+        "rmsd": 0.474068
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.512044,
+        "rmsd": 0.476479
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.511862,
+        "rmsd": 0.476825
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.510099,
+        "rmsd": 0.480202
+      },
+      {
+        "uniprot_id": "P40692",
+        "similarity": 0.507631,
+        "rmsd": 0.484967
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.505628,
+        "rmsd": 0.48887
+      }
+    ],
+    "P43246": [
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.523036,
+        "rmsd": 0.455957
+      },
+      {
+        "uniprot_id": "P05783",
+        "similarity": 0.521667,
+        "rmsd": 0.458466
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.516317,
+        "rmsd": 0.468397
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.514984,
+        "rmsd": 0.470903
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.513325,
+        "rmsd": 0.474041
+      },
+      {
+        "uniprot_id": "P17661",
+        "similarity": 0.513096,
+        "rmsd": 0.474476
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.511431,
+        "rmsd": 0.477648
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.507938,
+        "rmsd": 0.484372
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.503333,
+        "rmsd": 0.493378
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.496551,
+        "rmsd": 0.506947
+      },
+      {
+        "uniprot_id": "P40692",
+        "similarity": 0.496183,
+        "rmsd": 0.507692
+      },
+      {
+        "uniprot_id": "P08670",
+        "similarity": 0.492967,
+        "rmsd": 0.514266
+      }
+    ],
+    "P46531": [
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.499721,
+        "rmsd": 0.500558
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.496014,
+        "rmsd": 0.508035
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.492625,
+        "rmsd": 0.514971
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.475323,
+        "rmsd": 0.551916
+      },
+      {
+        "uniprot_id": "P02751",
+        "similarity": 0.474829,
+        "rmsd": 0.553011
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.474705,
+        "rmsd": 0.553285
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.470646,
+        "rmsd": 0.56237
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.46657,
+        "rmsd": 0.571651
+      },
+      {
+        "uniprot_id": "P05783",
+        "similarity": 0.464787,
+        "rmsd": 0.575761
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.463353,
+        "rmsd": 0.57909
+      },
+      {
+        "uniprot_id": "P17661",
+        "similarity": 0.460001,
+        "rmsd": 0.586953
+      },
+      {
+        "uniprot_id": "P08670",
+        "similarity": 0.456731,
+        "rmsd": 0.594735
+      }
+    ],
+    "P49768": [
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.550294,
+        "rmsd": 0.408605
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.550052,
+        "rmsd": 0.409004
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.549811,
+        "rmsd": 0.409403
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.541918,
+        "rmsd": 0.422648
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.538067,
+        "rmsd": 0.429251
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.537867,
+        "rmsd": 0.429597
+      },
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.520695,
+        "rmsd": 0.460256
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.514569,
+        "rmsd": 0.471686
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.513443,
+        "rmsd": 0.473819
+      },
+      {
+        "uniprot_id": "P12931",
+        "similarity": 0.50689,
+        "rmsd": 0.486408
+      },
+      {
+        "uniprot_id": "O96017",
+        "similarity": 0.505274,
+        "rmsd": 0.489561
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.504268,
+        "rmsd": 0.491536
+      }
+    ],
+    "P60484": [
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.563703,
+        "rmsd": 0.386992
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.558127,
+        "rmsd": 0.395853
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.557034,
+        "rmsd": 0.397611
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.557013,
+        "rmsd": 0.397645
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.544113,
+        "rmsd": 0.418927
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.543131,
+        "rmsd": 0.420587
+      },
+      {
+        "uniprot_id": "P11802",
+        "similarity": 0.530096,
+        "rmsd": 0.443226
+      },
+      {
+        "uniprot_id": "O96017",
+        "similarity": 0.526326,
+        "rmsd": 0.449981
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.521713,
+        "rmsd": 0.458381
+      },
+      {
+        "uniprot_id": "P06400",
+        "similarity": 0.52037,
+        "rmsd": 0.460855
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.518236,
+        "rmsd": 0.464811
+      },
+      {
+        "uniprot_id": "Q02750",
+        "similarity": 0.514414,
+        "rmsd": 0.471981
+      }
+    ],
+    "P68133": [
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.522621,
+        "rmsd": 0.456716
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.519992,
+        "rmsd": 0.461553
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.515645,
+        "rmsd": 0.469659
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.514547,
+        "rmsd": 0.471729
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.510987,
+        "rmsd": 0.478499
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.508726,
+        "rmsd": 0.482848
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.50779,
+        "rmsd": 0.484659
+      },
+      {
+        "uniprot_id": "O96017",
+        "similarity": 0.506527,
+        "rmsd": 0.487115
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.501371,
+        "rmsd": 0.497265
+      },
+      {
+        "uniprot_id": "P04637",
+        "similarity": 0.497582,
+        "rmsd": 0.504859
+      },
+      {
+        "uniprot_id": "P11802",
+        "similarity": 0.489539,
+        "rmsd": 0.521369
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.487076,
+        "rmsd": 0.526534
+      }
+    ],
+    "P68363": [
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.585963,
+        "rmsd": 0.353297
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.574701,
+        "rmsd": 0.370017
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.563319,
+        "rmsd": 0.387596
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.556829,
+        "rmsd": 0.397941
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.55642,
+        "rmsd": 0.398602
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.545628,
+        "rmsd": 0.416376
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.542,
+        "rmsd": 0.42251
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.533512,
+        "rmsd": 0.437186
+      },
+      {
+        "uniprot_id": "P11802",
+        "similarity": 0.526353,
+        "rmsd": 0.449934
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.521713,
+        "rmsd": 0.458381
+      },
+      {
+        "uniprot_id": "O96017",
+        "similarity": 0.519472,
+        "rmsd": 0.462516
+      },
+      {
+        "uniprot_id": "P06400",
+        "similarity": 0.515755,
+        "rmsd": 0.469452
+      }
+    ],
+    "Q00534": [
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.599332,
+        "rmsd": 0.334262
+      },
+      {
+        "uniprot_id": "P11802",
+        "similarity": 0.593451,
+        "rmsd": 0.342529
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.58309,
+        "rmsd": 0.357501
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.582251,
+        "rmsd": 0.358736
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.576789,
+        "rmsd": 0.366867
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.557013,
+        "rmsd": 0.397645
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.542041,
+        "rmsd": 0.42244
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.533609,
+        "rmsd": 0.437016
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.533512,
+        "rmsd": 0.437186
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.53044,
+        "rmsd": 0.442614
+      },
+      {
+        "uniprot_id": "Q02750",
+        "similarity": 0.52719,
+        "rmsd": 0.448425
+      },
+      {
+        "uniprot_id": "O96017",
+        "similarity": 0.526987,
+        "rmsd": 0.44879
+      }
+    ],
+    "Q00987": [
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.51059,
+        "rmsd": 0.479258
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.509612,
+        "rmsd": 0.481139
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.504603,
+        "rmsd": 0.490878
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.50391,
+        "rmsd": 0.49224
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.493785,
+        "rmsd": 0.512585
+      },
+      {
+        "uniprot_id": "P40692",
+        "similarity": 0.492543,
+        "rmsd": 0.51514
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.491906,
+        "rmsd": 0.516454
+      },
+      {
+        "uniprot_id": "P11802",
+        "similarity": 0.491807,
+        "rmsd": 0.516658
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.490537,
+        "rmsd": 0.519291
+      },
+      {
+        "uniprot_id": "Q02750",
+        "similarity": 0.490121,
+        "rmsd": 0.520156
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.487957,
+        "rmsd": 0.524681
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.487917,
+        "rmsd": 0.524765
+      }
+    ],
+    "Q01959": [
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.597052,
+        "rmsd": 0.337449
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.564289,
+        "rmsd": 0.386071
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.558702,
+        "rmsd": 0.394932
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.553953,
+        "rmsd": 0.402604
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.549811,
+        "rmsd": 0.409403
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.543391,
+        "rmsd": 0.420148
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.543131,
+        "rmsd": 0.420587
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.535526,
+        "rmsd": 0.433661
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.535078,
+        "rmsd": 0.434444
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.53044,
+        "rmsd": 0.442614
+      },
+      {
+        "uniprot_id": "P05067",
+        "similarity": 0.522017,
+        "rmsd": 0.457823
+      },
+      {
+        "uniprot_id": "P06400",
+        "similarity": 0.516079,
+        "rmsd": 0.468845
+      }
+    ],
+    "Q02750": [
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.52719,
+        "rmsd": 0.448425
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.517975,
+        "rmsd": 0.465297
+      },
+      {
+        "uniprot_id": "O96017",
+        "similarity": 0.516155,
+        "rmsd": 0.468701
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.514414,
+        "rmsd": 0.471981
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.508886,
+        "rmsd": 0.482539
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.502916,
+        "rmsd": 0.494201
+      },
+      {
+        "uniprot_id": "P11802",
+        "similarity": 0.500092,
+        "rmsd": 0.499816
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.493959,
+        "rmsd": 0.51223
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.493422,
+        "rmsd": 0.513331
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.491745,
+        "rmsd": 0.516786
+      },
+      {
+        "uniprot_id": "Q00987",
+        "similarity": 0.490121,
+        "rmsd": 0.520156
+      },
+      {
+        "uniprot_id": "P06400",
+        "similarity": 0.489049,
+        "rmsd": 0.522392
+      }
+    ],
+    "Q06609": [
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.596411,
+        "rmsd": 0.338348
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.583813,
+        "rmsd": 0.356439
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.576789,
+        "rmsd": 0.366867
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.575235,
+        "rmsd": 0.36921
+      },
+      {
+        "uniprot_id": "P02545",
+        "similarity": 0.571965,
+        "rmsd": 0.374179
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.565363,
+        "rmsd": 0.384388
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.563703,
+        "rmsd": 0.386992
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.558702,
+        "rmsd": 0.394932
+      },
+      {
+        "uniprot_id": "P68363",
+        "similarity": 0.556829,
+        "rmsd": 0.397941
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.546751,
+        "rmsd": 0.414493
+      },
+      {
+        "uniprot_id": "P42345",
+        "similarity": 0.546518,
+        "rmsd": 0.414883
+      },
+      {
+        "uniprot_id": "P13569",
+        "similarity": 0.545896,
+        "rmsd": 0.415926
+      }
+    ],
+    "Q12888": [
+      {
+        "uniprot_id": "P31645",
+        "similarity": 0.443644,
+        "rmsd": 0.62703
+      },
+      {
+        "uniprot_id": "P10636",
+        "similarity": 0.438755,
+        "rmsd": 0.639587
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.437522,
+        "rmsd": 0.642801
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.432876,
+        "rmsd": 0.655065
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.43144,
+        "rmsd": 0.65891
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.428932,
+        "rmsd": 0.665685
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.428324,
+        "rmsd": 0.66734
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.427074,
+        "rmsd": 0.670759
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.426358,
+        "rmsd": 0.672723
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.422764,
+        "rmsd": 0.682693
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.421756,
+        "rmsd": 0.68552
+      },
+      {
+        "uniprot_id": "P04626",
+        "similarity": 0.419749,
+        "rmsd": 0.691189
+      }
+    ],
+    "Q13535": [
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.573694,
+        "rmsd": 0.371545
+      },
+      {
+        "uniprot_id": "O60674",
+        "similarity": 0.552835,
+        "rmsd": 0.404429
+      },
+      {
+        "uniprot_id": "P42345",
+        "similarity": 0.549806,
+        "rmsd": 0.409412
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.541883,
+        "rmsd": 0.422708
+      },
+      {
+        "uniprot_id": "Q14654",
+        "similarity": 0.52219,
+        "rmsd": 0.457506
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.521338,
+        "rmsd": 0.45907
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.520035,
+        "rmsd": 0.461474
+      },
+      {
+        "uniprot_id": "P11802",
+        "similarity": 0.518781,
+        "rmsd": 0.463798
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.518236,
+        "rmsd": 0.464811
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.507136,
+        "rmsd": 0.485929
+      },
+      {
+        "uniprot_id": "P04626",
+        "similarity": 0.502957,
+        "rmsd": 0.49412
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.502103,
+        "rmsd": 0.495811
+      }
+    ],
+    "Q13621": [
+      {
+        "uniprot_id": "Q14654",
+        "similarity": 0.525024,
+        "rmsd": 0.452338
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.508583,
+        "rmsd": 0.483123
+      },
+      {
+        "uniprot_id": "Q9UNQ0",
+        "similarity": 0.507941,
+        "rmsd": 0.484367
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.504298,
+        "rmsd": 0.491476
+      },
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.501644,
+        "rmsd": 0.496722
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.499152,
+        "rmsd": 0.501699
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.498593,
+        "rmsd": 0.502822
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.491243,
+        "rmsd": 0.517827
+      },
+      {
+        "uniprot_id": "P04626",
+        "similarity": 0.490122,
+        "rmsd": 0.520155
+      },
+      {
+        "uniprot_id": "P49768",
+        "similarity": 0.488878,
+        "rmsd": 0.522749
+      },
+      {
+        "uniprot_id": "O60674",
+        "similarity": 0.488873,
+        "rmsd": 0.522761
+      },
+      {
+        "uniprot_id": "P06400",
+        "similarity": 0.48675,
+        "rmsd": 0.527221
+      }
+    ],
+    "Q14654": [
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.54045,
+        "rmsd": 0.425155
+      },
+      {
+        "uniprot_id": "Q13621",
+        "similarity": 0.525024,
+        "rmsd": 0.452338
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.52219,
+        "rmsd": 0.457506
+      },
+      {
+        "uniprot_id": "O96017",
+        "similarity": 0.52128,
+        "rmsd": 0.459177
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.519365,
+        "rmsd": 0.462715
+      },
+      {
+        "uniprot_id": "P12931",
+        "similarity": 0.517386,
+        "rmsd": 0.466396
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.514688,
+        "rmsd": 0.471463
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.512614,
+        "rmsd": 0.475393
+      },
+      {
+        "uniprot_id": "Q01959",
+        "similarity": 0.51124,
+        "rmsd": 0.478015
+      },
+      {
+        "uniprot_id": "O60674",
+        "similarity": 0.508678,
+        "rmsd": 0.482941
+      },
+      {
+        "uniprot_id": "P06400",
+        "similarity": 0.50843,
+        "rmsd": 0.48342
+      },
+      {
+        "uniprot_id": "P60484",
+        "similarity": 0.506492,
+        "rmsd": 0.487183
+      }
+    ],
+    "Q9UNQ0": [
+      {
+        "uniprot_id": "P02649",
+        "similarity": 0.540948,
+        "rmsd": 0.424304
+      },
+      {
+        "uniprot_id": "P35222",
+        "similarity": 0.537632,
+        "rmsd": 0.430004
+      },
+      {
+        "uniprot_id": "P01111",
+        "similarity": 0.528124,
+        "rmsd": 0.446748
+      },
+      {
+        "uniprot_id": "Q06609",
+        "similarity": 0.526653,
+        "rmsd": 0.449393
+      },
+      {
+        "uniprot_id": "P01116",
+        "similarity": 0.524571,
+        "rmsd": 0.453159
+      },
+      {
+        "uniprot_id": "P04626",
+        "similarity": 0.524509,
+        "rmsd": 0.453272
+      },
+      {
+        "uniprot_id": "P42345",
+        "similarity": 0.522904,
+        "rmsd": 0.456199
+      },
+      {
+        "uniprot_id": "Q13535",
+        "similarity": 0.520035,
+        "rmsd": 0.461474
+      },
+      {
+        "uniprot_id": "Q00534",
+        "similarity": 0.515436,
+        "rmsd": 0.470052
+      },
+      {
+        "uniprot_id": "O60674",
+        "similarity": 0.512827,
+        "rmsd": 0.474987
+      },
+      {
+        "uniprot_id": "O15245",
+        "similarity": 0.512125,
+        "rmsd": 0.476324
+      },
+      {
+        "uniprot_id": "Q13621",
+        "similarity": 0.507941,
+        "rmsd": 0.484367
+      }
+    ]
   }
 }

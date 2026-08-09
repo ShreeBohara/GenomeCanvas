@@ -112,31 +112,38 @@ class ProteinService:
         ]
 
     def similar(self, uniprot_id: str, limit: int) -> list[SimilarProteinResult]:
+        """Nearest structural neighbours, from the precomputed shape table.
+
+        This used to rank by Euclidean distance between the layout coordinates
+        in proteins.json. Those coordinates are hand-authored, so the answer was
+        circular -- it could only return what the layout already asserted. The
+        table consulted here is built from optimal superposition of the actual
+        alpha-carbon traces.
+
+        Returns nothing for the two proteins with no AlphaFold model: their
+        traces are procedurally generated, so any neighbour computed from one
+        would describe the generator rather than the protein.
+        """
         target = self.repository.get_protein(uniprot_id)
         if target is None:
             return []
 
-        ranked: list[tuple[float, ProteinDetail]] = []
-        for protein in self.repository.list_proteins():
-            if protein.uniprot_id == target.uniprot_id:
+        neighbours = self.repository.structural_neighbours.get(target.uniprot_id, [])
+        results: list[SimilarProteinResult] = []
+        for entry in neighbours[:limit]:
+            protein = self.repository.get_protein(str(entry["uniprot_id"]))
+            if protein is None:
                 continue
-            distance = math.dist(
-                [target.umap_x, target.umap_y, target.umap_z],
-                [protein.umap_x, protein.umap_y, protein.umap_z],
+            results.append(
+                SimilarProteinResult.model_validate(
+                    {
+                        **self._with_visual_metadata(protein),
+                        "similarity_score": round(float(entry["similarity"]), 4),
+                        "shape_rmsd": round(float(entry["rmsd"]), 4),
+                    }
+                )
             )
-            similarity = 1 / (1 + distance)
-            ranked.append((similarity, protein))
-
-        ranked.sort(key=lambda item: (-item[0], item[1].gene_name))
-        return [
-            SimilarProteinResult.model_validate(
-                {
-                    **self._with_visual_metadata(protein),
-                    "similarity_score": round(score, 4),
-                }
-            )
-            for score, protein in ranked[:limit]
-        ]
+        return results
 
     def proteins_for_disease(self, query: str, limit: int = 8) -> list[ProteinDetail]:
         generic_tokens = {"disease", "syndrome", "cancer", "disorder", "type"}

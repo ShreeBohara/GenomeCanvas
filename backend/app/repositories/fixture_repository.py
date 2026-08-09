@@ -17,6 +17,7 @@ class FixtureRepository:
         self.edges: list[GraphEdge] = []
         self.adjacency: dict[str, list[tuple[str, GraphEdge]]] = defaultdict(list)
         self.structure_assets_by_id: dict[str, ProteinStructureAsset] = {}
+        self.structural_neighbours: dict[str, list[dict]] = {}
         self.refresh()
 
     def refresh(self) -> None:
@@ -44,8 +45,13 @@ class FixtureRepository:
                 uniprot_id: ProteinStructureAsset.model_validate(asset)
                 for uniprot_id, asset in payload.get("proteins", {}).items()
             }
+            # Precomputed at build time from the backbone traces. Empty for
+            # proteins with no AlphaFold model, and absent entirely for asset
+            # files written before version 2.
+            self.structural_neighbours = payload.get("structural_neighbours", {})
         else:
             self.structure_assets_by_id = {}
+            self.structural_neighbours = {}
 
     def list_proteins(self) -> list[ProteinDetail]:
         return list(self.proteins_by_id.values())

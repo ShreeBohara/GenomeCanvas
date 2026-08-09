@@ -385,7 +385,7 @@ The backend listens on `http://localhost:8000` by default.
 | `GET` | `/api/proteins/universe-assets` | Returns low and mid structure traces for all proteins. |
 | `GET` | `/api/proteins/search?q=&limit=` | Searches proteins and returns scored matches. |
 | `GET` | `/api/proteins/{uniprot_id}` | Returns full protein detail. |
-| `GET` | `/api/proteins/{uniprot_id}/similar?limit=` | Returns nearest proteins by 3D UMAP coordinate distance. |
+| `GET` | `/api/proteins/{uniprot_id}/similar?limit=` | Nearest proteins by backbone shape, from optimal superposition of the alpha-carbon traces. Empty for proteins with no AlphaFold model. |
 | `GET` | `/api/proteins/{uniprot_id}/structure-asset` | Returns full structure asset, focus trace, camera hint, confidence summary, and similar IDs. |
 
 ### Graph
@@ -623,6 +623,8 @@ Configuration is in the repo. Neither target has been provisioned yet, so there 
 - The graph is in memory, not Neo4j or another persistent graph store.
 - Chat is grounded by local fixture logic; the optional LLM narrator is not allowed to invent facts according to its system prompt, but it is still best treated as explanatory text over fixture data.
 - `GraphNodeType` includes `go_term` and `pathway`, but the current generated graph fixture contains disease, protein, drug, and trial nodes.
+- The `umap_x/y/z` fields on a protein are a **curated layout**, not the output of UMAP over protein embeddings. They are hand-authored to keep the universe legible, and the field names are historical. Nothing is derived from them: similarity comes from the backbone traces, not from these coordinates. Producing real coordinates would require the amino-acid sequences, which `proteins.json` does not carry, plus an embedding model — see the spec's Phase 3.
+- Structural similarity compares traces point-wise by arc-length position, not by sequence alignment. It identifies close homologs decisively — KRAS and NRAS score 0.90 against a ~0.47 median for unrelated pairs — but it is weaker on distant homologs whose domain architecture differs, where a true structural alignment such as TM-align would do better.
 - Entity resolution in chat requires whole-term matches on gene symbols and accessions, and scores graph queries only on non-stopword tokens above a `0.34` floor. Both guards exist because plain substring matching resolved "describe" to gene `DES` and "show me the app" to an unrelated disease. Loosening either reintroduces confidently wrong answers; `backend/tests/test_resolution.py` pins the behavior.
 - This project is not intended for medical diagnosis, treatment selection, or clinical decision-making.
 

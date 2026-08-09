@@ -28,7 +28,10 @@ export interface ProteinSearchResult extends ProteinSummary {
 }
 
 export interface SimilarProteinResult extends ProteinSummary {
+  // Structural: derived from optimal superposition of the two backbone traces,
+  // not from proximity in the layout coordinates. 1.0 is identical shape.
   similarity_score: number;
+  shape_rmsd: number | null;
 }
 
 export interface DiseaseReference {

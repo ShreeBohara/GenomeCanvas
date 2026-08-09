@@ -9,13 +9,23 @@ from pathlib import Path
 from statistics import mean
 from typing import Any
 
+from app.repositories.structural_similarity import (
+    build_neighbour_table,
+    traces_from_assets,
+)
+
 
 LOGGER = logging.getLogger(__name__)
 
 
 RawDict = dict[str, Any]
-ASSET_VERSION = 1
+# 2 adds structure_error, drops confidence_palette for substituted structures,
+# and adds the precomputed structural_neighbours table.
+ASSET_VERSION = 2
 ASSET_FILE_NAME = "protein_structure_assets.json"
+# Deeper than any caller asks for, so the stored table can serve a larger
+# `limit` later without a rebuild.
+NEIGHBOUR_LIMIT = 12
 
 CATEGORY_HALO_COLORS = {
     "enzyme": "#8de285",
@@ -305,9 +315,17 @@ def build_structure_assets(data_dir: Path, max_workers: int = 8) -> RawDict:
             ", ".join(substituted),
         )
 
+    # Structural neighbours are derived from the traces above, so they are
+    # computed here rather than at request time: it is an all-pairs comparison,
+    # and the inputs only change when this builder runs.
+    neighbours = build_neighbour_table(
+        traces_from_assets(records.values()), limit=NEIGHBOUR_LIMIT
+    )
+
     return {
         "version": ASSET_VERSION,
         "proteins": dict(sorted(records.items())),
+        "structural_neighbours": neighbours,
     }
 
 
