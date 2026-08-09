@@ -54,6 +54,44 @@ jobs:
         working-directory: frontend
         run: npm run build
 
+  # Builds the actual deployment artifact and starts it. The unit suites all run
+  # against the repository checkout, where `backend/app/` sits under a `backend/`
+  # parent; the image copies `app/` to `/srv/app/`. A path that resolved from the
+  # repo root worked in every test and failed in every container, so nothing here
+  # caught it until a deploy did. This job is the one that runs the real image.
+  image:
+    name: Container image (build + boot)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        working-directory: backend
+        run: docker build -t genomecanvas-api:ci .
+      - name: Start container
+        run: docker run -d --name api -p 8000:8000 genomecanvas-api:ci
+      - name: Wait for health
+        run: |
+          for _ in $(seq 1 30); do
+            if curl -sf http://localhost:8000/api/health; then
+              echo
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "container did not become healthy; logs follow" >&2
+          docker logs api >&2
+          exit 1
+      - name: Assert fixtures actually loaded
+        # A 200 from /api/health is not sufficient: it would also pass if the
+        # repository had been constructed empty. Assert the real counts.
+        run: |
+          health=$(curl -sf http://localhost:8000/api/health)
+          echo "$health"
+          echo "$health" | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d["proteins_loaded"]==54, d; assert d["nodes_loaded"]==187, d; print("fixture counts OK")'
+      - name: Container logs
+        if: always()
+        run: docker logs api
+
   e2e:
     name: Playwright smoke
     runs-on: ubuntu-latest
