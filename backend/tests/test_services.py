@@ -89,5 +89,55 @@ class ServiceBehaviorTests(unittest.TestCase):
         self.assertEqual(matches[0].id, "disease:alzheimer_s_disease")
 
 
+class StructureIntegrityTests(unittest.TestCase):
+    """A substituted structure must be distinguishable from a real one.
+
+    The builder falls back to a procedural trace when AlphaFold has no model.
+    That fallback is correct -- AlphaFold DB publishes no single full-length
+    model above 2,700 residues, so BRCA2 and ATM legitimately 404 -- but it used
+    to be silent, and the synthetic curve's values were reported as pLDDT.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.service = ProteinService(FixtureRepository(get_settings().data_dir))
+
+    def test_procedural_assets_report_no_confidence(self) -> None:
+        asset = self.service.get_structure_asset("P51587")  # BRCA2, 3418 aa
+        assert asset is not None
+        self.assertEqual(asset.structure_source, "procedural")
+        self.assertIsNone(
+            asset.confidence_palette,
+            "a synthetic trace must not report a pLDDT palette",
+        )
+
+    def test_procedural_assets_record_why_they_were_substituted(self) -> None:
+        for uniprot_id in ("P51587", "Q13315"):
+            asset = self.service.get_structure_asset(uniprot_id)
+            assert asset is not None
+            self.assertIsNotNone(asset.structure_error)
+            self.assertIn("404", asset.structure_error or "")
+
+    def test_alphafold_assets_still_report_confidence(self) -> None:
+        asset = self.service.get_structure_asset("P38398")  # BRCA1
+        assert asset is not None
+        self.assertEqual(asset.structure_source, "alphafold")
+        self.assertIsNotNone(asset.confidence_palette)
+        assert asset.confidence_palette is not None
+        self.assertGreater(asset.confidence_palette.average, 0)
+        self.assertIsNone(asset.structure_error)
+
+    def test_substitution_count_is_pinned(self) -> None:
+        """Guards the silent-fabrication failure mode: if a future rebuild starts
+        substituting more proteins, this fails instead of quietly shipping them."""
+        repo = FixtureRepository(get_settings().data_dir)
+        substituted = [
+            a.uniprot_id
+            for a in repo.structure_assets_by_id.values()
+            if a.structure_source != "alphafold"
+        ]
+        self.assertEqual(sorted(substituted), ["P51587", "Q13315"])
+
+
 if __name__ == "__main__":
     unittest.main()

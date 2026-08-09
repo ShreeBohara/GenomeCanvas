@@ -100,9 +100,12 @@ export interface ProteinUniverseAsset {
 export interface ProteinStructureAsset extends ProteinUniverseAsset {
   focus_trace: StructureTrace;
   camera: CameraHint;
-  confidence_palette: ConfidencePalette;
+  // Null when structure_source is not "alphafold". A procedural trace's
+  // confidence values are synthetic, so there is no pLDDT to report.
+  confidence_palette: ConfidencePalette | null;
   alphafold_pdb_url: string | null;
   structure_source: string;
+  structure_error: string | null;
   similar_ids: string[];
 }
 

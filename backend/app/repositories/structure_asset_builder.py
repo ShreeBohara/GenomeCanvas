@@ -1,11 +1,16 @@
 from __future__ import annotations
 
 import json
+import logging
 import math
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from statistics import mean
 from typing import Any
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 RawDict = dict[str, Any]
@@ -202,6 +207,7 @@ def _procedural_trace(protein: RawDict) -> tuple[list[list[float]], list[float],
 
 def _build_asset_record(protein: RawDict) -> RawDict:
     structure_source = "alphafold"
+    structure_error: str | None = None
     pdb_url: str | None = None
     try:
         entry = _resolve_prediction_entry(protein["alphafold_url"], protein["uniprot_id"])
@@ -211,8 +217,21 @@ def _build_asset_record(protein: RawDict) -> RawDict:
 
         trace_points, confidence = _parse_pdb_trace(_fetch_text(pdb_url))
         normalized_points, bounds_radius = _center_and_normalize(trace_points)
-    except Exception:
+    except Exception as exc:
+        # The fallback is deliberate -- AlphaFold DB publishes no single
+        # full-length model above 2,700 residues, so BRCA2 and ATM 404 -- but it
+        # used to be silent. At 54 proteins that hid two substitutions; against a
+        # rate-limited API at ten thousand it would fabricate a large fraction of
+        # the dataset and still report success. Record what failed and why.
         structure_source = "procedural"
+        structure_error = f"{type(exc).__name__}: {exc}"
+        pdb_url = None
+        LOGGER.warning(
+            "%s (%s): no AlphaFold structure, substituting a procedural trace -- %s",
+            protein["gene_name"],
+            protein["uniprot_id"],
+            structure_error,
+        )
         normalized_points, confidence, bounds_radius = _procedural_trace(protein)
 
     low_points, low_confidence = _resample_trace(
@@ -235,18 +254,56 @@ def _build_asset_record(protein: RawDict) -> RawDict:
         "mid_trace": {"points": mid_points, "confidence": mid_confidence},
         "focus_trace": {"points": focus_points, "confidence": focus_confidence},
         "camera": _camera_hint(),
-        "confidence_palette": _confidence_palette(confidence),
+        # A procedural trace's "confidence" is a sine wave, not pLDDT. Reporting
+        # a palette for it would put fabricated numbers next to real ones in the
+        # same UI card, so there is no palette to report.
+        "confidence_palette": (
+            _confidence_palette(confidence) if structure_source == "alphafold" else None
+        ),
         "alphafold_pdb_url": pdb_url,
         "structure_source": structure_source,
+        "structure_error": structure_error,
         "similar_ids": [],
     }
 
 
-def build_structure_assets(data_dir: Path) -> RawDict:
+def build_structure_assets(data_dir: Path, max_workers: int = 8) -> RawDict:
+    """Fetch and reduce every AlphaFold model referenced by proteins.json.
+
+    Almost all of the wall clock here is waiting on EBI: two requests per
+    protein, and the arithmetic across all of them is a fifth of a second. The
+    work is therefore pooled rather than serialised. Bounded at 8 to stay a
+    polite client of a free public API; urllib releases the GIL around socket
+    reads, so threads are sufficient and no event loop is needed.
+    """
     proteins = _load_json(data_dir / "proteins.json")
     records: dict[str, RawDict] = {}
-    for protein in proteins:
-        records[protein["uniprot_id"]] = _build_asset_record(protein)
+
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        futures = {
+            pool.submit(_build_asset_record, protein): protein for protein in proteins
+        }
+        for future in as_completed(futures):
+            protein = futures[future]
+            # _build_asset_record handles its own failures and falls back, so an
+            # exception escaping it is a bug in the builder rather than a bad
+            # response. Let it fail the build instead of silently dropping a
+            # protein from the output.
+            records[protein["uniprot_id"]] = future.result()
+
+    substituted = sorted(
+        uniprot_id
+        for uniprot_id, record in records.items()
+        if record["structure_source"] != "alphafold"
+    )
+    if substituted:
+        LOGGER.warning(
+            "%d of %d proteins have no AlphaFold structure and use a procedural "
+            "trace: %s",
+            len(substituted),
+            len(records),
+            ", ".join(substituted),
+        )
 
     return {
         "version": ASSET_VERSION,

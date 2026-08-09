@@ -132,9 +132,15 @@ class ProteinUniverseAsset(BaseModel):
 class ProteinStructureAsset(ProteinUniverseAsset):
     focus_trace: StructureTrace
     camera: CameraHint
-    confidence_palette: ConfidencePalette
+    # Absent when structure_source is not "alphafold". A procedural trace's
+    # confidence values are a sine wave, not pLDDT, and presenting them in the
+    # same card as real per-residue confidence would be a fabrication.
+    confidence_palette: ConfidencePalette | None = None
     alphafold_pdb_url: str | None = None
     structure_source: str = "alphafold"
+    # Why the AlphaFold fetch failed, when it did. Kept so a substitution is
+    # visible in the data rather than only in the build log.
+    structure_error: str | None = None
     similar_ids: list[str] = Field(default_factory=list)
 
 

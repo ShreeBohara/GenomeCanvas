@@ -99,7 +99,7 @@ export function StructureViewport({
             </div>
           </section>
 
-          {structureAsset ? (
+          {structureAsset?.confidence_palette ? (
             <section className="info-card">
               <div className="panel-section-title">Confidence palette</div>
               <div className="metric-grid">
@@ -119,6 +119,24 @@ export function StructureViewport({
                   <span>Source</span>
                   <strong>{structureAsset.structure_source}</strong>
                 </div>
+              </div>
+            </section>
+          ) : structureAsset ? (
+            // No palette means the trace is not an AlphaFold prediction, so there
+            // is no per-residue confidence to report. Say that, rather than
+            // showing numbers derived from a synthetic curve.
+            <section className="info-card">
+              <div className="panel-section-title">Confidence unavailable</div>
+              <p className="info-body">
+                AlphaFold DB has no single full-length model for this protein, so the
+                shape shown here is a placeholder rather than a prediction. There is
+                no pLDDT to report and the colouring is not confidence.
+              </p>
+              <div className="chip-row">
+                <span className="inline-chip subtle">{structureAsset.structure_source}</span>
+                {structureAsset.structure_error ? (
+                  <span className="inline-chip subtle">{structureAsset.structure_error}</span>
+                ) : null}
               </div>
             </section>
           ) : null}

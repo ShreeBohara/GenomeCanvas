@@ -1705,6 +1705,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-O15245-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "O60674": {
@@ -3411,6 +3412,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-O60674-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "O96017": {
@@ -5117,6 +5119,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-O96017-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P00519": {
@@ -6823,6 +6826,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P00519-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P00533": {
@@ -8529,6 +8533,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P00533-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P01111": {
@@ -10235,6 +10240,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P01111-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P01116": {
@@ -11941,6 +11947,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P01116-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P02452": {
@@ -13647,6 +13654,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P02452-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P02458": {
@@ -15353,6 +15361,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P02458-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P02545": {
@@ -17059,6 +17068,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P02545-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P02649": {
@@ -18765,6 +18775,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P02649-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P02751": {
@@ -20471,6 +20482,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P02751-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P04626": {
@@ -22177,6 +22189,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P04626-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P04637": {
@@ -23883,6 +23896,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P04637-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P05067": {
@@ -25589,6 +25603,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P05067-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P05783": {
@@ -27295,6 +27310,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P05783-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P06400": {
@@ -29001,6 +29017,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P06400-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P08183": {
@@ -30707,6 +30724,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P08183-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P08670": {
@@ -32413,6 +32431,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P08670-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P09874": {
@@ -34119,6 +34138,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P09874-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P10636": {
@@ -35825,6 +35845,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P10636-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P11166": {
@@ -37531,6 +37552,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P11166-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P11802": {
@@ -39237,6 +39259,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P11802-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P12883": {
@@ -40943,6 +40966,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P12883-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P12931": {
@@ -42649,6 +42673,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P12931-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P13569": {
@@ -44355,6 +44380,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P13569-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P15056": {
@@ -46061,6 +46087,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P15056-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P17661": {
@@ -47767,6 +47794,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P17661-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P31645": {
@@ -49473,6 +49501,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P31645-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P31749": {
@@ -51179,6 +51208,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P31749-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P35222": {
@@ -52885,6 +52915,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P35222-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P35670": {
@@ -54591,6 +54622,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P35670-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P38398": {
@@ -56297,6 +56329,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P38398-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P40692": {
@@ -58003,6 +58036,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P40692-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P42336": {
@@ -59709,6 +59743,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P42336-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P42345": {
@@ -61415,6 +61450,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P42345-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P43246": {
@@ -63121,6 +63157,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P43246-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P46531": {
@@ -64827,6 +64864,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P46531-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P49768": {
@@ -66533,6 +66571,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P49768-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P51587": {
@@ -68228,17 +68267,10 @@
         ],
         "fov": 34
       },
-      "confidence_palette": {
-        "average": 48.64,
-        "minimum": 35.08,
-        "maximum": 57.0,
-        "very_high_fraction": 0.0,
-        "confident_fraction": 0.0,
-        "low_fraction": 0.5,
-        "very_low_fraction": 0.5
-      },
+      "confidence_palette": null,
       "alphafold_pdb_url": null,
       "structure_source": "procedural",
+      "structure_error": "HTTPError: HTTP Error 404: Not Found",
       "similar_ids": []
     },
     "P60484": {
@@ -69945,6 +69977,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P60484-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P68133": {
@@ -71651,6 +71684,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P68133-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "P68363": {
@@ -73357,6 +73391,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P68363-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "Q00534": {
@@ -75063,6 +75098,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q00534-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "Q00987": {
@@ -76769,6 +76805,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q00987-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "Q01959": {
@@ -78475,6 +78512,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q01959-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "Q02750": {
@@ -80181,6 +80219,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q02750-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "Q06609": {
@@ -81887,6 +81926,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q06609-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "Q12888": {
@@ -83593,6 +83633,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q12888-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "Q13315": {
@@ -85288,17 +85329,10 @@
         ],
         "fov": 34
       },
-      "confidence_palette": {
-        "average": 49.52,
-        "minimum": 35.02,
-        "maximum": 57.0,
-        "very_high_fraction": 0.0,
-        "confident_fraction": 0.0,
-        "low_fraction": 0.5444,
-        "very_low_fraction": 0.4556
-      },
+      "confidence_palette": null,
       "alphafold_pdb_url": null,
       "structure_source": "procedural",
+      "structure_error": "HTTPError: HTTP Error 404: Not Found",
       "similar_ids": []
     },
     "Q13535": {
@@ -87005,6 +87039,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q13535-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "Q13621": {
@@ -88711,6 +88746,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q13621-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "Q14654": {
@@ -90417,6 +90453,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q14654-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     },
     "Q9UNQ0": {
@@ -92123,6 +92160,7 @@
       },
       "alphafold_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q9UNQ0-F1-model_v6.pdb",
       "structure_source": "alphafold",
+      "structure_error": null,
       "similar_ids": []
     }
   }
