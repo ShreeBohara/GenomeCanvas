@@ -37,7 +37,7 @@ class ProteinService:
         backfills the geometry used on hover and selection.
         """
         assets = sorted(
-            self.repository.structure_assets_by_id.values(),
+            self.repository.list_structure_assets(),
             key=lambda asset: asset.uniprot_id,
         )
         include_low = tier in ("low", "all")
@@ -128,7 +128,7 @@ class ProteinService:
         if target is None:
             return []
 
-        neighbours = self.repository.structural_neighbours.get(target.uniprot_id, [])
+        neighbours = self.repository.get_structural_neighbours(target.uniprot_id)
         results: list[SimilarProteinResult] = []
         for entry in neighbours[:limit]:
             protein = self.repository.get_protein(str(entry["uniprot_id"]))

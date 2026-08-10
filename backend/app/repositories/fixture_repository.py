@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 import json
 from pathlib import Path
+from typing import Iterable
 
 from app.models.schemas import GraphEdge, GraphNode, ProteinDetail, ProteinStructureAsset
 from app.repositories.fixture_builder import build_fixture_bundle
@@ -73,3 +74,44 @@ class FixtureRepository:
 
     def neighbors(self, node_id: str) -> list[tuple[str, GraphEdge]]:
         return list(self.adjacency.get(node_id, []))
+
+    # ------------------------------------------------------------------
+    # The methods below exist so callers never touch the backing dicts.
+    #
+    # Services used to reach in for `nodes_by_id` and `proteins_by_id`
+    # directly. That works against an in-memory store and nothing else: a
+    # database-backed repository cannot hand out a dict of every node without
+    # materialising the whole graph, which is the opposite of why you would
+    # use one. Every access is expressed here as a question that any backing
+    # store can answer -- does this node exist, give me these nodes, how many
+    # are there -- so the implementation can change without touching a service.
+    # ------------------------------------------------------------------
+
+    def has_node(self, node_id: str) -> bool:
+        return node_id in self.nodes_by_id
+
+    def get_nodes(self, node_ids: Iterable[str]) -> list[GraphNode]:
+        """Nodes for the given ids, skipping any that do not resolve.
+
+        Batched deliberately: this is the call that becomes one round trip
+        against a real database, where a per-id loop would become N.
+        """
+        resolved = (self.nodes_by_id.get(node_id) for node_id in node_ids)
+        return [node for node in resolved if node is not None]
+
+    def list_structure_assets(self) -> list[ProteinStructureAsset]:
+        return list(self.structure_assets_by_id.values())
+
+    def get_structural_neighbours(self, uniprot_id: str) -> list[dict]:
+        """Precomputed shape-distance ranking for one protein.
+
+        Empty for the two proteins with no AlphaFold model, and empty for every
+        protein when reading an asset file written before the table existed.
+        """
+        return self.structural_neighbours.get(uniprot_id.upper(), [])
+
+    def count_proteins(self) -> int:
+        return len(self.proteins_by_id)
+
+    def count_nodes(self) -> int:
+        return len(self.nodes_by_id)

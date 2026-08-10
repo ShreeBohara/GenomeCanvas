@@ -20,7 +20,7 @@ class GraphService:
         self.repository = repository
 
     def get_neighborhood(self, node_id: str, hops: int = 1) -> GraphData:
-        if node_id not in self.repository.nodes_by_id:
+        if not self.repository.has_node(node_id):
             return GraphData()
 
         visited = {node_id}
@@ -39,7 +39,7 @@ class GraphService:
             if not frontier:
                 break
 
-        nodes = [self.repository.nodes_by_id[node_id] for node_id in sorted(visited)]
+        nodes = self.repository.get_nodes(sorted(visited))
         edges = list(collected_edges.values())
         return GraphData(nodes=nodes, edges=edges)
 
@@ -93,7 +93,7 @@ class GraphService:
         return ranked[:limit]
 
     def find_path(self, start_id: str, end_id: str) -> GraphPathResponse:
-        if start_id not in self.repository.nodes_by_id or end_id not in self.repository.nodes_by_id:
+        if not self.repository.has_node(start_id) or not self.repository.has_node(end_id):
             return GraphPathResponse()
 
         queue: deque[str] = deque([start_id])
@@ -125,7 +125,7 @@ class GraphService:
 
         path_ids.reverse()
         path_edges.reverse()
-        path_nodes = [self.repository.nodes_by_id[node_id] for node_id in path_ids]
+        path_nodes = self.repository.get_nodes(path_ids)
         return GraphPathResponse(nodes=path_nodes, edges=path_edges, path_ids=path_ids)
 
     def query(self, request: GraphQueryRequest) -> GraphData:

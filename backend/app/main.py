@@ -68,6 +68,6 @@ async def health() -> HealthResponse:
     repository: FixtureRepository = app.state.fixture_repository
     return HealthResponse(
         status="ok",
-        proteins_loaded=len(repository.proteins_by_id),
-        nodes_loaded=len(repository.nodes_by_id),
+        proteins_loaded=repository.count_proteins(),
+        nodes_loaded=repository.count_nodes(),
     )
