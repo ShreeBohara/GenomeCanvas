@@ -19,14 +19,14 @@ measured that was not actually measured.
 | **Stack** | Next.js 14 · TypeScript · Three.js / react-three-fiber · Mol* · FastAPI · Pydantic v2 · Zustand · Claude API |
 | **Hand-written code + docs** | ~11,800 lines across 70 tracked files `[measured]` |
 | **Generated data** | 1.79 MB of fixtures: 54 proteins, 187 graph nodes, 217 edges, 14,904 interpolated backbone vertices `[measured]` |
-| **Tests** | **69 passing** across 3 runners — 48 backend (unittest), 16 frontend (vitest), plus 5 Playwright specs `[measured]` |
-| **Backend suite runtime** | 0.170 s `[measured]` |
+| **Tests** | **74 passing** across 3 runners — 53 backend (unittest), 16 frontend (vitest), plus 5 Playwright specs `[measured]` |
+| **Backend suite runtime** | 0.254 s `[measured]` |
 | **Real AlphaFold structures** | 52 of 54. The 2 substitutions are labelled as such in the API and the UI, and are excluded from structural similarity `[measured]` |
 | **First-paint payload** | 18.2 KiB gzipped, down from 177.6 KiB uncompressed `[measured]` |
 | **External calls at request time** | Zero. Everything is precomputed and in-memory. |
 | **Cost per AI turn** | ~$0.003 (Haiku 4.5) → ~$0.009 (Sonnet 5) `[estimated]` |
 | **Documentation** | 2,205 lines across three READMEs plus a 351-line product spec `[measured]` |
-| **Repo** | https://github.com/ShreeBohara/GenomeCanvas — `main` at `f7c059b` |
+| **Repo** | https://github.com/ShreeBohara/GenomeCanvas — `main` at `d44b1b5` |
 | **Live URL** | None yet — deploy config in repo, not yet provisioned |
 
 **The one-sentence version:** *AlphaFold published 214 million protein structures and gave the
@@ -70,8 +70,8 @@ answer ships unchanged and the user never learns anything went wrong.
 `render.yaml`, and a three-job GitHub Actions workflow — but neither target has been provisioned.
 Say this plainly: *the deployment is configured, not executed.*
 
-**Current status:** working local full-stack MVP with CI defined. All **69 tests pass**
-`[measured]` — 48 backend, 16 frontend, 5 Playwright specs. CI additionally builds the container
+**Current status:** working local full-stack MVP with CI defined. All **74 tests pass**
+`[measured]` — 53 backend, 16 frontend, 5 Playwright specs. CI additionally builds the container
 image, boots it, and asserts the fixture counts it serves.
 
 **Languages and size** `[measured]` — excludes `node_modules`, `.next`, `.venv`, lockfiles, and
@@ -146,7 +146,7 @@ Backend **6 pinned** — `fastapi`, `uvicorn`, `pydantic`, `anthropic`, `httpx`,
 | **Phase 1.5 — rewrite** | 2026-03-18 | A ~2,900-line frontend rewrite that was **never committed** — it sat in the working tree for 141 days, on no branch and in no stash `[measured]`. |
 | **Phase 2 — document** | 2026-04-15 | 2,125 lines of architecture documentation across three READMEs: mermaid diagrams, per-layer file tables, fixture-count tables, the full API surface, and the chat command protocol. 1 commit. |
 | **Phase 3 — harden** | 2026-08-06 → 08-07 | The rewrite committed at last, three resolution bugs found and fixed, a streaming-protocol correction, dead-code removal, +13 tests, CI, deploy config, and a documentation reconciliation. 3 commits. |
-| **Phase 4 — audit** | 2026-08-09 | A technology-evaluation exercise run as six parallel research agents, which surfaced four defects instead: a container that could not start, a similarity endpoint that was circular, fabricated confidence presented as real, and a first-paint payload 90% larger than it needed to be. All four fixed. +21 tests. 4 commits. |
+| **Phase 4 — audit** | 2026-08-09 | A technology-evaluation exercise run as six parallel research agents, which surfaced five defects instead: a container that could not start, a similarity endpoint that was circular, fabricated confidence presented as real, a first-paint payload 90% larger than needed, and a documented storage-swap seam that did not exist in the code. All five fixed. +26 tests. 5 commits. |
 
 The shape is honest and slightly unusual: an intense build, a finished rewrite that never landed, a
 documentation pass written *against the pre-rewrite code*, and then a hardening pass that had to
@@ -380,6 +380,27 @@ re-sending bytes the client already held. **177.6 KiB → 18.2 KiB, 89.7%.**
 version is that the `umap_*` coordinates are hand-authored, so ranking by distance between them
 could only return what the layout already asserted. Replaced with optimal superposition of the real
 alpha-carbon traces via Horn's quaternion method. Zero dependencies added.
+
+**D5 — The storage swap the README advertised was impossible.** `d44b1b5`. `README.md` states the
+layers are "written so the backing repositories can be swapped later without changing the frontend
+contract." They were not. Seven call sites across `GraphService`, `ProteinService`, and `main.py`
+indexed the repository's backing dictionaries directly — `repository.nodes_by_id[node_id]`,
+`len(repository.proteins_by_id)`, `repository.structure_assets_by_id.values()`. That is correct
+against dicts and impossible against anything else: a database-backed repository cannot hand out a
+dict of every node without materialising the whole graph, which is the opposite of why you would
+use one. **The documented extension point was load-bearing in the docs and absent in the code.**
+
+Each access became a question the repository answers, phrased so any backing store could:
+`has_node`, `get_nodes` (batched, because that is the call that becomes one round trip rather than
+N), `list_structure_assets`, `get_structural_neighbours`, `count_proteins`, `count_nodes`.
+
+The durable part is `test_repository_boundary.py`, which walks the AST of every module under `app/`
+and fails on any access to a backing container from outside the repository package, reporting the
+exact file and line. A reviewer will not catch one new `nodes_by_id[...]` in a diff. It also asserts
+the required method surface — so the contract a Neo4j implementation must satisfy is written down
+rather than implied — and includes a check that the detector still matches the pattern it was
+written for, because a guard that cannot fail is worse than no guard. Verified by reintroducing the
+coupling deliberately: the test failed with the right location, and passed again on revert.
 
 **On the original question.** Of the fifteen, roughly eight fit a coherent architecture and the rest
 are better as reasoned rejections than as dependencies — *"I evaluated Kafka for the ingestion
