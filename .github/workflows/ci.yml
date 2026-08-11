@@ -110,6 +110,13 @@ jobs:
         run: pip install -r backend/requirements.txt
       - name: Start backend and wait for health
         working-directory: backend
+        # Playwright serves the frontend on 127.0.0.1:3005, which is not in the
+        # default CORS allow-list (localhost:3000/3001). Without this every API
+        # call from the e2e run is blocked at the preflight, the universe never
+        # loads, and the specs pass only against text the client renders on its
+        # own -- a green suite that exercises none of the backend.
+        env:
+          GENOMECANVAS_CORS_ORIGINS: "http://127.0.0.1:3005,http://localhost:3005"
         run: |
           python -m uvicorn app.main:app --port 8000 &
           for _ in $(seq 1 30); do

@@ -240,8 +240,12 @@ describe("GraphWorkspace shortest-connection readout", () => {
       screen.getByRole("button", { name: /trace path from root/i }),
     ).toBeEnabled();
 
+    // The label is deliberately stable across states; progress shows as
+    // disabled + aria-busy so the control stays unambiguously targetable.
     rerender(<GraphWorkspace {...inspectingProtein} pathIds={null} pathPending />);
-    expect(screen.getByRole("button", { name: /tracing/i })).toBeDisabled();
+    const affordance = screen.getByRole("button", { name: /trace path from root/i });
+    expect(affordance).toBeDisabled();
+    expect(affordance).toHaveAttribute("aria-busy", "true");
   });
 
   it("hides the trace affordance when the inspected node is the root", () => {
