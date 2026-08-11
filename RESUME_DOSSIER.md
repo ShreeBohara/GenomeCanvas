@@ -19,14 +19,14 @@ measured that was not actually measured.
 | **Stack** | Next.js 14 · TypeScript · Three.js / react-three-fiber · Mol* · FastAPI · Pydantic v2 · Zustand · Claude API |
 | **Hand-written code + docs** | ~11,800 lines across 70 tracked files `[measured]` |
 | **Generated data** | 1.79 MB of fixtures: 54 proteins, 187 graph nodes, 217 edges, 14,904 interpolated backbone vertices `[measured]` |
-| **Tests** | **74 passing** across 3 runners — 53 backend (unittest), 16 frontend (vitest), plus 5 Playwright specs `[measured]` |
+| **Tests** | **82 passing** across 3 runners — 53 backend (unittest), 23 frontend (vitest), 6 Playwright e2e `[measured]` |
 | **Backend suite runtime** | 0.254 s `[measured]` |
 | **Real AlphaFold structures** | 52 of 54. The 2 substitutions are labelled as such in the API and the UI, and are excluded from structural similarity `[measured]` |
 | **First-paint payload** | 18.2 KiB gzipped, down from 177.6 KiB uncompressed `[measured]` |
 | **External calls at request time** | Zero. Everything is precomputed and in-memory. |
 | **Cost per AI turn** | ~$0.003 (Haiku 4.5) → ~$0.009 (Sonnet 5) `[estimated]` |
 | **Documentation** | 2,205 lines across three READMEs plus a 351-line product spec `[measured]` |
-| **Repo** | https://github.com/ShreeBohara/GenomeCanvas — `main` at `d44b1b5` |
+| **Repo** | https://github.com/ShreeBohara/GenomeCanvas — `main` at `67e336c` |
 | **Live URL** | None yet — deploy config in repo, not yet provisioned |
 
 **The one-sentence version:** *AlphaFold published 214 million protein structures and gave the
@@ -71,7 +71,7 @@ answer ships unchanged and the user never learns anything went wrong.
 Say this plainly: *the deployment is configured, not executed.*
 
 **Current status:** working local full-stack MVP with CI defined. All **74 tests pass**
-`[measured]` — 53 backend, 16 frontend, 5 Playwright specs. CI additionally builds the container
+`[measured]` — 53 backend, 23 frontend, 6 Playwright e2e. CI additionally builds the container
 image, boots it, and asserts the fixture counts it serves.
 
 **Languages and size** `[measured]` — excludes `node_modules`, `.next`, `.venv`, lockfiles, and
@@ -147,6 +147,7 @@ Backend **6 pinned** — `fastapi`, `uvicorn`, `pydantic`, `anthropic`, `httpx`,
 | **Phase 2 — document** | 2026-04-15 | 2,125 lines of architecture documentation across three READMEs: mermaid diagrams, per-layer file tables, fixture-count tables, the full API surface, and the chat command protocol. 1 commit. |
 | **Phase 3 — harden** | 2026-08-06 → 08-07 | The rewrite committed at last, three resolution bugs found and fixed, a streaming-protocol correction, dead-code removal, +13 tests, CI, deploy config, and a documentation reconciliation. 3 commits. |
 | **Phase 4 — audit** | 2026-08-09 | A technology-evaluation exercise run as six parallel research agents, which surfaced five defects instead: a container that could not start, a similarity endpoint that was circular, fabricated confidence presented as real, a first-paint payload 90% larger than needed, and a documented storage-swap seam that did not exist in the code. All five fixed. +26 tests. 5 commits. |
+| **Phase 5 — reach** | 2026-08-11 | Surfaced the shortest-path capability, which had been built, tested, and unreachable since it was written. Chasing its e2e coverage exposed that the whole e2e suite had been passing without ever reaching the backend. 3 commits, including a merge with an independent branch that had found two of the same problems. |
 
 The shape is honest and slightly unusual: an intense build, a finished rewrite that never landed, a
 documentation pass written *against the pre-rewrite code*, and then a hardening pass that had to
@@ -401,6 +402,61 @@ the required method surface — so the contract a Neo4j implementation must sati
 rather than implied — and includes a check that the detector still matches the pattern it was
 written for, because a guard that cannot fail is worse than no guard. Verified by reintroducing the
 coupling deliberately: the test failed with the right location, and passed again on revert.
+
+### E. A green test suite that tested nothing — 2026-08-11, commits `bd4e8b9` → `67e336c`
+
+**The strongest single story in the project, and it came from trying to test a feature rather than
+from looking for bugs.**
+
+The starting point was small: `/api/graph/path` had been written, tested, and left unreachable.
+`fetchPath` in `lib/api.ts` had **zero call sites**, so BFS shortest-path — arguably the question a
+knowledge graph exists to answer — was invisible to anyone using the app. Surfacing it produced
+routes like `BRCA1 → Breast Cancer → PIK3CA → EGFR` and `BRCA1 → Ovarian Cancer → SOLO-1 Trial`.
+
+Writing an end-to-end test for it is what surfaced the real finding.
+
+**The e2e suite was green and exercising none of the backend.** Playwright serves the frontend on
+`127.0.0.1:3005`, which is not in the backend's CORS allow-list (`localhost:3000/3001`). Every API
+call in every e2e run was blocked at the preflight — the universe never loaded, the chat never
+answered. The specs passed regardless, because they asserted on text the client renders unaided:
+
+```ts
+await page.getByPlaceholder(/Ask the guide/i).fill("What does BRCA1 do?");
+await page.getByRole("button", { name: "Send" }).click();
+await expect(page.getByText(/BRCA1/i)).toBeVisible();   // matches the user's own echoed message
+```
+
+That assertion cannot fail, with or without a backend. All three chat specs had the same shape, and
+CI ran them the same way. The suite was decoration.
+
+They now assert on content only the server can produce — the `BRCA1 in UniProt` source chip, the
+curated Alzheimer gene symbols, EGFR drug names — and CI sets `GENOMECANVAS_CORS_ORIGINS` so the run
+is real.
+
+A second, independent failure was hiding underneath: the layout-shell spec asserted
+`getByText("Protein universe")`, which matches **two** nodes — the command bar's eyebrow label and
+the viewport heading — and is a Playwright strict-mode violation. **That spec could not have passed
+in any browser** and had been red since the workspace rewrite renamed the panels.
+
+Two things worth naming beyond the fixes:
+
+- **The test chase found a UX defect.** The trace affordance existed only on canvas hover, which is
+  undiscoverable and unreachable by keyboard — which is also why it could not be driven. The answer
+  was an explicit target picker, not a cleverer test. Both trace controls also stopped renaming
+  themselves under load, because a control that becomes "Tracing…" mid-interaction is ambiguous to a
+  screen reader and to a locator when a second control shares that transient name.
+- **An independent branch found two of the same problems.** PR #2 landed a SwiftShader fix and the
+  same strict-mode fix while this work was in flight. Its WebGL flags were **better** —
+  `--use-angle=swiftshader` rather than the deprecated `--use-gl=swiftshader` — and its comment
+  identified the failure mode this branch had not diagnosed: three.js throws out of
+  `new WebGLRenderer`, and Next's dev overlay then mounts a full-screen error dialog that pulls the
+  app out of the accessibility tree mid-test. The merge took the better version of both and kept
+  what the PR did not cover.
+
+**Why this is the interview story.** It is not "I fixed a CORS header." It is that a green suite is
+evidence of nothing until you have watched it fail: three specs asserted on their own input, one
+could never pass, and the whole thing ran without a backend for months. The fix was to make each
+assertion name something only the server could have produced.
 
 **On the original question.** Of the fifteen, roughly eight fit a coherent architecture and the rest
 are better as reasoned rejections than as dependencies — *"I evaluated Kafka for the ingestion
@@ -787,7 +843,7 @@ without that, `"Alzheimer's disease"` matches every protein that has *any* disea
 the shared token `disease`. Pinned by `test_api.py`: `search?q=alzheimer&limit=4` must contain both
 `P05067` and `P49768`.
 
-**Scale demonstrably handled** `[measured]`: 11 endpoints, 24 models, 48 backend tests green in
+**Scale demonstrably handled** `[measured]`: 11 endpoints, 24 models, 53 backend tests green in
 0.170 s. Search and similarity are O(N) linear scans — exactly the code path a vector index
 replaces at the spec's target. `[estimated]` The same scan over 10,000 records is ~15–40 ms
 single-threaded; the real motivation for pgvector at that scale is the 768-dimensional embedding,
@@ -817,6 +873,19 @@ any two entities, and ranked node search over an in-memory adjacency structure.
   sorted ID order for stable rendering.
 - **Shortest path:** BFS with a `parents: dict[node, (parent, edge)]` map, then walk backwards and
   reverse. Unweighted BFS is correct because every edge is one relational hop.
+
+  Since `bd4e8b9` this is a user-facing feature rather than a tested-but-unreachable endpoint —
+  `fetchPath` had zero call sites for its entire life. The graph rail now offers a target picker
+  and renders the route as a chain of labels with a hop count, each hop clickable to re-root:
+  `BRCA1 → Breast Cancer → PIK3CA → EGFR`. On the canvas the route draws at full strength while
+  everything off it drops to a trace, because a highlighted path competing with highlighted
+  neighbours is not legible in a dense neighborhood.
+
+  Three states are kept distinct, which is most of the work: nothing requested, a route found, and
+  **requested but unconnected** — the endpoint 404s when both entities exist in the graph and
+  nothing joins them, which is an answer rather than an error and reads as one. Measured examples:
+  `BRCA1 → Olaparib` 1 hop, `BRCA1 → Ovarian Cancer → SOLO-1 Trial` 2 hops, Alzheimer's →
+  Osimertinib correctly unconnected `[measured]`.
 - **Search:** now three-tier — whole-term containment 1.0, word-prefix 0.85, else significant-token
   overlap; admitted at a 0.34 floor, with an early return for queries carrying no significant
   tokens. `rank_nodes()` exposes scores for callers that need the confidence.
@@ -1184,7 +1253,7 @@ tests including the paragraph-rejoin regression.
 
 ### WS-12: Test and verification harness
 
-**What and why.** 69 tests across three runners covering data invariants, service behavior, API
+**What and why.** 82 tests across three runners covering data invariants, service behavior, API
 contract, SSE protocol, adversarial entity resolution, store transitions, camera math, and component
 rendering.
 
@@ -1215,7 +1284,7 @@ client without a server — `api.test.ts` builds a `ReadableStream` and enqueues
 as one encoded chunk, which specifically exercises the `\n\n` buffer-splitting loop rather than the
 easy one-event-per-read case.
 
-**Scale demonstrably handled** `[measured]`: **69 tests, all green.** Backend 48 in 0.170 s;
+**Scale demonstrably handled** `[measured]`: **82 tests, all green.** Backend 53 in 0.21 s;
 frontend 13. Now executed by CI on every push.
 
 **Proposed lenses (PROPOSED):** swe **5/5** (five deliberate layers, an OpenAPI assertion, an
@@ -1266,7 +1335,7 @@ actually trustworthy — a containment design that resolves the wrong entity is 
 
 ### WS-14: CI and deployment configuration
 
-**What and why.** 69 passing tests that nothing runs automatically are 69 tests one commit from
+**What and why.** 82 passing tests that nothing runs automatically are 82 tests one commit from
 rotting. And the spec plans a deployment (§13) that had no configuration at all.
 
 **Files.** `.github/workflows/ci.yml` (3 jobs), `backend/Dockerfile`, `render.yaml`, `vercel.json`.
@@ -1299,7 +1368,7 @@ attached storage, no database) — with the two coupled only by `NEXT_PUBLIC_API
 
 ## Genuinely hard
 
-Six things a competent engineer would not get right on the first attempt.
+Seven things a competent engineer would not get right on the first attempt.
 
 **1. Arc-length resampling that carries a second signal.**
 Reducing a 3,000-point polyline to exactly 180 points is easy by index and wrong by geometry.
@@ -1355,6 +1424,24 @@ watch it confidently return a disease about the vas deferens. The general lesson
 similarity-scoring code fails silently and asymmetrically — it does not throw, it returns a wrong
 answer with full confidence — so the only way to find it is to attack it with inputs designed to be
 misread, and then pin every one with a regression test named after the failure it prevents.
+
+**7. Noticing that a passing test suite was proving nothing.**
+The hardest failures in this project were all *silent* — the container that started and died in its
+lifespan, the similarity endpoint that answered fluently from hand-typed coordinates, the
+substituted structures that rendered fabricated confidence. The e2e suite was the same shape one
+level up: six specs, all green, none of them reaching the backend, because CORS blocked every call
+and the assertions matched text the client rendered on its own. `getByText(/BRCA1/i)` after typing
+*"What does BRCA1 do?"* is a tautology, and a tautology is indistinguishable from a passing test
+until you look at what it names.
+
+The general principle, and the one worth being able to state: **an assertion should name something
+only the system under test could have produced.** A source chip the server generates, a gene symbol
+that exists only in the fixture, a drug name the client has never seen. Anything else can pass with
+the backend switched off — which, for months here, is exactly what was happening. The corollary is
+that a suite you have never watched fail is not yet evidence of anything, and the cheapest way to
+earn that evidence is to break the thing on purpose and confirm the test goes red. That is the same
+technique as the boundary guard in D5, which includes a test asserting its own detector still
+matches the pattern it was written for.
 
 ---
 
