@@ -355,6 +355,46 @@ button {
   font-size: 1rem;
 }
 
+/* Shortest-connection readout. Sits under the entity detail strip and mirrors
+   what the canvas is drawing: the route in full, everything else receded. */
+.graph-path-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding: 12px 14px;
+  background: var(--bg-panel-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+}
+
+.graph-path-route {
+  margin: 6px 0 0;
+  line-height: 1.9;
+}
+
+/* The route is a chain of buttons, so each hop is clickable to re-root there.
+   Styled as text rather than as controls to keep the chain readable. */
+.graph-path-node {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: var(--accent-cyan);
+  border-bottom: 1px solid transparent;
+}
+
+.graph-path-node:hover {
+  border-bottom-color: var(--accent-cyan);
+}
+
+.graph-path-arrow {
+  color: var(--text-dim);
+}
+
 .toolbar-button,
 .segmented-control button,
 .starter-card {

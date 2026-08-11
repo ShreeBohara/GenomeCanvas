@@ -12,6 +12,7 @@ import {
 
 import {
   fetchNeighborhood,
+  fetchPath,
   fetchProteinDetail,
   fetchSimilarProteins,
   fetchStructureAsset,
@@ -88,6 +89,8 @@ export function GenomeCanvasApp() {
   const setLoading = useGenomeCanvasStore((state) => state.setLoading);
   const setGraphHops = useGenomeCanvasStore((state) => state.setGraphHops);
   const setGraphSelectionId = useGenomeCanvasStore((state) => state.setGraphSelectionId);
+  const graphPathIds = useGenomeCanvasStore((state) => state.graphPathIds);
+  const setGraphPathIds = useGenomeCanvasStore((state) => state.setGraphPathIds);
   const setViewportPreset = useGenomeCanvasStore((state) => state.setViewportPreset);
   const setRightRailSection = useGenomeCanvasStore((state) => state.setRightRailSection);
   const spotlightEntity = useGenomeCanvasStore((state) => state.spotlightEntity);
@@ -98,6 +101,7 @@ export function GenomeCanvasApp() {
   const [similarProteins, setSimilarProteins] = useState<SimilarProteinResult[]>([]);
   const [commandInput, setCommandInput] = useState("");
   const [queuedPrompt, setQueuedPrompt] = useState<string | null>(null);
+  const [pathPending, setPathPending] = useState(false);
   const [isSearching, startSearchTransition] = useTransition();
   const deferredQuery = useDeferredValue(commandInput.trim());
 
@@ -178,6 +182,28 @@ export function GenomeCanvasApp() {
       setPaletteOpen(false);
     },
     [hydrateProtein, setPaletteOpen, spotlightEntity],
+  );
+
+  const tracePath = useCallback(
+    async (targetId: string) => {
+      if (!graphRootId || targetId === graphRootId) {
+        return;
+      }
+      setPathPending(true);
+      try {
+        const result = await fetchPath(graphRootId, targetId);
+        setGraphPathIds(result.path_ids);
+      } catch (error) {
+        // The endpoint 404s when the two entities are in the graph but have no
+        // connecting route. That is an answer, not a failure, so it renders as
+        // an empty path rather than an error.
+        setGraphPathIds([]);
+        console.error(error);
+      } finally {
+        setPathPending(false);
+      }
+    },
+    [graphRootId, setGraphPathIds],
   );
 
   const openGraphContext = useCallback(
@@ -306,6 +332,10 @@ export function GenomeCanvasApp() {
 
     let cancelled = false;
     const currentGraphRoot = graphRootId;
+    // A traced route belongs to the root it was traced from. Re-rooting makes it
+    // meaningless, and leaving it on screen would dim a neighborhood against a
+    // path that no longer refers to it.
+    setGraphPathIds(null);
     async function loadGraph() {
       setLoading("graph", true);
       try {
@@ -330,7 +360,7 @@ export function GenomeCanvasApp() {
     return () => {
       cancelled = true;
     };
-  }, [graphHops, graphRootId, setGraphData, setGraphSelectionId, setLoading]);
+  }, [graphHops, graphRootId, setGraphData, setGraphPathIds, setGraphSelectionId, setLoading]);
 
   useEffect(() => {
     if (!focusedProteinId) {
@@ -510,6 +540,10 @@ export function GenomeCanvasApp() {
             highlightedIds={highlightedIds}
             loading={loading.graph}
             onChangeHops={setGraphHops}
+            onClearPath={() => setGraphPathIds(null)}
+            onTracePath={(targetId) => void tracePath(targetId)}
+            pathIds={graphPathIds}
+            pathPending={pathPending}
             onClose={() => setRightRailSection("graph", !rightRailSections.graph)}
             onSelectNode={(nodeId, nodeType) => {
               setGraphSelectionId(nodeId);

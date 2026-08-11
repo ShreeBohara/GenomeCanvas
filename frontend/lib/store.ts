@@ -50,6 +50,11 @@ export type StoreSnapshot = {
   loading: LoadingState;
   graphHops: 1 | 2;
   graphSelectionId: string | null;
+  // Ordered node ids of the shortest connection between the graph root and a
+  // chosen target. Null when no path is being shown; empty when one was asked
+  // for and the two entities are not connected, which is a different state and
+  // has to render differently.
+  graphPathIds: string[] | null;
   viewportPreset: ViewportPreset;
   viewportRevision: number;
   rightRailSections: RightRailSections;
@@ -77,6 +82,7 @@ type StoreState = StoreSnapshot & {
   setLoading: (key: keyof LoadingState, value: boolean) => void;
   setGraphHops: (hops: 1 | 2) => void;
   setGraphSelectionId: (id: string | null) => void;
+  setGraphPathIds: (pathIds: string[] | null) => void;
   setViewportPreset: (preset: ViewportPreset) => void;
   setRightRailSection: (section: keyof RightRailSections, open: boolean) => void;
   spotlightEntity: (entity: SelectedEntity) => void;
@@ -124,6 +130,7 @@ export const initialStoreState: StoreSnapshot = {
   },
   graphHops: 1,
   graphSelectionId: null,
+  graphPathIds: null,
   viewportPreset: "fit-all",
   viewportRevision: 0,
   rightRailSections: {
@@ -199,6 +206,7 @@ export const useGenomeCanvasStore = create<StoreState>((set) => ({
   setCameraTarget: (cameraTarget) => set({ cameraTarget }),
   setGraphHops: (graphHops) => set({ graphHops }),
   setGraphSelectionId: (graphSelectionId) => set({ graphSelectionId }),
+  setGraphPathIds: (graphPathIds) => set({ graphPathIds }),
   setViewportPreset: (viewportPreset) =>
     set((state) => ({
       viewportPreset,
