@@ -4,7 +4,12 @@ import { expect, test } from "@playwright/test";
 test("desktop workspace renders split layout shell", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByText("GenomeCanvas")).toBeVisible();
-  await expect(page.getByText("Protein universe")).toBeVisible();
+  // "Protein universe" appears twice: the command bar's eyebrow label echoes
+  // the active viewport mode, and the panel titles it. Match the panel heading
+  // so this stays a check on the layout shell rather than on the mode label.
+  await expect(
+    page.getByRole("heading", { name: "Protein universe" }),
+  ).toBeVisible();
   await expect(page.getByText("Graph constellation")).toBeVisible();
   await expect(page.getByText("Guided exploration")).toBeVisible();
 });
