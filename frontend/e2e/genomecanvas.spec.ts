@@ -3,17 +3,17 @@ import { expect, test } from "@playwright/test";
 
 test("desktop workspace renders split layout shell", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByText("GenomeCanvas")).toBeVisible();
-  // "Protein universe" appears twice: the command bar's eyebrow label echoes
-  // the active viewport mode, and the panel titles it. Match the panel heading
-  // so this stays a check on the layout shell rather than on the mode label.
-  await expect(
-    page.getByRole("heading", { name: "Protein universe" }),
-  ).toBeVisible();
-  await expect(page.getByText("Graph constellation")).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Guided exploration" }),
-  ).toBeVisible();
+  // Each assertion names the element that identifies a panel. A string passed to
+  // getByText is a case-insensitive substring match, which makes bare label text
+  // fragile here: "Protein universe" titles the viewport panel, labels the brand
+  // lockup, and is a substring of the universe's "Loading the protein universe..."
+  // placeholder.
+  await expect(page.getByRole("heading", { level: 1, name: "GenomeCanvas" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: "Protein universe" })).toBeVisible();
+  // The graph panel's heading is the active graph root, not a fixed label, so key
+  // off the panel itself and check its eyebrow label inside that scope.
+  await expect(page.getByTestId("graph-panel").getByText("Graph constellation")).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: "Guided exploration" })).toBeVisible();
 });
 
 
