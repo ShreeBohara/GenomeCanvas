@@ -3,15 +3,17 @@ import { expect, test } from "@playwright/test";
 
 test("desktop workspace renders split layout shell", async ({ page }) => {
   await page.goto("/");
-  // Headings, not bare text. "Protein universe" appears twice -- once as the
-  // command bar's eyebrow label and once as the viewport heading -- so
-  // getByText matches two elements and fails Playwright's strict mode. That
-  // assertion could not pass regardless of the browser, which is what kept
-  // this spec red after the workspace rewrite renamed the panels.
-  await expect(page.getByRole("heading", { name: "GenomeCanvas" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Protein universe" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Guided exploration" })).toBeVisible();
+  await expect(page.getByText("GenomeCanvas")).toBeVisible();
+  // "Protein universe" appears twice: the command bar's eyebrow label echoes
+  // the active viewport mode, and the panel titles it. Match the panel heading
+  // so this stays a check on the layout shell rather than on the mode label.
+  await expect(
+    page.getByRole("heading", { name: "Protein universe" }),
+  ).toBeVisible();
   await expect(page.getByText("Graph constellation")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Guided exploration" }),
+  ).toBeVisible();
 });
 
 
