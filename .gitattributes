@@ -1,0 +1,18 @@
+# Source is always text. Without this, a stray control character (a literal NUL
+# written instead of an escape sequence) makes git classify the file as binary:
+# `git diff` prints "Binary files differ", `git blame` stops working, and a
+# three-way merge resolves to one side without emitting conflict markers.
+# `diff` forces git to diff these as text even when they do contain such a byte,
+# so the problem surfaces as a visible patch instead of hiding behind "Binary".
+*.ts   text diff
+*.tsx  text diff
+*.js   text diff
+*.jsx  text diff
+*.mjs  text diff
+*.cjs  text diff
+*.py   text diff
+*.json text diff
+*.css  text diff
+*.md   text diff
+*.yml  text diff
+*.yaml text diff
