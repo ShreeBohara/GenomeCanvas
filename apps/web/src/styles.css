@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@import "@genomecanvas/ui/tailwind.css";
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--gc-bg);
+    color: var(--gc-text);
+    font-family: var(--gc-font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--gc-focus);
+    outline-offset: 2px;
+  }
+}
