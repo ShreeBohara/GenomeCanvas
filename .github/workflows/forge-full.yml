@@ -1,10 +1,17 @@
 # The Forge's full profile: every reviewed human protein from the pinned
-# downloads in forge/downloads.lock.json. Run by hand; nothing is published.
-# The tables, the check report and the manifest are kept as an artifact.
+# downloads in forge/downloads.lock.json. Nothing is published; the tables,
+# the check report and the manifest are kept as an artifact.
+#
+# Run by hand, and whenever a push to v2 changes the pinned downloads or this
+# workflow. GitHub dispatches a workflow by hand only once it exists on the
+# default branch, so until v2 is merged the push trigger is how this runs.
 name: Forge full build
 
 on:
   workflow_dispatch:
+  push:
+    branches: [v2]
+    paths: [forge/downloads.lock.json, .github/workflows/forge-full.yml]
 
 permissions:
   contents: read
