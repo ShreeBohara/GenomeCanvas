@@ -1,0 +1,208 @@
+# The licence ledger: one row per data source GenomeCanvas takes from.
+#
+# A row may say `status: verified` only when someone has read the licence page
+# or file at `licence_url` on the `checked` date. Until then the licence is
+# recorded as unknown (`licence: null`), even where the plan names one, and the
+# source may not be used (`in_use: false`). `python -m forge.ledger check` fails
+# on any row that breaks these rules, and on any verified row whose check is
+# more than 180 days old.
+#
+# Seeded on 2026-11-25 from plan section 4.4 and its Appendix B. Licences are
+# SPDX identifiers.
+
+- id: uniprot
+  name: UniProt Knowledgebase (Swiss-Prot, human), including its ProtT5 embeddings
+  version: "2026_04"
+  url: https://www.uniprot.org
+  licence: null
+  licence_url: null
+  checked: null
+  attribution: null
+  in_use: false
+  status: unverified
+  note: The plan names CC BY 4.0; the licence page has not been read.
+
+- id: alphafold-db
+  name: AlphaFold Protein Structure Database
+  version: v6
+  url: https://alphafold.ebi.ac.uk
+  licence: null
+  licence_url: null
+  checked: null
+  attribution: null
+  in_use: false
+  status: unverified
+  note: >-
+    The plan names CC BY 4.0; the licence page has not been read. The backbone
+    traces in forge/fixtures/v1 come from this source, so verify this row before
+    anything derived from them is served publicly.
+
+- id: alphamissense
+  name: AlphaMissense predictions
+  version: "2023"
+  url: https://github.com/google-deepmind/alphamissense
+  licence: CC-BY-4.0
+  licence_url: https://github.com/google-deepmind/alphamissense
+  checked: 2026-11-25
+  attribution: >-
+    AlphaMissense predictions by Google DeepMind (Cheng et al., Science 2023),
+    licensed under CC BY 4.0.
+  in_use: false
+  status: verified
+  note: >-
+    The licence is stated in the repository README. A Zenodo copy still shows
+    an older non-commercial licence, so take the files from AlphaFold DB or the
+    bucket the README names.
+
+- id: open-targets
+  name: Open Targets Platform
+  version: "26.09"
+  url: https://platform.opentargets.org
+  licence: CC0-1.0
+  licence_url: https://platform-docs.opentargets.org/licence
+  checked: 2026-11-25
+  attribution: Open Targets Platform, release 26.09 (CC0 1.0; credited as a courtesy).
+  in_use: false
+  status: verified
+  note: >-
+    CC0 covers the platform's own release. Third-party sources inside it keep
+    their own terms, for example ChEMBL under CC BY-SA 3.0.
+
+- id: string
+  name: STRING protein–protein association networks
+  version: "12.5"
+  url: https://string-db.org
+  licence: null
+  licence_url: null
+  checked: null
+  attribution: null
+  in_use: false
+  status: unverified
+  note: The plan names CC BY 4.0; the licence page has not been read.
+
+- id: reactome
+  name: Reactome pathways
+  version: "98"
+  url: https://reactome.org
+  licence: null
+  licence_url: null
+  checked: null
+  attribution: null
+  in_use: false
+  status: unverified
+  note: The plan names CC0; the licence page has not been read.
+
+- id: clinvar
+  name: ClinVar
+  version: null
+  url: https://www.ncbi.nlm.nih.gov/clinvar/
+  licence: null
+  licence_url: null
+  checked: null
+  attribution: null
+  in_use: false
+  status: unverified
+  note: Version not yet pinned; exact terms to confirm in Phase 2.
+
+- id: gnomad
+  name: gnomAD gene constraint
+  version: 4.1.1
+  url: https://gnomad.broadinstitute.org
+  licence: null
+  licence_url: null
+  checked: null
+  attribution: null
+  in_use: false
+  status: unverified
+  note: Exact terms to confirm in Phase 2.
+
+- id: interpro
+  name: InterPro domains and families
+  version: null
+  url: https://www.ebi.ac.uk/interpro/
+  licence: null
+  licence_url: null
+  checked: null
+  attribution: null
+  in_use: false
+  status: unverified
+  note: Version not yet pinned; exact terms to confirm in Phase 2.
+
+- id: ted
+  name: TED, domain segmentation of AlphaFold models
+  version: null
+  url: https://ted.cathdb.info
+  licence: null
+  licence_url: null
+  checked: null
+  attribution: null
+  in_use: false
+  status: unverified
+  note: Version not yet pinned; exact terms to confirm in Phase 2.
+
+- id: esm
+  name: ESM models and sparse-autoencoder features (Chan Zuckerberg Biohub)
+  version: "2026-05-27"
+  url: https://github.com/biohub/esm
+  licence: MIT
+  licence_url: https://raw.githubusercontent.com/biohub/esm/main/LICENSE.md
+  checked: 2026-11-25
+  attribution: ESM, Copyright (c) 2026 Chan Zuckerberg Biohub, MIT licence.
+  in_use: false
+  status: verified
+  note: >-
+    The licence file covers code and weights. An acceptable use policy applies
+    on top for the hosted 6B model; link it wherever its features appear.
+
+- id: human-protein-atlas
+  name: Human Protein Atlas
+  version: "26.0"
+  url: https://www.proteinatlas.org
+  licence: CC-BY-4.0
+  licence_url: https://www.proteinatlas.org/about/licence
+  checked: 2026-11-25
+  attribution: Human Protein Atlas, version 26.0, www.proteinatlas.org.
+  in_use: false
+  status: verified
+  note: >-
+    CC BY 4.0 covers the Atlas's own content; some third-party parts carry
+    other terms. Open Targets lists the Atlas as CC BY-SA 3.0, so recheck the
+    exact files used before release.
+
+- id: europe-pmc
+  name: Europe PMC
+  version: null
+  url: https://europepmc.org
+  licence: null
+  licence_url: null
+  checked: null
+  attribution: null
+  in_use: false
+  status: unverified
+  note: A live API, fetched on demand; terms and rate limits to confirm.
+
+- id: pubtator3
+  name: PubTator3
+  version: null
+  url: https://www.ncbi.nlm.nih.gov/research/pubtator3/
+  licence: null
+  licence_url: null
+  checked: null
+  attribution: null
+  in_use: false
+  status: unverified
+  note: A live API, fetched on demand; terms and rate limits to confirm.
+
+- id: chembl
+  name: ChEMBL
+  version: "37"
+  url: https://www.ebi.ac.uk/chembl/
+  licence: null
+  licence_url: null
+  checked: null
+  attribution: null
+  in_use: false
+  status: unverified
+  note: >-
+    The plan names CC BY-SA 3.0. Anything taken directly from ChEMBL goes in the
+    separate share-alike layer, never the main dataset.
