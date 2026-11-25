@@ -44,7 +44,7 @@ jobs:
           fi
 
   deploy:
-    name: Deploy to ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    name: Build, upload and deploy
     needs: credentials
     # A manual run deploys only from v2 or main, like a push.
     if: needs.credentials.outputs.present == 'true' && (github.ref_name == 'v2' || github.ref_name == 'main')
