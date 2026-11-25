@@ -1,19 +1,28 @@
+# Operating system and editors
 .DS_Store
-.claude
+.idea/
+.vscode/
+*.swp
+
+# Local secrets: never commit these
 .env
-.env.local
-.env.*.local
-.next
-.pytest_cache
-.venv
-node_modules
-dist
-coverage
-backend/venv
-backend/**/__pycache__
-frontend/.next
-frontend/node_modules
-frontend/coverage
-frontend/test-results
-frontend/playwright-report
-frontend/public/vendor/molstar-viewer
+.env.*
+!.env.example
+
+# Node
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Claude Code: local state only; the shared launch.json is tracked
+.claude/*
+!.claude/launch.json
