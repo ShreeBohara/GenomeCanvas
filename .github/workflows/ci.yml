@@ -88,7 +88,7 @@ jobs:
           if-no-files-found: ignore
 
   python:
-    name: Python (ruff, mypy, pytest, licence ledger)
+    name: Python (ruff, mypy, pytest, licence ledger, sample build)
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     defaults:
@@ -116,6 +116,14 @@ jobs:
       - name: Licence ledger
         # Uses today's date, so a licence check older than 180 days turns CI red.
         run: uv run --frozen python -m forge.ledger check
+      - name: Sample snapshots match the lock
+        run: uv run --frozen python -m forge lock verify
+      - name: Data dictionary is current
+        run: uv run --frozen python -m forge dictionary --check
+      - name: Sample build, offline
+        # The sample profile reads only committed snapshots and refuses any
+        # network connection; its 43 data checks must all pass.
+        run: uv run --frozen python -m forge build --profile sample --out ../build/tables/sample
 
   opentofu:
     name: OpenTofu (format and validate)

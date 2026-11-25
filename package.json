@@ -11,6 +11,8 @@
   "scripts": {
     "dev": "corepack pnpm run release:sample && corepack pnpm run release:local && corepack pnpm --filter @genomecanvas/web run dev",
     "release:sample": "cd forge && uv run --locked python -m forge.skeleton build --out ../build/release/sample",
+    "forge:sample": "cd forge && uv run --locked python -m forge build --profile sample --out ../build/tables/sample",
+    "forge:full": "cd forge && uv run --locked python -m forge build --profile full --out ../build/tables/full",
     "release:local": "corepack pnpm --filter @genomecanvas/web run release:upload ../../build/release/sample --release sample --local --apply",
     "lint": "biome lint .",
     "format": "biome format --write .",
@@ -22,7 +24,7 @@
     "e2e": "corepack pnpm --filter @genomecanvas/web run e2e",
     "e2e:install": "corepack pnpm --filter @genomecanvas/web exec playwright install chromium",
     "check": "corepack pnpm run lint && corepack pnpm run format:check && corepack pnpm run typecheck && corepack pnpm run test && corepack pnpm run build && corepack pnpm run budget",
-    "check:py": "cd forge && uv run --locked ruff check . && uv run --locked ruff format --check . && uv run --locked mypy && uv run --locked pytest && uv run --locked python -m forge.ledger check",
+    "check:py": "cd forge && uv run --locked ruff check . && uv run --locked ruff format --check . && uv run --locked mypy && uv run --locked pytest && uv run --locked python -m forge.ledger check && uv run --locked python -m forge lock verify && uv run --locked python -m forge dictionary --check && uv run --locked python -m forge build --profile sample --out ../build/tables/sample",
     "check:e2e": "corepack pnpm run release:sample && corepack pnpm --filter @genomecanvas/web run build && corepack pnpm run release:local && corepack pnpm run e2e",
     "check:all": "corepack pnpm run check && corepack pnpm run check:py && corepack pnpm run check:e2e",
     "deploy:dry-run": "CLOUDFLARE_ENV=staging corepack pnpm --filter @genomecanvas/web run build && corepack pnpm --filter @genomecanvas/web run deploy:dry-run && CLOUDFLARE_ENV=production corepack pnpm --filter @genomecanvas/web run build && corepack pnpm --filter @genomecanvas/web run deploy:dry-run && corepack pnpm --filter @genomecanvas/web run build"
