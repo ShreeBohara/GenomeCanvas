@@ -12,11 +12,12 @@ Maintained by the orchestrating session. Build sessions read this and do not edi
 | 1B | Walking skeleton, local end to end | [`briefs/phase-1b.md`](briefs/phase-1b.md) | **Done** ([report](reports/phase-1b.md)) | Yes, 2026-11-25 |
 | 1C | Data path through R2, infrastructure as code, delivery | [`briefs/phase-1c.md`](briefs/phase-1c.md) | **Done** ([report](reports/phase-1c.md)) | Yes, 2026-11-25 |
 | — | **First deployment** | [`runbooks/first-deploy.md`](../runbooks/first-deploy.md) | **Waiting on the owner** | — |
-| 2A | The Forge: pipeline frame, data model, identity, UniProt | [`briefs/phase-2a.md`](briefs/phase-2a.md) | In progress (started 2026-11-25) | — |
-| 2B | Structures: AlphaFold DB, backbone packs | not written yet | Waiting on 2A and on download permission | — |
-| 2C | Knowledge graph: Open Targets, STRING, Reactome | not written yet | Waiting | — |
-| 2D | Embeddings, layouts, structural neighbours | not written yet | Waiting | — |
-| 2E | Release assembly, publishing, the atlas on real data | not written yet | Waiting | — |
+| 2A | The Forge: pipeline frame, data model, identity, UniProt | [`briefs/phase-2a.md`](briefs/phase-2a.md) | **Done** ([report](reports/phase-2a.md)) | Yes, 2026-11-25 |
+| 2D | Embeddings, the similarity map and how far to trust it, atlas files | [`briefs/phase-2d.md`](briefs/phase-2d.md) | In progress (started 2026-11-25) | — |
+| 2E | The atlas on real data (the app) | not written yet | Waiting on 2D | — |
+| 2B | Structures: AlphaFold DB, backbone packs | not written yet | **Waiting on download permission** | — |
+| 2C | Knowledge graph: Open Targets, STRING, Reactome; genome layout | not written yet | **Waiting on download permission** | — |
+| 2F | Release assembly and publishing | not written yet | Waiting | — |
 | 3 | The Atlas engine | — | Not started | — |
 | 4 | Product and design system | — | Not started | — |
 | 5 | Trails and stories; soft launch | — | Not started | — |
@@ -29,6 +30,22 @@ Maintained by the orchestrating session. Build sessions read this and do not edi
 **Phase 1 is built and verified, and is not closed.** Its exit criterion is a live address, and that needs the owner's Cloudflare account. Until the two secrets exist, the deploy and preview jobs skip.
 
 ## Verification record
+
+### 2A, verified 2026-11-25
+
+Run by the orchestrator in a fresh clone of `v2` at `aad602c`, separately from the build session's own run.
+
+| Check | Result |
+|---|---|
+| Install, then `corepack pnpm check:all` | Exit 0. 265 TypeScript tests, 201 Python tests, 20 browser tests; the sample profile built offline with 43 of 43 data checks passing |
+| A full build of my own, from an empty stage cache | 20,429 proteins, 43 of 43 checks, 54.5 s, 1.56 GB peak |
+| **Reproducibility across machines** | All 16 files of my macOS build are byte-identical to the build session's, and to the artifact GitHub's Linux runner produced in run 45701288965 |
+| **Five proteins compared field by field with UniProt's JSON API**, a different serialisation from the XML the pipeline parses | 60 of 60 fields agree: length, mass, gene symbol, genes encoding it, sequence hash, annotation score, and counts of GO annotations, keywords, variants, domains, modified residues and all features. The five were TP53, BRCA2, titin, the 2-residue TRDD1 and histone H4 (14 genes) |
+| Four corruptions of the input data that the build session had not tried | All caught by the check written for them: a human protein relabelled as mouse, a malformed GO identifier, an entry shipped twice, a variant whose stated original residue is not in the sequence |
+| The two licences, read directly | UniProt's page states CC BY 4.0; HGNC's states CC0 |
+| CI on GitHub | 17 checks passing, none failing, 3 skipped as designed |
+
+A note on my own method: my first run of the four corruptions reported "all checks passed", which would have meant the checks were useless. The fault was in my test setup, which built from an untouched copy. Four passes on corrupted data was implausible, so I looked, fixed the setup, and all four were then caught. A passing result is not evidence until the test has been seen to fail.
 
 ### 1C, verified 2026-11-25
 
@@ -64,6 +81,8 @@ Fresh clone at `9b234d1`: install and both check suites exit 0; `actionlint` cle
 | 20,429 points | 1 draw call; frame time capped at the display's 16.7 ms; 4.6 to 6.3 ms draw plus GPU wait | 1B report. Points, not ribbons |
 | Lighthouse on the skeleton, in CI under software rendering | Performance 74 to 79; accessibility 100; best practices 100; SEO 91 | 1C report. Performance is 85 to 87 on a real GPU |
 
+| Full build of the UniProt tables | 20,429 proteins, 15 tables, 54.6 MB; 54.5 s and 1.56 GB peak on this machine; 87 to 95 s on a free GitHub runner, downloads included | 2A report and my own run |
+
 ## Follow-ups noted during verification
 
 Small, none blocking. Each belongs to the step named.
@@ -75,6 +94,10 @@ Small, none blocking. Each belongs to the step named.
 | Preview releases under `pr-<number>/` are never cleaned up. Add a lifecycle rule. | 2E |
 | Cache hashed release files with the Workers Cache API. | Phase 10 |
 | The light theme's orange and vermillion categories are the closest pair; check with a colour-vision simulator. | Phase 4 |
+| The proposed mapping from UniProt's 23 evidence codes to measured, curated and predicted needs a biologist's review (`docs/data/dictionary.md`, last section). | Before launch |
+| When UniProt publishes its next release, the full build stops until the lock is refreshed. That is by design; the sample build and CI are unaffected. | When it happens |
+| 152 proteins have no AlphaFold DB link in UniProt, titin among them. Step 2B must not assume one model per protein. | 2B |
+| Join Open Targets on the crosswalk's Ensembl gene, never on UniProt's raw cross-references, which include alternative-haplotype genes. | 2C |
 
 ## Decisions taken on the owner's behalf
 
@@ -83,7 +106,7 @@ Small, none blocking. Each belongs to the step named.
 | Licence | Apache-2.0 for code, CC BY 4.0 for the dataset | **Confirmed by the owner** on 2026-11-25 |
 | Framework and host | React with Vite and TanStack Router, on Cloudflare, as one Worker with static assets | Assumed; not yet confirmed in words |
 | 3D engine | three.js on WebGL 2, instanced only; WebGPU deferred until measured | Assumed |
-| Pipeline orchestration | Plain typed stages with a content-addressed cache; no orchestrator until the stage count or scheduling needs justify one | Assumed; decision record 8 is being amended in 2A. The plan named Dagster and said to revisit |
+| Pipeline orchestration | Plain typed stages with a content-addressed cache; no orchestrator until the stage count or scheduling needs justify one | Recorded in decision record 8 (amended in 2A), with four conditions that would reverse it |
 | Tool versions | pnpm 10, Vitest 4, wrangler 4.86: each behind its current release, because this machine runs Node 20.19 | Assumed |
 | `RESUME_DOSSIER.md` and the `.docx` | Left where they are | Waiting on owner |
 
@@ -92,9 +115,10 @@ Small, none blocking. Each belongs to the step named.
 | What | Needed by | Why it cannot be done for them |
 |---|---|---|
 | **The first deployment:** a Cloudflare account, two buckets, one API token, two repository secrets. Steps are in [`runbooks/first-deploy.md`](../runbooks/first-deploy.md) | To close Phase 1 | Accounts and credentials are never created or entered by a session |
-| **Permission to download about 8 to 10 GB of public datasets to this machine** (the AlphaFold DB human archive is 4.8 GB; Open Targets, STRING and others make up the rest) | Step 2B | A large download onto the owner's disk |
+| **Permission to download about 8 to 10 GB of public datasets to this machine** (the AlphaFold DB human archive is 4.8 GB; Open Targets, STRING and others make up the rest) | Steps 2B and 2C, which are waiting on it | A large download onto the owner's disk |
 | **Node 24 on this machine** (`nvm install 24`) | Soon | Changes the owner's environment. Local runs differ from CI, and four tools are pinned behind current because of it |
-| Hugging Face and Zenodo accounts with tokens, to publish the open dataset | Step 2E | Accounts and credentials |
+| Hugging Face and Zenodo accounts with tokens, to publish the open dataset | Step 2F | Accounts and credentials |
+| A biologist willing to review the evidence-kind mapping and, later, the stories | Before launch | It needs a person with the training, and neither the owner nor the sessions have it |
 | Turn on private vulnerability reporting for the repository | Before launch | A repository setting |
 | A domain, if wanted | Any time | A purchase |
 | Five conversations with potential users; two hours using the three closest products | Before Phase 3 | Plan section 5, Phase 1 |
@@ -111,3 +135,4 @@ For information: the 1C build session started Docker Desktop on this machine to 
 - **2026-11-25.** Step 1A reported done (17 commits) and was verified. `v2` pushed and draft pull request 5 opened. Step 1B started.
 - **2026-11-25.** Step 1B reported done (16 commits) and was verified. Step 1C started.
 - **2026-11-25.** Step 1C reported done (16 commits) and was verified. Phase 1 is built; its first deployment waits on the owner. Phase 2 split into five steps; step 2A started.
+- **2026-11-25.** Step 2A reported done (13 commits) and was verified, including byte-identical builds on two operating systems. Steps reordered: 2D and 2E need only small downloads and go next; 2B and 2C wait for the owner's permission to download several gigabytes. Step 2D started.
