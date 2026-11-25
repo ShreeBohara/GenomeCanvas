@@ -41,4 +41,11 @@ The plan is `Documents/genomecanvas-2.0-plan.md`. Read "The short version", then
 
 ## Commands
 
-Phase 1A fills this section in. Until then there are none.
+Run from the repository root. pnpm only through corepack; never `corepack enable`. Set `COREPACK_ENABLE_DOWNLOAD_PROMPT=0` in non-interactive shells.
+
+- Install: `corepack pnpm install --frozen-lockfile`, and `uv sync --frozen` inside `forge/`.
+- Everything, both languages: `corepack pnpm check:all`.
+- TypeScript: `corepack pnpm check` runs `lint`, `format:check`, `typecheck`, `test` and `build`, each also a script of its own. `corepack pnpm format` rewrites files.
+- Python: `corepack pnpm check:py` runs ruff (lint and format check), mypy, pytest and the ledger check in `forge/`. Single tools: `uv run ruff check .`, `uv run mypy`, `uv run pytest` inside `forge/`.
+- Licence ledger: `uv run python -m forge.ledger check` inside `forge/` (add `--today YYYY-MM-DD` to check against another date).
+- Workflows: `actionlint` validates `.github/workflows/`.
