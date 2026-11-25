@@ -13,7 +13,9 @@
     "test": "vitest run",
     "budget": "node scripts/budget.mjs",
     "e2e": "playwright test",
-    "release:upload": "tsx --conditions=source scripts/release-upload/cli.ts"
+    "release:upload": "tsx --conditions=source scripts/release-upload/cli.ts",
+    "deploy:check": "tsx --conditions=source scripts/deploy-check/cli.ts",
+    "deploy:dry-run": "wrangler deploy --dry-run"
   },
   "dependencies": {
     "@genomecanvas/engine": "workspace:*",
