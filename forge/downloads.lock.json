@@ -1,0 +1,58 @@
+{
+  "artifacts": {
+    "hgnc_complete_set": {
+      "description": "HGNC's complete set of approved human genes, monthly archive of 6 October 2026.",
+      "full": {
+        "bytes": 16973125,
+        "sha256": "8bf6f686e640dbc864a346484626953621b0500d900d26cd085a35c2782d725d",
+        "url": "https://storage.googleapis.com/public-download-files/hgnc/archive/archive/monthly/tsv/hgnc_complete_set_2026-10-06.tsv"
+      },
+      "release": "2026-10-06",
+      "sample": {
+        "bytes": 38554,
+        "path": "snapshots/hgnc_complete_set.sample.tsv.gz",
+        "sha256": "f3facde9120926d352d11ebafae32e7fd9d641481e0bdbbd4cb08cd47b924ff2"
+      },
+      "source": "hgnc"
+    },
+    "uniprot_human_annotation_scores": {
+      "description": "Annotation score of every reviewed human entry, from UniProt's REST API (the XML does not carry it).",
+      "full": {
+        "bytes": 56844,
+        "reported_by": "UniProt REST API, X-Total-Results for (organism_id:9606) AND (reviewed:true), release 2026_04",
+        "reported_records": 20429,
+        "sha256": "81fd45882fd93fef9244ff66b796c7e11057ded2bea045a522e7f37d939ef3f5",
+        "url": "https://rest.uniprot.org/uniprotkb/stream?compressed=true&fields=accession%2Cannotation_score&format=tsv&query=%28organism_id%3A9606%29+AND+%28reviewed%3Atrue%29&sort=accession+asc"
+      },
+      "release": "2026_04",
+      "sample": {
+        "bytes": 877,
+        "path": "snapshots/uniprot_annotation_scores.sample.tsv.gz",
+        "reported_by": "the sample accession list, snapshots/sample-accessions.tsv",
+        "reported_records": 200,
+        "sha256": "6b6ecf496e0d1e64c2a94f4fead17b0c3480cdd8ad20c4dfa00483ba6c4a4b14"
+      },
+      "source": "uniprot"
+    },
+    "uniprot_human_xml": {
+      "description": "Every reviewed human UniProtKB/Swiss-Prot entry in UniProt's XML format (the human taxonomic division file).",
+      "full": {
+        "bytes": 174683391,
+        "reported_by": "UniProt REST API, X-Total-Results for (organism_id:9606) AND (reviewed:true), release 2026_04",
+        "reported_records": 20429,
+        "sha256": "4216089394b4eecdd410a975adeb9ee02d45f33ad72c5151ec2228b41f9194bf",
+        "url": "https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/taxonomic_divisions/uniprot_sprot_human.xml.gz"
+      },
+      "release": "2026_04",
+      "sample": {
+        "bytes": 2881195,
+        "path": "snapshots/uniprot_sprot_human.sample.xml.gz",
+        "reported_by": "the sample accession list, snapshots/sample-accessions.tsv",
+        "reported_records": 200,
+        "sha256": "f9442fc721d268fd8c7cf63af94b3d58c81fa13fca03e7301dd1942c05927748"
+      },
+      "source": "uniprot"
+    }
+  },
+  "format": "forge-lock/1"
+}
