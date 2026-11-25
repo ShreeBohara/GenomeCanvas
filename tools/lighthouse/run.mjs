@@ -17,10 +17,12 @@ const CATEGORIES = ["performance", "accessibility", "best-practices", "seo"];
 
 // Fail below these, on the worst of the three runs.
 const FAIL_BELOW = { accessibility: 95, "best-practices": 90 };
-// Performance only warns. Under software rendering on a shared runner the score
-// moves with the machine, not the code; see docs/build/reports/phase-1c.md for
-// the measured spread behind this choice. Phase 4 makes it a failing budget of
-// 90 on a protein page (plan section 7), measured where rendering is stable.
+// Performance only warns. On GitHub's runners, under software rendering, three
+// runs of the same build scored 56, 76 and 77, and 55, 71 and 73 (step 1C,
+// before the warm-up run was added): a spread of about 20 points that comes
+// from the machine, not the code. A failing threshold would fail at random.
+// Phase 4 makes it a failing budget of 90 on a protein page (plan section 7),
+// measured where rendering is stable.
 const WARN_BELOW = { performance: 90 };
 
 const chromeFlags = [
@@ -35,7 +37,10 @@ const chromeFlags = [
 mkdirSync("reports", { recursive: true });
 const runs = [];
 let chromeVersion = "unknown";
-for (let i = 1; i <= RUNS; i++) {
+// Run 0 is a warm-up and is thrown away: the first page load after the preview
+// server starts also pays for workerd's start-up, which no visitor of a
+// deployed site pays. Each measured run still gets a cold browser.
+for (let i = 0; i <= RUNS; i++) {
   // A fresh browser and profile for every run, so no run warms another's cache.
   const chrome = await chromeLauncher.launch({ chromeFlags });
   try {
@@ -49,6 +54,12 @@ for (let i = 1; i <= RUNS; i++) {
     const { lhr, report } = result;
     if (lhr.runtimeError) throw new Error(`Lighthouse: ${lhr.runtimeError.message}`);
     chromeVersion = lhr.environment.hostUserAgent;
+    if (i === 0) {
+      console.log(
+        `Warm-up run, not counted: performance ${Math.round((lhr.categories.performance?.score ?? 0) * 100)}`,
+      );
+      continue;
+    }
     writeFileSync(`reports/run-${i}.json`, Array.isArray(report) ? report[0] : report);
     const scores = Object.fromEntries(
       CATEGORIES.map((c) => [c, Math.round((lhr.categories[c]?.score ?? 0) * 100)]),
