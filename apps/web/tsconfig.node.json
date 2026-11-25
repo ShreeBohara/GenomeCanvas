@@ -11,6 +11,7 @@
   },
   "include": [
     "worker",
+    "scripts/**/*.ts",
     "e2e",
     "src/**/*.test.ts",
     "src/env.d.ts",
