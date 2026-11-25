@@ -3,7 +3,7 @@
 import { readFileSync } from "node:fs";
 import { decodePoints } from "@genomecanvas/query";
 
-const FOLDER = new URL("../public/release/sample/", import.meta.url);
+const FOLDER = new URL("../../../build/release/sample/", import.meta.url);
 
 export interface BuiltRelease {
   readonly rowCount: number;
@@ -52,4 +52,9 @@ export function loneliestRow(release: BuiltRelease): number {
     }
   }
   return best;
+}
+
+/** A file of the built release, byte for byte as the pipeline wrote it. */
+export function readBuiltFile(name: string): Buffer {
+  return readFileSync(new URL(name, FOLDER));
 }

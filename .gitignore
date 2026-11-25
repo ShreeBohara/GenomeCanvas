@@ -27,8 +27,8 @@ __pycache__/
 .claude/*
 !.claude/launch.json
 
-# Built output: the sample release, the Workers runtime's local state, test reports
-apps/web/public/release/
+# Built output: releases, the Workers runtime's local state (including its local R2), test reports
+/build/
 .wrangler/
 playwright-report/
 test-results/
