@@ -14,13 +14,39 @@
   name: UniProt Knowledgebase (Swiss-Prot, human), including its ProtT5 embeddings
   version: "2026_04"
   url: https://www.uniprot.org
-  licence: null
-  licence_url: null
-  checked: null
-  attribution: null
-  in_use: false
-  status: unverified
-  note: The plan names CC BY 4.0; the licence page has not been read.
+  licence: CC-BY-4.0
+  licence_url: https://www.uniprot.org/help/license
+  checked: 2026-11-25
+  attribution: >-
+    UniProtKB/Swiss-Prot release 2026_04 (4 November 2026), The UniProt
+    Consortium, www.uniprot.org, licensed under CC BY 4.0.
+  in_use: true
+  status: verified
+  note: >-
+    Read on 2026-11-25 through rest.uniprot.org/help/license, the same page the
+    website renders (page last modified 2024-12-18). CC BY 4.0 applies to all
+    copyrightable parts of the databases. Its disclaimer: no warranty of
+    correctness; some data may be covered by patents or other rights; medical
+    and genetic information is for research, education and information only and
+    is not medical advice. Used from step 2A for the reviewed human set.
+
+- id: hgnc
+  name: HGNC, HUGO Gene Nomenclature Committee (complete set of approved human gene symbols)
+  version: "2026-10-06"
+  url: https://www.genenames.org
+  licence: CC0-1.0
+  licence_url: https://www.genenames.org/about/license/
+  checked: 2026-11-25
+  attribution: >-
+    HGNC complete set, monthly archive of 6 October 2026, HUGO Gene
+    Nomenclature Committee, www.genenames.org (RRID:SCR_002827), CC0.
+  in_use: true
+  status: verified
+  note: >-
+    All HGNC data is released under CC0. Attribution is not required; the HGNC
+    asks for it and recommends citing "Genenames.org: the HGNC and PGNC
+    resources in 2026" (Seal et al., Nucleic Acids Research). Used from step 2A
+    for the identity crosswalk only.
 
 - id: alphafold-db
   name: AlphaFold Protein Structure Database

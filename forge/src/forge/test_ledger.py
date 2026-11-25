@@ -57,8 +57,16 @@ def test_the_committed_ledger_passes_on_the_day_it_was_seeded() -> None:
     verdict = check_ledger(parse_ledger(DEFAULT_LEDGER.read_text(encoding="utf-8")), TODAY)
     assert verdict.problems == ()
     verified = {s.id for s in verdict.sources if s.status == "verified"}
-    assert verified == {"alphamissense", "esm", "human-protein-atlas", "open-targets"}
+    assert verified == {
+        "alphamissense",
+        "esm",
+        "hgnc",
+        "human-protein-atlas",
+        "open-targets",
+        "uniprot",
+    }
     assert all(s.licence is None for s in verdict.sources if s.status == "unverified")
+    assert {s.id for s in verdict.sources if s.in_use} == {"hgnc", "uniprot"}
 
 
 @pytest.mark.parametrize("field", ["id", "licence", "checked", "in_use", "status"])
@@ -140,7 +148,7 @@ def test_the_command_prints_the_table_and_exits_zero(capsys: pytest.CaptureFixtu
     assert main(["check", "--today", "2026-11-25"]) == 0
     out = capsys.readouterr().out
     assert re.search(r"^alphamissense +verified +no +CC-BY-4.0 +2026-11-25 +0$", out, re.M)
-    assert "15 sources, 4 verified, checked against 2026-11-25." in out
+    assert "16 sources, 6 verified, checked against 2026-11-25." in out
 
 
 def test_the_command_exits_non_zero_on_a_broken_ledger(
