@@ -26,3 +26,9 @@ __pycache__/
 # Claude Code: local state only; the shared launch.json is tracked
 .claude/*
 !.claude/launch.json
+
+# Built output: the sample release, the Workers runtime's local state, test reports
+apps/web/public/release/
+.wrangler/
+playwright-report/
+test-results/
