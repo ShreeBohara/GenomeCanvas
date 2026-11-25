@@ -16,8 +16,14 @@ The Worker serves the release from an R2 bucket with byte ranges and caching, as
 production will; locally that bucket is wrangler's own. The cloud resources are
 described in OpenTofu, and deploys and pull request previews are wired up and
 wait only for the owner's Cloudflare account
-([`docs/runbooks/first-deploy.md`](docs/runbooks/first-deploy.md)). **The data
-is sample data, and nothing is deployed yet.** Version 1
+([`docs/runbooks/first-deploy.md`](docs/runbooks/first-deploy.md)). **The app
+still shows sample data, and nothing is deployed yet.**
+
+The data pipeline, the Forge, now builds real tables: every reviewed human
+protein in UniProt release 2026_04 (20,429 of them) as checked, documented
+Parquet tables, with an identity crosswalk to Ensembl and HGNC. The app moves
+onto them in step 2E. The tables are described in
+[`docs/data/dictionary.md`](docs/data/dictionary.md). Version 1
 (Next.js and FastAPI) is frozen at tag `v1.0.0` and kept runnable on branch
 `legacy`.
 
@@ -43,6 +49,8 @@ tests need Chromium once: `corepack pnpm e2e:install`.
 | `corepack pnpm dev` | Build the sample release, load it into local R2, then serve the app and the Worker with live reload |
 | `corepack pnpm release:sample` | Build the sample release into `build/release/sample/` |
 | `corepack pnpm release:local` | Load the built sample release into wrangler's local R2 |
+| `corepack pnpm forge:sample` | Build the Forge's tables from the committed 200-protein sample, offline, into `build/tables/sample/` |
+| `corepack pnpm forge:full` | Build the tables for every reviewed human protein into `build/tables/full/`; downloads about 192 MB once |
 | `corepack pnpm deploy:dry-run` | Package the staging and production Workers without uploading anything |
 | `corepack pnpm lint` | Biome lint |
 | `corepack pnpm format` | Biome format, writing changes |
@@ -51,7 +59,7 @@ tests need Chromium once: `corepack pnpm e2e:install`.
 | `corepack pnpm build` | Build every package and the app |
 | `corepack pnpm budget` | Print every chunk's size; fail if first-load JavaScript is over 150 KB gzip |
 | `corepack pnpm check` | All of the above but `dev`, with format in verify mode |
-| `corepack pnpm check:py` | ruff, mypy, pytest and the licence ledger check in `forge/` |
+| `corepack pnpm check:py` | ruff, mypy, pytest, the licence ledger, the sample snapshots against the lock, the data dictionary, and the sample build, in `forge/` |
 | `corepack pnpm check:e2e` | Build the release and the app, load local R2, then run the Playwright tests |
 | `corepack pnpm check:all` | `check`, `check:py` and `check:e2e` |
 
@@ -65,12 +73,14 @@ tests need Chromium once: `corepack pnpm e2e:install`.
 | `packages/query/` | `@genomecanvas/query`: fetches a release, checks lengths and hashes, decodes the points format |
 | `packages/engine/` | `@genomecanvas/engine`: the atlas renderer on three.js and WebGL 2; no React |
 | `packages/ui/` | `@genomecanvas/ui`: design tokens as CSS variables, wired into Tailwind |
-| `forge/` | The Python data pipeline: the licence ledger, and `forge.skeleton`, which builds the sample release |
+| `forge/` | The Python data pipeline, the Forge: the licence ledger (`sources.yaml`), pinned downloads (`downloads.lock.json`), the stage runner (`src/forge/pipeline/`), UniProt (`src/forge/uniprot/`), identity (`src/forge/identity/`), and `forge.skeleton`, which still builds the app's sample release |
+| `forge/snapshots/` | The 200-protein sample the `sample` profile builds from, with UniProt's and HGNC's attribution |
 | `forge/fixtures/v1/` | Two data files kept from version 1 for the skeleton; not real data, see its README |
 | `infra/` | OpenTofu: the release buckets (`cloudflare/`) and optional repository settings (`github/`) |
 | `tools/lighthouse/` | Lighthouse, three runs against the built site; its own lockfile, run in CI |
 | `.github/workflows/` | CI, CodeQL, deploy on push, and a preview per pull request |
 | `docs/formats/` | Binary and file formats, starting with `points-v0.md` |
+| `docs/data/` | The data dictionary, generated from the Forge's table declarations |
 | `docs/runbooks/` | Steps only the owner can take, starting with `first-deploy.md` |
 | `docs/adr/` | Architecture decision records |
 | `docs/licensing.md` | How code and data are licensed |

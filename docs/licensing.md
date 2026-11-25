@@ -38,8 +38,28 @@ uv run python -m forge.ledger check
 ```
 
 The check fails if a verified licence was last read more than 180 days ago, or if
-a source marked as in use is not verified. Each release will embed the ledger in
-its manifest, and the app's Sources page will be rendered from it.
+a source marked as in use is not verified. The app's Sources page will be
+rendered from it.
+
+### The rule at build time
+
+Every stage of the Forge declares the ledger sources it reads. `python -m forge
+build` refuses to run any stage if one of those sources has no valid row, is
+not verified, or is not marked in use, and a stage may not read a pinned file
+belonging to a source it has not declared. Each table release embeds the
+licence, licence URL, date checked and attribution of every source it used in
+its `manifest.json`.
+
+### Sources in use
+
+| Source | Since | Licence | What is taken |
+|---|---|---|---|
+| UniProtKB/Swiss-Prot, release 2026_04 | Step 2A | CC BY 4.0 ([read 2026-11-25](https://www.uniprot.org/help/license)) | Every reviewed human entry: names, sequences, features, GO terms, comments, keywords, cross-references; annotation scores |
+| HGNC complete set, 2026-10-06 | Step 2A | CC0 ([read 2026-11-25](https://www.genenames.org/about/license/)) | Approved symbols and their Ensembl genes, for the identity crosswalk |
+
+Both are compatible with releasing the dataset under CC BY 4.0; UniProt's
+attribution is carried into every release manifest. The committed sample
+snapshots carry the same attribution in `forge/snapshots/README.md`.
 
 ## Left out for licence reasons
 
