@@ -1060,6 +1060,7 @@ Suggestions from my own knowledge, not from the research. Every claim in every s
 | ESM licence | MIT, Chan Zuckerberg Biohub, 2026 | Read the licence file |
 | AlphaMissense prediction licence | CC BY 4.0 | Read the README |
 | Human Protein Atlas licence | CC BY 4.0 for its own content | Read the licence page |
+| Open Targets licence | CC0 1.0 for the platform's own release; its source table lists other terms for some third-party data | Read the licence page |
 | Cloudflare static-asset requests | Free and unlimited; no byte ranges | Read the billing page |
 | Vercel free-plan guidelines | 100 GB transfer, 1,000,000 invocations a month | Read the fair-use page |
 | Human Protein Atlas version | 26.0, released 11 November 2026 | Read the release page |

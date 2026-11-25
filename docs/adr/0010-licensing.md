@@ -1,6 +1,6 @@
 # 10. Licensing: Apache-2.0 for code, CC BY 4.0 for the dataset
 
-Status: Accepted, pending owner confirmation before the first push, 2026-11-25
+Status: Accepted. The owner approved publishing under this licence on 2026-11-25.
 
 ## Context
 
@@ -28,5 +28,5 @@ share-alike (plan section 4.4; `docs/licensing.md`).
 
 ## Consequences
 
-- The owner must confirm before anything is pushed under this licence.
+- The owner confirmed this before the first push. Changing the licence later needs the same.
 - DisGeNET, AlphaFold 3 outputs, OMIM, DrugBank and PhosphoSitePlus stay out.

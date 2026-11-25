@@ -12,7 +12,7 @@ The plan is `Documents/genomecanvas-2.0-plan.md`. Read "The short version", then
 
 ## Hard rules
 
-1. **Branch.** Work only on `v2`. Never check out, commit to, merge into, rebase or delete `main`, `legacy` or any tag. Never push. Never force anything.
+1. **Branch.** Work only on `v2`. Never check out, commit to, merge into, rebase or delete `main`, `legacy` or any tag. Never force anything. The owner has allowed pushing `v2`: push only `v2`, only to `origin`, and only commits that already pass `corepack pnpm check:all` locally. Never push tags or any other branch, and never open, merge or close a pull request; the orchestrator does that.
 2. **No accounts, credentials, purchases or deployments.** If a step needs one, write the exact commands into a runbook under `docs/runbooks/` and report that item as blocked. Do the rest.
 3. **No `sudo` and no global installs** (`npm i -g`, `brew`, `pipx`), and never pipe an installer from the internet into a shell. If a tool is missing, say so in the report.
 4. **Do not delete or rewrite** `Documents/`, `reports/`, `research_notes/`, `RESUME_DOSSIER.md` or `docs/build/`.
@@ -21,6 +21,7 @@ The plan is `Documents/genomecanvas-2.0-plan.md`. Read "The short version", then
 7. **Measure, then claim.** A report states what was run and what it printed. "Should work" is not evidence. A test nobody has seen fail is not evidence either: where it is cheap, break the thing once and watch the test go red.
 8. **Check versions against the registry before pinning.** Version numbers in the plan or a work order may be stale.
 9. **No secrets in the repository,** including in tests, fixtures and examples.
+10. **No absolute local paths, usernames or machine names in committed files.** Write `<repository>` or a relative path. Reports included.
 
 ## Engineering conventions
 

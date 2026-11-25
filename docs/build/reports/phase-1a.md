@@ -4,7 +4,7 @@ Commits: cfac88b..3dcdbef on v2, then this report's commit. Nothing pushed.
 
 ## Exit criteria
 
-All "fresh clone" runs used `git clone --branch v2 /Users/shree/code/GenomeCanvas <scratch>/clone` at `3dcdbef`, with `COREPACK_ENABLE_DOWNLOAD_PROMPT=0`, on Node 20.19.0, corepack 0.31.0, uv 0.11.29.
+All "fresh clone" runs used `git clone --branch v2 <this repository> <scratch>/clone` at `3dcdbef`, with `COREPACK_ENABLE_DOWNLOAD_PROMPT=0`, on Node 20.19.0, corepack 0.31.0, uv 0.11.29.
 
 | # | Criterion | Result | Evidence |
 |---|---|---|---|
