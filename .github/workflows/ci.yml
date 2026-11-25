@@ -108,3 +108,23 @@ jobs:
       - name: Licence ledger
         # Uses today's date, so a licence check older than 180 days turns CI red.
         run: uv run --frozen python -m forge.ledger check
+
+  opentofu:
+    name: OpenTofu (format and validate)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # infra/tofu.sh runs OpenTofu from its official image, pinned by digest,
+      # so CI and a machine without tofu installed run the same build.
+      - name: Format
+        run: infra/tofu.sh fmt -check -recursive -diff
+      - name: Validate
+        # -lockfile=readonly fails if a provider no longer matches the committed lock file.
+        run: |
+          for module in cloudflare github; do
+            infra/tofu.sh -chdir="$module" init -backend=false -input=false -lockfile=readonly
+            infra/tofu.sh -chdir="$module" validate
+          done
