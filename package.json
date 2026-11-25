@@ -24,7 +24,8 @@
     "check": "corepack pnpm run lint && corepack pnpm run format:check && corepack pnpm run typecheck && corepack pnpm run test && corepack pnpm run build && corepack pnpm run budget",
     "check:py": "cd forge && uv run --locked ruff check . && uv run --locked ruff format --check . && uv run --locked mypy && uv run --locked pytest && uv run --locked python -m forge.ledger check",
     "check:e2e": "corepack pnpm run release:sample && corepack pnpm --filter @genomecanvas/web run build && corepack pnpm run release:local && corepack pnpm run e2e",
-    "check:all": "corepack pnpm run check && corepack pnpm run check:py && corepack pnpm run check:e2e"
+    "check:all": "corepack pnpm run check && corepack pnpm run check:py && corepack pnpm run check:e2e",
+    "deploy:dry-run": "CLOUDFLARE_ENV=staging corepack pnpm --filter @genomecanvas/web run build && corepack pnpm --filter @genomecanvas/web run deploy:dry-run && CLOUDFLARE_ENV=production corepack pnpm --filter @genomecanvas/web run build && corepack pnpm --filter @genomecanvas/web run deploy:dry-run && corepack pnpm --filter @genomecanvas/web run build"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.9",

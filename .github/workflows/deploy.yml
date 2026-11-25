@@ -1,0 +1,102 @@
+# Deploys on push: v2 to staging, main to production. Each run builds, uploads
+# the sample release to that environment's bucket, deploys the Worker, then
+# checks /api/health and the manifest on the deployed address.
+#
+# Until the owner stores CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID as
+# repository secrets (docs/runbooks/first-deploy.md), the deploy job is skipped,
+# not failed. Every `run:` is a fixed command string; values from the event and
+# from secrets reach the shell only through environment variables.
+name: Deploy
+
+on:
+  push:
+    branches: [v2, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deploy per branch at a time, and a newer push waits rather than cancelling
+# a deploy halfway through.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  credentials:
+    name: Look for Cloudflare credentials
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    outputs:
+      present: ${{ steps.look.outputs.present }}
+    steps:
+      - id: look
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        # Secrets cannot appear in a job's `if`, so this job says whether they exist.
+        run: |
+          if [ -n "$CLOUDFLARE_API_TOKEN" ] && [ -n "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::No Cloudflare secrets are set, so the deploy is skipped. See docs/runbooks/first-deploy.md."
+          fi
+
+  deploy:
+    name: Deploy to ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    needs: credentials
+    # A manual run deploys only from v2 or main, like a push.
+    if: needs.credentials.outputs.present == 'true' && (github.ref_name == 'v2' || github.ref_name == 'main')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment:
+      name: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+      url: ${{ steps.deploy.outputs.url }}
+    env:
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: "0"
+      WRANGLER_SEND_METRICS: "false"
+      DEPLOY_ENV: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: "0.11.29"
+          working-directory: forge
+      - name: Install
+        run: |
+          corepack pnpm install --frozen-lockfile
+          (cd forge && uv sync --locked)
+      - name: Build the sample release
+        run: corepack pnpm run release:sample
+      - name: Build the app for this environment
+        # The Cloudflare Vite plugin picks the wrangler.jsonc environment at build time.
+        run: CLOUDFLARE_ENV="$DEPLOY_ENV" corepack pnpm run build
+      - name: Upload the sample release
+        # Data files first, the manifest last, so the Worker deployed next never
+        # points at a missing file. Hashed files already there are skipped.
+        run: corepack pnpm --filter @genomecanvas/web run release:upload ../../build/release/sample --release sample --env "$DEPLOY_ENV" --apply
+      - name: Deploy the Worker
+        id: deploy
+        working-directory: apps/web
+        run: |
+          WRANGLER_OUTPUT_FILE_PATH="$RUNNER_TEMP/wrangler-output.ndjson" \
+            corepack pnpm exec wrangler deploy --message "$GITHUB_SHA"
+          url=$(jq -r 'select(.type == "deploy") | .targets[]?' "$RUNNER_TEMP/wrangler-output.ndjson" | grep -m1 '^https://.*\.workers\.dev$' || true)
+          if [ -z "$url" ]; then
+            echo "::error::wrangler reported no workers.dev address. Is the workers.dev subdomain set up (runbook, step 3)?"
+            exit 1
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+      - name: Check the deployed site
+        env:
+          DEPLOY_URL: ${{ steps.deploy.outputs.url }}
+        run: corepack pnpm --filter @genomecanvas/web run deploy:check "$DEPLOY_URL" --release sample --manifest ../../build/release/sample/manifest.json
