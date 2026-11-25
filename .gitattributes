@@ -1,0 +1,15 @@
+# Normalise text to LF in the repository, whatever the platform.
+* text=auto eol=lf
+
+# Binary data: never normalise, never diff as text.
+*.bin binary
+*.parquet binary
+*.bcif binary
+*.png binary
+*.jpg binary
+*.gz binary
+*.docx binary
+
+# Lockfiles are generated; hosts collapse them in review views.
+pnpm-lock.yaml linguist-generated=true
+forge/uv.lock linguist-generated=true
