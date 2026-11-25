@@ -1,0 +1,120 @@
+{
+  "about": "How a file name in a release is classified. Read by packages/protocol (release-files.test.ts) and forge (test_release_names.py), so the Worker, the upload command and the pipeline share one rule. `served` is whether the name may appear in a release at all; `hashed` is whether its bytes are fixed by its name.",
+  "names": [
+    { "name": "manifest.json", "served": true, "hashed": false, "why": "the one fixed name" },
+    {
+      "name": "points.f958edcc94e000e4.bin",
+      "served": true,
+      "hashed": true,
+      "why": "a points file as forge writes it"
+    },
+    {
+      "name": "proteins.0c919232e600b999.json",
+      "served": true,
+      "hashed": true,
+      "why": "a protein index as forge writes it"
+    },
+    {
+      "name": "proteins.0123456789abcdef.parquet",
+      "served": true,
+      "hashed": true,
+      "why": "Parquet, for Phase 2"
+    },
+    {
+      "name": "p38398.0123456789abcdef.bcif",
+      "served": true,
+      "hashed": true,
+      "why": "BinaryCIF, for the structure mirror"
+    },
+    {
+      "name": "backbone.lod16.0123456789abcdef.bin",
+      "served": true,
+      "hashed": true,
+      "why": "a stem may contain dots"
+    },
+    {
+      "name": "gene_set-2.0123456789abcdef.json",
+      "served": true,
+      "hashed": true,
+      "why": "a stem may contain hyphens and underscores"
+    },
+    {
+      "name": "points.bin",
+      "served": false,
+      "hashed": false,
+      "why": "a fixed name other than the manifest could be replaced"
+    },
+    {
+      "name": "points.f958edcc94e000e.bin",
+      "served": false,
+      "hashed": false,
+      "why": "15 hex digits, not 16"
+    },
+    {
+      "name": "points.f958edcc94e000e4a.bin",
+      "served": false,
+      "hashed": false,
+      "why": "17 hex digits, not 16"
+    },
+    {
+      "name": "points.F958EDCC94E000E4.bin",
+      "served": false,
+      "hashed": false,
+      "why": "upper-case hex"
+    },
+    {
+      "name": "points.f958edcc94e000e4.exe",
+      "served": false,
+      "hashed": true,
+      "why": "hashed, but an extension a release never contains"
+    },
+    { "name": "points.f958edcc94e000e4", "served": false, "hashed": false, "why": "no extension" },
+    { "name": "Manifest.json", "served": false, "hashed": false, "why": "upper case" },
+    {
+      "name": "manifest.json.bak",
+      "served": false,
+      "hashed": false,
+      "why": "an unknown extension"
+    },
+    { "name": ".manifest.json", "served": false, "hashed": false, "why": "a leading dot" },
+    { "name": "..", "served": false, "hashed": false, "why": "the parent folder" },
+    {
+      "name": "points..f958edcc94e000e4.bin",
+      "served": false,
+      "hashed": false,
+      "why": "an empty part between dots"
+    },
+    {
+      "name": "sample/manifest.json",
+      "served": false,
+      "hashed": false,
+      "why": "a path, not a bare name"
+    },
+    {
+      "name": "..%2Fmanifest.json",
+      "served": false,
+      "hashed": false,
+      "why": "an encoded climb out of the folder"
+    },
+    {
+      "name": "manifest%2Ejson",
+      "served": false,
+      "hashed": false,
+      "why": "percent-encoding is never decoded"
+    },
+    { "name": "manifest.json ", "served": false, "hashed": false, "why": "a trailing space" },
+    { "name": "manifest.json\n", "served": false, "hashed": false, "why": "a trailing newline" },
+    { "name": "", "served": false, "hashed": false, "why": "empty" }
+  ],
+  "releases": [
+    { "name": "sample", "valid": true, "why": "the sample release" },
+    { "name": "2026-04", "valid": true, "why": "a dated release" },
+    { "name": "v1.2", "valid": true, "why": "dots between parts" },
+    { "name": "..", "valid": false, "why": "the parent folder" },
+    { "name": ".", "valid": false, "why": "the current folder" },
+    { "name": "Sample", "valid": false, "why": "upper case" },
+    { "name": "sample/", "valid": false, "why": "a slash" },
+    { "name": "-sample", "valid": false, "why": "a leading hyphen" },
+    { "name": "", "valid": false, "why": "empty" }
+  ]
+}
