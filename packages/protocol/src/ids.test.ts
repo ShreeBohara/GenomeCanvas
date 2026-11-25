@@ -1,29 +1,28 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { type EntityId, entityKind, isUniProtAccession, parseEntityId } from "./ids.js";
 
+interface AccessionVector {
+  readonly value: string;
+  readonly why: string;
+}
+
+// Shared with forge's Python tests, so both languages agree on what an accession is.
+const vectors = JSON.parse(
+  readFileSync(new URL("../vectors/uniprot-accessions.json", import.meta.url), "utf8"),
+) as { readonly valid: readonly AccessionVector[]; readonly invalid: readonly AccessionVector[] };
+
 describe("isUniProtAccession", () => {
-  it.each([
-    ["P38398", "BRCA1, six characters starting with P"],
-    ["Q13315", "ATM, starting with Q"],
-    ["O15245", "starting with O"],
-    ["A2BC19", "the second six-character form"],
-    ["A0A023GPI8", "the ten-character form"],
-  ])("accepts %s (%s)", (value) => {
+  it("reads a non-trivial set of shared vectors", () => {
+    expect(vectors.valid.length).toBeGreaterThanOrEqual(5);
+    expect(vectors.invalid.length).toBeGreaterThanOrEqual(10);
+  });
+
+  it.each(vectors.valid.map((v) => [v.value, v.why]))("accepts %j (%s)", (value) => {
     expect(isUniProtAccession(value)).toBe(true);
   });
 
-  it.each([
-    ["", "empty"],
-    ["p38398", "lower case"],
-    ["P38398 ", "trailing space"],
-    [" P38398", "leading space"],
-    ["P3839", "too short"],
-    ["P383981", "seven characters"],
-    ["O1A2B3C", "O, P and Q never start the ten-character form"],
-    ["A0A023GPI8X", "eleven characters"],
-    ["BRCA1", "a gene symbol"],
-    ["P38398-2", "an isoform suffix is not an accession"],
-  ])("rejects %j (%s)", (value) => {
+  it.each(vectors.invalid.map((v) => [v.value, v.why]))("rejects %j (%s)", (value) => {
     expect(isUniProtAccession(value)).toBe(false);
   });
 });
