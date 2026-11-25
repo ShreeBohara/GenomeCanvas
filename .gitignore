@@ -41,3 +41,6 @@ test-results/
 .terraform.tfstate.lock.info
 terraform.tfvars
 crash.log
+
+# Lighthouse reports, written by tools/lighthouse/run.mjs
+tools/lighthouse/reports/

@@ -70,6 +70,10 @@ jobs:
         run: corepack pnpm --filter @genomecanvas/web exec playwright install --with-deps chromium
       - name: End-to-end tests
         run: corepack pnpm run e2e
+      - name: Dry-run deploys for staging and production
+        # Builds for each environment and asks wrangler to package it without
+        # uploading; needs no credentials. Rebuilds the default last.
+        run: corepack pnpm run deploy:dry-run
       - name: Keep the Playwright report
         if: failure()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -128,3 +132,58 @@ jobs:
             infra/tofu.sh -chdir="$module" init -backend=false -input=false -lockfile=readonly
             infra/tofu.sh -chdir="$module" validate
           done
+
+  lighthouse:
+    name: Lighthouse (three runs)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: "0"
+      WRANGLER_SEND_METRICS: "false"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: "0.11.29"
+          working-directory: forge
+      - name: Install
+        # tools/lighthouse sits outside the workspace (Lighthouse 13 needs Node 22.19+).
+        run: |
+          corepack pnpm install --frozen-lockfile
+          (cd forge && uv sync --locked)
+          corepack pnpm --dir tools/lighthouse install --frozen-lockfile --ignore-workspace
+      - name: Build the release and the app, and load the release into local R2
+        run: |
+          corepack pnpm run release:sample
+          corepack pnpm run build
+          corepack pnpm run release:local
+      - name: Serve the built site
+        # vite preview runs the built assets and the Worker in local workerd,
+        # reading the release from local R2: the deployed shape, on this machine.
+        run: |
+          (cd apps/web && nohup corepack pnpm exec vite preview --port 4173 --strictPort > "$RUNNER_TEMP/preview.log" 2>&1 &)
+          for _ in $(seq 1 60); do
+            curl -sf http://localhost:4173/api/health > /dev/null && exit 0
+            sleep 1
+          done
+          cat "$RUNNER_TEMP/preview.log"
+          exit 1
+      - name: Lighthouse, three runs
+        working-directory: tools/lighthouse
+        run: |
+          google-chrome --version
+          node run.mjs http://localhost:4173/
+      - name: Keep the Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: lighthouse-reports
+          path: tools/lighthouse/reports
+          retention-days: 14
+          if-no-files-found: ignore
