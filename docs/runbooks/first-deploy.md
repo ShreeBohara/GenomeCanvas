@@ -147,8 +147,8 @@ sample release to `genomecanvas-releases-staging`, deploys the
 `/api/health` does not answer `{"status":"ok"}` or the manifest is not the one
 just uploaded.
 
-Production deploys the same way from `main`, which only the orchestrator merges
-into:
+Production deploys the same way from `main`. Nothing is merged into `main`
+without your say-so:
 
 ```bash
 gh workflow run deploy.yml --repo <owner>/GenomeCanvas --ref main
