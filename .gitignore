@@ -1,19 +1,46 @@
+# Operating system and editors
 .DS_Store
-.claude
+.idea/
+.vscode/
+*.swp
+
+# Local secrets: never commit these
 .env
-.env.local
-.env.*.local
-.next
-.pytest_cache
-.venv
-node_modules
-dist
-coverage
-backend/venv
-backend/**/__pycache__
-frontend/.next
-frontend/node_modules
-frontend/coverage
-frontend/test-results
-frontend/playwright-report
-frontend/public/vendor/molstar-viewer
+.env.*
+!.env.example
+
+# Node
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Claude Code: local state only; the shared launch.json is tracked
+.claude/*
+!.claude/launch.json
+
+# Built output: releases, the Workers runtime's local state (including its local R2), test reports
+/build/
+.wrangler/
+playwright-report/
+test-results/
+
+# OpenTofu: providers, local state and your own variable values stay on your machine.
+# The .terraform.lock.hcl files are tracked: they pin each provider's checksums.
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+terraform.tfvars
+crash.log
+
+# Lighthouse reports, written by tools/lighthouse/run.mjs
+tools/lighthouse/reports/

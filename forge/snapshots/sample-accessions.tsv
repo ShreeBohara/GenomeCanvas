@@ -1,0 +1,201 @@
+accession	reasons
+A0A024RBG1	Ensembl gene settled by HGNC
+A0A075B6H7	Ensembl gene settled by HGNC
+A0A075B6J1	Ensembl gene settled by HGNC
+A0A075B6X5	filler, by fixed hash order
+A0A075B700	annotation score 1
+A0A087WSY4	Ensembl gene mapping ambiguous
+A0A087WUL8	over 2,700 residues; no AlphaFold DB link
+A0A087WV53	annotation score 1
+A0A0A0MT78	no AlphaFold DB link
+A0A0A0MT89	no AlphaFold DB link
+A0A0B4J235	filler, by fixed hash order
+A0A0B4J2H0	filler, by fixed hash order
+A0A0C4DH34	filler, by fixed hash order
+A0A0U1RRN3	has a feature placed on an isoform
+A0A1B0GTZ2	filler, by fixed hash order
+A0A3B3IS91	has a feature with an unknown position
+A0A494C071	protein existence predicted or uncertain
+A0FGR8	filler, by fixed hash order
+A0PJZ0	protein existence predicted or uncertain
+A0ZSE6	protein existence predicted or uncertain
+A1A4F0	protein existence predicted or uncertain
+A1L429	Ensembl gene mapping ambiguous; HGNC mapping ambiguous
+A1L4Q6	names no gene; Ensembl gene mapping missing; HGNC mapping missing
+A2A288	has a feature placed on an isoform
+A2VEC9	over 2,700 residues
+A4D1N5	names no gene; Ensembl gene mapping missing; HGNC mapping missing
+A4UGR9	over 2,700 residues
+A6NDN8	names no gene; Ensembl gene mapping missing; HGNC mapping missing
+A6NDX4	Ensembl gene mapping missing; HGNC mapping missing
+A6NEC2	Ensembl gene mapping missing; HGNC mapping missing
+A6NIE9	has a feature with an unknown position
+A6NJ78	has a feature with an unknown position
+A6NMK8	filler, by fixed hash order
+A8MUX0	filler, by fixed hash order
+A8MVS5	UniProt's symbol differs from HGNC's
+A8MXU0	HGNC mapping ambiguous
+A8MYA2	Ensembl gene mapping ambiguous; HGNC mapping ambiguous
+A8MZ97	UniProt's symbol differs from HGNC's
+B1AMM8	filler, by fixed hash order
+C9J1S8	Ensembl gene mapping ambiguous; HGNC mapping ambiguous
+D6RBM5	its sequence is a fragment
+E9PRG8	UniProt's symbol differs from HGNC's
+I3L3L1	Ensembl gene mapping ambiguous
+O14598	HGNC mapping ambiguous
+O14686	over 2,700 residues
+O15018	over 2,700 residues
+O15078	filler, by fixed hash order
+O15245	one of the 54 proteins of version 1
+O43497	among those with the most isoforms
+O60613	a selenoprotein
+O60674	one of the 54 proteins of version 1
+O60716	among those with the most isoforms
+O75388	filler, by fixed hash order
+O96017	one of the 54 proteins of version 1
+P00519	one of the 54 proteins of version 1
+P00533	one of the 54 proteins of version 1
+P01111	one of the 54 proteins of version 1
+P01116	one of the 54 proteins of version 1
+P01858	among the five shortest
+P02452	one of the 54 proteins of version 1
+P02458	one of the 54 proteins of version 1
+P02545	one of the 54 proteins of version 1
+P02649	one of the 54 proteins of version 1
+P02729	among the five shortest
+P02751	one of the 54 proteins of version 1
+P04626	one of the 54 proteins of version 1
+P04637	one of the 54 proteins of version 1
+P05067	one of the 54 proteins of version 1
+P05783	one of the 54 proteins of version 1
+P06400	one of the 54 proteins of version 1
+P06681	filler, by fixed hash order
+P06870	filler, by fixed hash order
+P07203	a selenoprotein
+P08183	one of the 54 proteins of version 1
+P08670	one of the 54 proteins of version 1
+P09565	has only ORF gene names, no symbol
+P09874	one of the 54 proteins of version 1
+P0DH78	filler, by fixed hash order
+P0DOY5	among the five shortest
+P0DPI4	among the five shortest
+P0DPR3	among the five shortest
+P10636	one of the 54 proteins of version 1
+P11166	one of the 54 proteins of version 1
+P11801	filler, by fixed hash order
+P11802	one of the 54 proteins of version 1
+P12883	one of the 54 proteins of version 1
+P12931	one of the 54 proteins of version 1
+P13569	one of the 54 proteins of version 1
+P15056	one of the 54 proteins of version 1
+P17023	filler, by fixed hash order
+P17661	one of the 54 proteins of version 1
+P18283	a selenoprotein
+P20929	among the five longest
+P22352	a selenoprotein
+P27797	filler, by fixed hash order
+P31645	one of the 54 proteins of version 1
+P31749	one of the 54 proteins of version 1
+P35222	one of the 54 proteins of version 1
+P35670	one of the 54 proteins of version 1
+P36969	a selenoprotein
+P38398	one of the 54 proteins of version 1
+P40692	one of the 54 proteins of version 1
+P42336	one of the 54 proteins of version 1
+P42345	one of the 54 proteins of version 1
+P43246	one of the 54 proteins of version 1
+P46531	one of the 54 proteins of version 1
+P47901	filler, by fixed hash order
+P49207	filler, by fixed hash order
+P49221	filler, by fixed hash order
+P49768	one of the 54 proteins of version 1
+P49821	filler, by fixed hash order
+P51587	one of the 54 proteins of version 1; over 2,700 residues, named in the plan
+P51810	filler, by fixed hash order
+P53367	filler, by fixed hash order
+P58166	filler, by fixed hash order
+P60484	one of the 54 proteins of version 1
+P61009	filler, by fixed hash order
+P62805	encoded by several genes
+P68133	one of the 54 proteins of version 1
+P68363	one of the 54 proteins of version 1
+P68431	encoded by several genes
+P80365	filler, by fixed hash order
+Q00534	one of the 54 proteins of version 1
+Q00975	filler, by fixed hash order
+Q00987	one of the 54 proteins of version 1
+Q01959	one of the 54 proteins of version 1
+Q02750	one of the 54 proteins of version 1
+Q03060	among those with the most isoforms
+Q06609	one of the 54 proteins of version 1
+Q0IIN9	filler, by fixed hash order
+Q0P140	has only ORF gene names, no symbol
+Q11203	among those with the most isoforms
+Q12888	one of the 54 proteins of version 1
+Q12986	filler, by fixed hash order
+Q13315	one of the 54 proteins of version 1; over 2,700 residues, named in the plan
+Q13444	filler, by fixed hash order
+Q13535	one of the 54 proteins of version 1
+Q13621	one of the 54 proteins of version 1
+Q13936	among those with the most isoforms
+Q14654	one of the 54 proteins of version 1
+Q16620	filler, by fixed hash order
+Q16663	filler, by fixed hash order
+Q32MQ0	filler, by fixed hash order
+Q3MIV0	filler, by fixed hash order
+Q3SY69	filler, by fixed hash order
+Q5JQC4	encoded by several genes
+Q5T1Q4	filler, by fixed hash order
+Q5TC12	filler, by fixed hash order
+Q5TZF3	filler, by fixed hash order
+Q5VV16	filler, by fixed hash order
+Q6GQQ9	filler, by fixed hash order
+Q6L8G8	filler, by fixed hash order
+Q6NXN4	filler, by fixed hash order
+Q6S8J3	filler, by fixed hash order
+Q6UWF5	has only ORF gene names, no symbol
+Q6WBX8	filler, by fixed hash order
+Q7L3T8	filler, by fixed hash order
+Q7Z4H4	filler, by fixed hash order
+Q7Z4Y8	filler, by fixed hash order
+Q7Z7C7	filler, by fixed hash order
+Q8IXK0	filler, by fixed hash order
+Q8IZD2	filler, by fixed hash order
+Q8N5M9	filler, by fixed hash order
+Q8NCC5	filler, by fixed hash order
+Q8NCT3	filler, by fixed hash order
+Q8NF91	among the five longest
+Q8NG06	filler, by fixed hash order
+Q8WXE0	filler, by fixed hash order
+Q8WXI7	among the five longest; longer than 12,000 residues
+Q8WZ42	among the five longest; longer than 12,000 residues
+Q92918	filler, by fixed hash order
+Q969V5	filler, by fixed hash order
+Q96B21	filler, by fixed hash order
+Q96CS2	filler, by fixed hash order
+Q96M61	filler, by fixed hash order
+Q96NC0	filler, by fixed hash order
+Q9BQI5	filler, by fixed hash order
+Q9BQT8	filler, by fixed hash order
+Q9BVC4	filler, by fixed hash order
+Q9BXF6	filler, by fixed hash order
+Q9BY12	filler, by fixed hash order
+Q9BYW2	filler, by fixed hash order
+Q9BZG1	filler, by fixed hash order
+Q9GZP4	filler, by fixed hash order
+Q9H195	among the five longest; longer than 12,000 residues
+Q9H7E2	filler, by fixed hash order
+Q9HAF1	filler, by fixed hash order
+Q9HAN9	filler, by fixed hash order
+Q9HAS0	filler, by fixed hash order
+Q9NQE7	filler, by fixed hash order
+Q9NSA1	filler, by fixed hash order
+Q9NST1	filler, by fixed hash order
+Q9P1Y6	filler, by fixed hash order
+Q9UGC6	filler, by fixed hash order
+Q9UIL8	filler, by fixed hash order
+Q9ULC4	filler, by fixed hash order
+Q9UN19	filler, by fixed hash order
+Q9UNQ0	one of the 54 proteins of version 1
+Q9Y5E9	filler, by fixed hash order
+Q9Y5F0	filler, by fixed hash order

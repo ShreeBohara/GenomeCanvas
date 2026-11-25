@@ -1,18 +1,36 @@
 {
   "name": "genomecanvas",
   "private": true,
-  "workspaces": [
-    "frontend"
-  ],
-  "scripts": {
-    "build:fixtures": "python3 backend/scripts/build_fixtures.py",
-    "dev:backend": "cd backend && python3 -m uvicorn app.main:app --reload",
-    "dev:frontend": "npm --prefix frontend run dev",
-    "lint:frontend": "npm --prefix frontend run lint",
-    "build:frontend": "npm --prefix frontend run build",
-    "test:backend": "python3 -m unittest discover -s backend/tests",
-    "test:frontend": "npm --prefix frontend run test",
-    "test": "npm run test:backend && npm run test:frontend"
+  "description": "A free, open atlas of the human proteome in which any question becomes a replayable, sourced walkthrough.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "packageManager": "pnpm@10.34.9+sha512.f49b5a8ea0fdedb44bb3c0c1d6575092a53c2950d95b7ad15df11f17974877a2de3a01c07e934e9b28ce716e51c09a94962c7306d09be2e1e4b18a8c8762fd32",
+  "engines": {
+    "node": ">=20.19.0"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "scripts": {
+    "dev": "corepack pnpm run release:sample && corepack pnpm run release:local && corepack pnpm --filter @genomecanvas/web run dev",
+    "release:sample": "cd forge && uv run --locked python -m forge.skeleton build --out ../build/release/sample",
+    "forge:sample": "cd forge && uv run --locked python -m forge build --profile sample --out ../build/tables/sample",
+    "forge:full": "cd forge && uv run --locked python -m forge build --profile full --out ../build/tables/full",
+    "release:local": "corepack pnpm --filter @genomecanvas/web run release:upload ../../build/release/sample --release sample --local --apply",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "typecheck": "corepack pnpm -r --if-present run typecheck",
+    "test": "corepack pnpm -r --if-present run test",
+    "build": "corepack pnpm -r --if-present run build",
+    "budget": "corepack pnpm --filter @genomecanvas/web run budget",
+    "e2e": "corepack pnpm --filter @genomecanvas/web run e2e",
+    "e2e:install": "corepack pnpm --filter @genomecanvas/web exec playwright install chromium",
+    "check": "corepack pnpm run lint && corepack pnpm run format:check && corepack pnpm run typecheck && corepack pnpm run test && corepack pnpm run build && corepack pnpm run budget",
+    "check:py": "cd forge && uv run --locked ruff check . && uv run --locked ruff format --check . && uv run --locked mypy && uv run --locked pytest && uv run --locked python -m forge.ledger check && uv run --locked python -m forge lock verify && uv run --locked python -m forge dictionary --check && uv run --locked python -m forge build --profile sample --out ../build/tables/sample",
+    "check:e2e": "corepack pnpm run release:sample && corepack pnpm --filter @genomecanvas/web run build && corepack pnpm run release:local && corepack pnpm run e2e",
+    "check:all": "corepack pnpm run check && corepack pnpm run check:py && corepack pnpm run check:e2e",
+    "deploy:dry-run": "CLOUDFLARE_ENV=staging corepack pnpm --filter @genomecanvas/web run build && corepack pnpm --filter @genomecanvas/web run deploy:dry-run && CLOUDFLARE_ENV=production corepack pnpm --filter @genomecanvas/web run build && corepack pnpm --filter @genomecanvas/web run deploy:dry-run && corepack pnpm --filter @genomecanvas/web run build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.9",
+    "typescript": "7.0.2"
+  }
 }

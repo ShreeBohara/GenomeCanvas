@@ -1,0 +1,46 @@
+{
+  "name": "@genomecanvas/web",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The GenomeCanvas app and its Worker, deployed together as one Cloudflare Worker with static assets.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit",
+    "test": "vitest run",
+    "budget": "node scripts/budget.mjs",
+    "e2e": "playwright test",
+    "release:upload": "tsx --conditions=source scripts/release-upload/cli.ts",
+    "deploy:check": "tsx --conditions=source scripts/deploy-check/cli.ts",
+    "deploy:dry-run": "wrangler deploy --dry-run"
+  },
+  "dependencies": {
+    "@genomecanvas/engine": "workspace:*",
+    "@genomecanvas/protocol": "workspace:*",
+    "@genomecanvas/query": "workspace:*",
+    "@genomecanvas/ui": "workspace:*",
+    "@tanstack/react-router": "1.170.46",
+    "hono": "4.13.22",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.34.0",
+    "@playwright/test": "1.65.1",
+    "@tailwindcss/vite": "4.3.5",
+    "@types/node": "20.19.43",
+    "@types/react": "19.3.3",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "axe-core": "4.14.1",
+    "tailwindcss": "4.3.5",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "vite": "8.3.8",
+    "vitest": "4.1.12",
+    "wrangler": "4.86.0"
+  }
+}

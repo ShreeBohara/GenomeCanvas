@@ -1,0 +1,24 @@
+{
+  "description": "UniProtKB accession test vectors, read by the TypeScript tests in packages/protocol and the Python tests in forge, so both languages agree on what an accession is.",
+  "invalid": [
+    { "value": "", "why": "empty" },
+    { "value": "p38398", "why": "lower case" },
+    { "value": "P38398 ", "why": "trailing space" },
+    { "value": " P38398", "why": "leading space" },
+    { "value": "P38398\n", "why": "trailing newline" },
+    { "value": "P3839", "why": "too short" },
+    { "value": "P383981", "why": "seven characters" },
+    { "value": "O1A2B3C", "why": "O, P and Q never start the ten-character form" },
+    { "value": "A0A023GPI8X", "why": "eleven characters" },
+    { "value": "BRCA1", "why": "a gene symbol" },
+    { "value": "P38398-2", "why": "an isoform suffix is not an accession" },
+    { "value": "P38398.1", "why": "a version suffix is not an accession" }
+  ],
+  "valid": [
+    { "value": "P38398", "why": "BRCA1, six characters starting with P" },
+    { "value": "Q13315", "why": "ATM, starting with Q" },
+    { "value": "O15245", "why": "starting with O" },
+    { "value": "A2BC19", "why": "the second six-character form" },
+    { "value": "A0A023GPI8", "why": "the ten-character form" }
+  ]
+}

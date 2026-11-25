@@ -1,0 +1,10 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# pnpm 10 runs no install scripts unless listed. workerd's links the local
+# Workers runtime binary and esbuild's checks its own; sharp, an optional image
+# library wrangler can use, is left off because nothing here needs it.
+onlyBuiltDependencies:
+  - esbuild
+  - workerd

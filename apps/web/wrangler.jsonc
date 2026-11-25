@@ -1,0 +1,40 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // One Worker serves the app's static files, the API and the release files.
+  // Requests under /api/ and /release/ reach the Worker first; everything else
+  // is a static file, and an unknown path gets index.html so client-side routes
+  // work. Release files come from R2 because the static-asset host ignores byte
+  // ranges (docs/adr/0005-immutable-files-on-r2.md).
+  "name": "genomecanvas",
+  "main": "./worker/index.ts",
+  "compatibility_date": "2026-04-20",
+  "assets": {
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/release/*"]
+  },
+  "observability": { "enabled": false },
+  // The top level is for `corepack pnpm dev` and the preview server only: the
+  // bucket lives in wrangler's local state (.wrangler/state), filled by
+  // `corepack pnpm release:local`. No bucket by this name exists in any account,
+  // so deploying without an environment fails instead of creating a third Worker.
+  "workers_dev": false,
+  "r2_buckets": [{ "binding": "RELEASES", "bucket_name": "genomecanvas-releases-local" }],
+  // Bindings are not inherited, so each environment names its own bucket. The
+  // bucket names must match infra/ (OpenTofu) and the deploy workflow.
+  "env": {
+    // Deployed from v2 to genomecanvas-staging.<subdomain>.workers.dev. Pull
+    // request previews are versions of this Worker with their own alias.
+    "staging": {
+      "workers_dev": true,
+      "preview_urls": true,
+      "r2_buckets": [{ "binding": "RELEASES", "bucket_name": "genomecanvas-releases-staging" }]
+    },
+    // Deployed from main to genomecanvas-production.<subdomain>.workers.dev
+    // until there is a custom domain.
+    "production": {
+      "workers_dev": true,
+      "preview_urls": false,
+      "r2_buckets": [{ "binding": "RELEASES", "bucket_name": "genomecanvas-releases-production" }]
+    }
+  }
+}

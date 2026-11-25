@@ -1,138 +1,201 @@
-# No step in this workflow interpolates untrusted input. There are no
-# `${{ github.event.* }}` expressions anywhere: every `run:` is a fixed command
-# string, and the only expressions used are static `secrets`-free config values.
+# Every `run:` is a fixed command string: no expression interpolates untrusted
+# input from the event, so nothing a pull request writes can reach a shell.
 name: CI
 
 on:
   push:
-    branches: ["**"]
+    branches: [v2, main]
   pull_request:
-    branches: [main]
 
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  backend:
-    name: Backend (unittest)
-    runs-on: ubuntu-latest
+  typescript:
+    name: TypeScript (lint, format, types, tests, build)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: "0"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          python-version: "3.12"
-          cache: pip
-          cache-dependency-path: backend/requirements.txt
-      - name: Install dependencies
-        run: pip install -r backend/requirements.txt
-      - name: Run tests
-        run: python -m unittest discover -s backend/tests -v
-
-  frontend:
-    name: Frontend (typecheck + lint + vitest + build)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: "20"
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
-      - name: Install dependencies
-        working-directory: frontend
-        run: npm ci
-      - name: Typecheck
-        working-directory: frontend
-        run: npx tsc --noEmit
-      - name: Lint
-        working-directory: frontend
-        run: npm run lint
-      - name: Unit tests
-        working-directory: frontend
-        run: npm run test
-      - name: Production build
-        working-directory: frontend
-        run: npm run build
-
-  # Builds the actual deployment artifact and starts it. The unit suites all run
-  # against the repository checkout, where `backend/app/` sits under a `backend/`
-  # parent; the image copies `app/` to `/srv/app/`. A path that resolved from the
-  # repo root worked in every test and failed in every container, so nothing here
-  # caught it until a deploy did. This job is the one that runs the real image.
-  image:
-    name: Container image (build + boot)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build image
-        working-directory: backend
-        run: docker build -t genomecanvas-api:ci .
-      - name: Start container
-        run: docker run -d --name api -p 8000:8000 genomecanvas-api:ci
-      - name: Wait for health
-        run: |
-          for _ in $(seq 1 30); do
-            if curl -sf http://localhost:8000/api/health; then
-              echo
-              exit 0
-            fi
-            sleep 1
-          done
-          echo "container did not become healthy; logs follow" >&2
-          docker logs api >&2
-          exit 1
-      - name: Assert fixtures actually loaded
-        # A 200 from /api/health is not sufficient: it would also pass if the
-        # repository had been constructed empty. Assert the real counts.
-        run: |
-          health=$(curl -sf http://localhost:8000/api/health)
-          echo "$health"
-          echo "$health" | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d["proteins_loaded"]==54, d; assert d["nodes_loaded"]==187, d; print("fixture counts OK")'
-      - name: Container logs
-        if: always()
-        run: docker logs api
+          node-version-file: .node-version
+          # pnpm comes from corepack, which is not on PATH when setup-node
+          # would look for it, so its automatic cache is turned off.
+          package-manager-cache: false
+      - name: Install
+        run: corepack pnpm install --frozen-lockfile
+      - name: Check
+        # Lint, format, types, unit tests, every package's build and the bundle budget.
+        run: corepack pnpm check
 
   e2e:
-    name: Playwright smoke
-    runs-on: ubuntu-latest
-    needs: [backend, frontend]
+    name: Pipeline, web build and end-to-end tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: "0"
+      WRANGLER_SEND_METRICS: "false"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          python-version: "3.12"
-      - uses: actions/setup-node@v4
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: "20"
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
-      - name: Install backend dependencies
-        run: pip install -r backend/requirements.txt
-      - name: Start backend and wait for health
-        working-directory: backend
-        # Playwright serves the frontend on 127.0.0.1:3005, which is not in the
-        # default CORS allow-list (localhost:3000/3001). Without this every API
-        # call from the e2e run is blocked at the preflight, the universe never
-        # loads, and the specs pass only against text the client renders on its
-        # own -- a green suite that exercises none of the backend.
-        env:
-          GENOMECANVAS_CORS_ORIGINS: "http://127.0.0.1:3005,http://localhost:3005"
+          node-version-file: .node-version
+          package-manager-cache: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: "0.11.29"
+          working-directory: forge
+      - name: Install
         run: |
-          python -m uvicorn app.main:app --port 8000 &
-          for _ in $(seq 1 30); do
-            if curl -sf http://localhost:8000/api/health; then exit 0; fi
+          corepack pnpm install --frozen-lockfile
+          (cd forge && uv sync --locked)
+      - name: Build the sample release
+        run: corepack pnpm run release:sample
+      - name: Build
+        run: corepack pnpm run build
+      - name: Bundle budget
+        run: corepack pnpm run budget
+      - name: Load the release into local R2
+        # The app reads the release through the Worker's /release/ route, from
+        # wrangler's local R2, as production reads it from a real bucket.
+        run: corepack pnpm run release:local
+      - name: Install Chromium
+        run: corepack pnpm --filter @genomecanvas/web exec playwright install --with-deps chromium
+      - name: End-to-end tests
+        run: corepack pnpm run e2e
+      - name: Dry-run deploys for staging and production
+        # Builds for each environment and asks wrangler to package it without
+        # uploading; needs no credentials. Rebuilds the default last.
+        run: corepack pnpm run deploy:dry-run
+      - name: Keep the Playwright report
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report
+          retention-days: 14
+          if-no-files-found: ignore
+
+  python:
+    name: Python (ruff, mypy, pytest, licence ledger, sample build)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: forge
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: "0.11.29"
+          working-directory: forge
+      - name: Install
+        # --locked also fails if uv.lock no longer matches pyproject.toml.
+        run: uv sync --locked
+      - name: Lint
+        run: uv run --frozen ruff check .
+      - name: Format
+        run: uv run --frozen ruff format --check .
+      - name: Types
+        run: uv run --frozen mypy
+      - name: Tests
+        run: uv run --frozen pytest
+      - name: Licence ledger
+        # Uses today's date, so a licence check older than 180 days turns CI red.
+        run: uv run --frozen python -m forge.ledger check
+      - name: Sample snapshots match the lock
+        run: uv run --frozen python -m forge lock verify
+      - name: Data dictionary is current
+        run: uv run --frozen python -m forge dictionary --check
+      - name: Sample build, offline
+        # The sample profile reads only committed snapshots and refuses any
+        # network connection; its 43 data checks must all pass.
+        run: uv run --frozen python -m forge build --profile sample --out ../build/tables/sample
+
+  opentofu:
+    name: OpenTofu (format and validate)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # infra/tofu.sh runs OpenTofu from its official image, pinned by digest,
+      # so CI and a machine without tofu installed run the same build.
+      - name: Format
+        run: infra/tofu.sh fmt -check -recursive -diff
+      - name: Validate
+        # -lockfile=readonly fails if a provider no longer matches the committed lock file.
+        run: |
+          for module in cloudflare github; do
+            infra/tofu.sh -chdir="$module" init -backend=false -input=false -lockfile=readonly
+            infra/tofu.sh -chdir="$module" validate
+          done
+
+  lighthouse:
+    name: Lighthouse (three runs)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: "0"
+      WRANGLER_SEND_METRICS: "false"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: "0.11.29"
+          working-directory: forge
+      - name: Install
+        # tools/lighthouse sits outside the workspace (Lighthouse 13 needs Node 22.19+).
+        run: |
+          corepack pnpm install --frozen-lockfile
+          (cd forge && uv sync --locked)
+          corepack pnpm --dir tools/lighthouse install --frozen-lockfile --ignore-workspace
+      - name: Build the release and the app, and load the release into local R2
+        run: |
+          corepack pnpm run release:sample
+          corepack pnpm run build
+          corepack pnpm run release:local
+      - name: Serve the built site
+        # vite preview runs the built assets and the Worker in local workerd,
+        # reading the release from local R2: the deployed shape, on this machine.
+        run: |
+          (cd apps/web && nohup corepack pnpm exec vite preview --port 4173 --strictPort > "$RUNNER_TEMP/preview.log" 2>&1 &)
+          for _ in $(seq 1 60); do
+            curl -sf http://localhost:4173/api/health > /dev/null && exit 0
             sleep 1
           done
-          echo "backend did not become healthy" >&2
+          cat "$RUNNER_TEMP/preview.log"
           exit 1
-      - name: Install frontend dependencies
-        working-directory: frontend
-        run: npm ci
-      - name: Install Chromium
-        working-directory: frontend
-        run: npx playwright install --with-deps chromium
-      - name: Run Playwright
-        working-directory: frontend
-        run: npx playwright test
-        env:
-          NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
+      - name: Lighthouse, three runs
+        working-directory: tools/lighthouse
+        run: |
+          google-chrome --version
+          node run.mjs http://localhost:4173/
+      - name: Keep the Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: lighthouse-reports
+          path: tools/lighthouse/reports
+          retention-days: 14
+          if-no-files-found: ignore

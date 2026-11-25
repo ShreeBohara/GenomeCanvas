@@ -1,0 +1,71 @@
+# The Forge's full profile: every reviewed human protein from the pinned
+# downloads in forge/downloads.lock.json. Nothing is published; the tables,
+# the check report and the manifest are kept as an artifact.
+#
+# Run by hand, and whenever a push to v2 changes the pinned downloads or this
+# workflow. GitHub dispatches a workflow by hand only once it exists on the
+# default branch, so until v2 is merged the push trigger is how this runs.
+name: Forge full build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v2]
+    paths: [forge/downloads.lock.json, .github/workflows/forge-full.yml]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  full:
+    name: Full build (every reviewed human protein)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: forge
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: "0.11.29"
+          working-directory: forge
+      - name: Install
+        run: uv sync --locked
+      - name: Build
+        # GNU time prints the peak memory; the build prints its own wall time.
+        run: |
+          started=$(date +%s)
+          set +e
+          /usr/bin/time -v -o ../build-time.txt uv run --frozen python -m forge build --profile full --out ../build/tables/full
+          status=$?
+          set -e
+          grep -E "Maximum resident set size|Elapsed \(wall clock\)" ../build-time.txt
+          echo "Full build took $(( $(date +%s) - started )) seconds, including downloads."
+          exit $status
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Forge full build"
+            echo
+            grep -E "Maximum resident set size|Elapsed \(wall clock\)" ../build-time.txt || true
+            echo
+            echo '```'
+            ls -l ../build/tables/full || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Keep the tables and the check report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: forge-tables-full
+          path: build/tables/full
+          retention-days: 14
+          if-no-files-found: error

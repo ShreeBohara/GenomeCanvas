@@ -1,0 +1,32 @@
+{
+  "name": "@genomecanvas/engine",
+  "version": "0.0.0",
+  "description": "The atlas renderer: every protein as one instance, on three.js and WebGL 2. No React inside.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.19.43",
+    "@types/three": "0.187.0",
+    "typescript": "7.0.2",
+    "vitest": "4.1.12"
+  }
+}
