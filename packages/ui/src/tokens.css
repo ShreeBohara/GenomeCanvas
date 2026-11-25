@@ -1,0 +1,85 @@
+/*
+ * GenomeCanvas design tokens. Every colour, size and duration the interface uses
+ * is one of these, and Tailwind reads them through tailwind.css.
+ *
+ * Surfaces are neutral and the data carries the colour (plan section 3.6, rule 2).
+ * Light is the default; dark follows the system setting.
+ */
+:root {
+  color-scheme: light dark;
+
+  /* Type: a system stack until Phase 4 chooses typefaces. */
+  --gc-font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --gc-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --gc-text-xs: 0.75rem;
+  --gc-text-sm: 0.875rem;
+  --gc-text-base: 1rem;
+  --gc-text-lg: 1.25rem;
+  --gc-text-xl: 1.5rem;
+
+  /* Spacing, on a 4 px grid. */
+  --gc-space-1: 0.25rem;
+  --gc-space-2: 0.5rem;
+  --gc-space-3: 0.75rem;
+  --gc-space-4: 1rem;
+  --gc-space-6: 1.5rem;
+  --gc-space-8: 2rem;
+
+  --gc-radius-sm: 4px;
+  --gc-radius-md: 8px;
+
+  /* Motion explains and stays under 400 ms (rule 6). */
+  --gc-duration-fast: 120ms;
+  --gc-duration-base: 200ms;
+  --gc-duration-slow: 360ms;
+
+  /* Light theme. */
+  --gc-bg: #f6f7f9;
+  --gc-surface: #ffffff;
+  --gc-text: #15181d;
+  --gc-text-muted: #4a5260;
+  --gc-border: #d5d9e0;
+  --gc-accent: #2155c9;
+  --gc-focus: #2155c9;
+  --gc-point-outline: #15181d;
+  --gc-point-highlight: #15181d;
+
+  /*
+   * Categories: the Okabe–Ito palette, which stays distinguishable with the
+   * common colour-vision deficiencies. Light swaps sky blue for blue and yellow
+   * for vermillion, which have too little contrast on white to read as marks.
+   */
+  --gc-category-1: #e69f00; /* orange */
+  --gc-category-2: #0072b2; /* blue */
+  --gc-category-3: #009e73; /* bluish green */
+  --gc-category-4: #d55e00; /* vermillion */
+  --gc-category-5: #cc79a7; /* reddish purple */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --gc-bg: #0f1115;
+    --gc-surface: #181b21;
+    --gc-text: #e8eaee;
+    --gc-text-muted: #a3abb8;
+    --gc-border: #2c313a;
+    --gc-accent: #7aa2ff;
+    --gc-focus: #7aa2ff;
+    --gc-point-outline: #0f1115;
+    --gc-point-highlight: #ffffff;
+
+    --gc-category-1: #e69f00; /* orange */
+    --gc-category-2: #56b4e9; /* sky blue */
+    --gc-category-3: #009e73; /* bluish green */
+    --gc-category-4: #f0e442; /* yellow */
+    --gc-category-5: #cc79a7; /* reddish purple */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --gc-duration-fast: 0ms;
+    --gc-duration-base: 0ms;
+    --gc-duration-slow: 0ms;
+  }
+}

@@ -1,0 +1,33 @@
+/* Import after "tailwindcss": exposes the tokens as Tailwind's theme. */
+@import "./tokens.css";
+
+@theme inline {
+  --font-sans: var(--gc-font-sans);
+  --font-mono: var(--gc-font-mono);
+
+  --text-xs: var(--gc-text-xs);
+  --text-sm: var(--gc-text-sm);
+  --text-base: var(--gc-text-base);
+  --text-lg: var(--gc-text-lg);
+  --text-xl: var(--gc-text-xl);
+
+  --radius-sm: var(--gc-radius-sm);
+  --radius-md: var(--gc-radius-md);
+
+  --color-canvas: var(--gc-bg);
+  --color-surface: var(--gc-surface);
+  --color-ink: var(--gc-text);
+  --color-muted: var(--gc-text-muted);
+  --color-line: var(--gc-border);
+  --color-accent: var(--gc-accent);
+  --color-focus: var(--gc-focus);
+  --color-category-1: var(--gc-category-1);
+  --color-category-2: var(--gc-category-2);
+  --color-category-3: var(--gc-category-3);
+  --color-category-4: var(--gc-category-4);
+  --color-category-5: var(--gc-category-5);
+
+  --duration-fast: var(--gc-duration-fast);
+  --duration-base: var(--gc-duration-base);
+  --duration-slow: var(--gc-duration-slow);
+}
