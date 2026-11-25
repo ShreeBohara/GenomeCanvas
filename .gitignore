@@ -32,3 +32,12 @@ __pycache__/
 .wrangler/
 playwright-report/
 test-results/
+
+# OpenTofu: providers, local state and your own variable values stay on your machine.
+# The .terraform.lock.hcl files are tracked: they pin each provider's checksums.
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+terraform.tfvars
+crash.log

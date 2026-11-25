@@ -1,0 +1,3 @@
+# Copy to terraform.tfvars (ignored by git) and fill in. The account ID is not a
+# secret, but it is yours; the API token never goes in any file.
+account_id = "0123456789abcdef0123456789abcdef"
