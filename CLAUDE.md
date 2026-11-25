@@ -45,12 +45,16 @@ The plan is `Documents/genomecanvas-2.0-plan.md`. Read "The short version", then
 Run from the repository root. pnpm only through corepack; never `corepack enable`. Set `COREPACK_ENABLE_DOWNLOAD_PROMPT=0` in non-interactive shells.
 
 - Install: `corepack pnpm install --frozen-lockfile`, and `uv sync --frozen` inside `forge/`. Chromium for the end-to-end tests, once: `corepack pnpm e2e:install`.
-- Run it: `corepack pnpm dev` builds the sample release and serves the app and its Worker on port 5173.
+- Run it: `corepack pnpm dev` builds the sample release, loads it into wrangler's local R2, and serves the app and its Worker on port 5173. The app reads the release only through the Worker's `/release/` route.
 - Everything, both languages and the browser tests: `corepack pnpm check:all`.
 - TypeScript: `corepack pnpm check` runs `lint`, `format:check`, `typecheck`, `test`, `build` and `budget`, each also a script of its own. `corepack pnpm format` rewrites files.
 - Python: `corepack pnpm check:py` runs ruff (lint and format check), mypy, pytest and the ledger check in `forge/`. Single tools: `uv run ruff check .`, `uv run mypy`, `uv run pytest` inside `forge/`.
-- Sample release: `corepack pnpm release:sample` (runs `python -m forge.skeleton build`); output in `apps/web/public/release/sample/`, ignored by git.
-- End to end: `corepack pnpm check:e2e` builds the release and the app, then runs Playwright against `vite preview`. `corepack pnpm e2e` alone reuses an existing build.
+- Sample release: `corepack pnpm release:sample` (runs `python -m forge.skeleton build`); output in `build/release/sample/`, ignored by git. `corepack pnpm release:local` loads it into wrangler's local R2 (`apps/web/.wrangler/state`).
+- Upload a release: `corepack pnpm --filter @genomecanvas/web run release:upload <folder> --release <name> (--local | --env staging|production)` prints the plan and changes nothing; `--apply` uploads, and with `--env` needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Sessions never run it with `--env` and `--apply`.
+- Deploys: `corepack pnpm deploy:dry-run` packages staging and production without credentials. The environment is chosen at build time with `CLOUDFLARE_ENV`, not with `wrangler --env`. Real deploys happen only in `.github/workflows/deploy.yml`, once the owner has stored the secrets (`docs/runbooks/first-deploy.md`).
+- OpenTofu: `infra/tofu.sh` runs it from the pinned container image (Docker, only for this): `infra/tofu.sh fmt -check -recursive`, `infra/tofu.sh -chdir=cloudflare init -backend=false -lockfile=readonly`, `infra/tofu.sh -chdir=cloudflare validate`. Never `plan` or `apply` against a real account.
+- Lighthouse: with `vite preview` serving on port 4173, `node run.mjs` inside `tools/lighthouse/` (its own lockfile: `corepack pnpm --dir tools/lighthouse install --frozen-lockfile --ignore-workspace`).
+- End to end: `corepack pnpm check:e2e` builds the release and the app, loads local R2, then runs Playwright against `vite preview`. `corepack pnpm e2e` alone reuses an existing build and local R2.
 - Frame time on the real GPU: with `dev` running, `node scripts/measure.mjs [instances] [frames]` inside `apps/web/`.
 - Licence ledger: `uv run python -m forge.ledger check` inside `forge/` (add `--today YYYY-MM-DD` to check against another date).
 - Workflows: `actionlint` validates `.github/workflows/`.

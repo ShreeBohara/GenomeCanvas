@@ -27,3 +27,28 @@ dependency updates are on from the start.
 - Workflows cannot run until the owner allows `v2` to be pushed; until then
   they are validated locally with `actionlint`.
 - Actions are pinned to commit SHAs and updated by Dependabot.
+
+## Amendment, 2026-11-25 (step 1C): what OpenTofu manages and what wrangler manages
+
+- **OpenTofu (`infra/`)** manages resources that outlive any one deploy: today
+  the two release buckets (`infra/cloudflare`), later the database and DNS. It
+  also holds an optional module for repository settings (`infra/github`): a
+  ruleset requiring the CI checks on `main`, and Dependabot alerts. Private
+  vulnerability reporting has no resource in the GitHub provider (v6.13.0), so
+  `infra/README.md` gives the API call instead.
+- **wrangler (`apps/web/wrangler.jsonc`)** manages the Worker: its code, its
+  versions, its bindings, its `workers.dev` address and preview addresses, for
+  the `staging` and `production` environments. These change with every deploy,
+  and wrangler's versions and rollback are the right tool for them; managing the
+  same Worker from OpenTofu too would give two owners for one resource.
+- The bucket names are the seam. They appear in `infra/cloudflare/variables.tf`
+  and in `wrangler.jsonc`, and the upload command reads them from
+  `wrangler.jsonc`.
+- **Not installed on the build machine.** `infra/tofu.sh` runs OpenTofu 1.13.10
+  from its official image, pinned by digest, and CI runs `fmt -check` and
+  `validate` through the same script. State is local and ignored by git until
+  the owner moves it (README, "Remote state").
+- **Delivery.** `deploy.yml` deploys staging from `v2` and production from
+  `main`; `preview.yml` uploads a version of the staging Worker per pull request
+  with its own alias. Both look for the Cloudflare secrets first and are skipped,
+  not failed, while there are none.
