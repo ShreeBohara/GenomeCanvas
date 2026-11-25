@@ -32,3 +32,30 @@ Requests for static assets are free and unlimited.
 - At most 20,000 files per deployment, so protein pages are one shared page that
   the Worker fills in.
 - If the owner chooses Next.js instead, this record is superseded before step 1B.
+
+## Amendment, 2026-11-25 (step 1B): one Worker with static assets
+
+The app and its API ship as **one Cloudflare Worker with static assets**, in
+`apps/web`, not as a separate `apps/edge` Worker.
+
+- Cloudflare's Vite plugin lists "single-page applications, with or without an
+  integrated backend API" as a use case, and its "React SPA with an API"
+  tutorial uses exactly this layout: `main: ./worker/index.ts`,
+  `not_found_handling: "single-page-application"`, `run_worker_first: ["/api/*"]`
+  (developers.cloudflare.com/workers/vite-plugin/, modified 2026-11-06, and
+  …/vite-plugin/tutorial/, modified 2026-09-05; read 2026-11-25).
+- `vite dev` and `vite preview` run the Worker in a local workerd process, so the
+  end-to-end tests exercise the files and the API together, as deployed.
+- **Pinned behind the current release, because of Node 20.19 on this machine.**
+  wrangler 4.87 and later require Node 22; 4.86.0 is the last that accepts 20.3,
+  and `@cloudflare/vite-plugin` 1.34.0 is the release built against it. Current
+  versions are wrangler 4.168.0 and plugin 1.70.2. Both move forward when local
+  Node reaches 22 (ADR 11).
+- The sample release is served from the same static assets for now
+  (`/release/sample/`). Step 1C moves releases to R2; the app reads them only
+  through `VITE_RELEASE_BASE_URL`, so that is a configuration change.
+
+Rejected: a separate `apps/edge` Worker. It would mean two deployments, two
+configurations and a cross-origin API for no gain at this size; the Worker can
+still be split out later, because the API is a Hono app with no dependence on the
+asset binding.

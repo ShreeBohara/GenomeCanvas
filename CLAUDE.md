@@ -44,9 +44,13 @@ The plan is `Documents/genomecanvas-2.0-plan.md`. Read "The short version", then
 
 Run from the repository root. pnpm only through corepack; never `corepack enable`. Set `COREPACK_ENABLE_DOWNLOAD_PROMPT=0` in non-interactive shells.
 
-- Install: `corepack pnpm install --frozen-lockfile`, and `uv sync --frozen` inside `forge/`.
-- Everything, both languages: `corepack pnpm check:all`.
-- TypeScript: `corepack pnpm check` runs `lint`, `format:check`, `typecheck`, `test` and `build`, each also a script of its own. `corepack pnpm format` rewrites files.
+- Install: `corepack pnpm install --frozen-lockfile`, and `uv sync --frozen` inside `forge/`. Chromium for the end-to-end tests, once: `corepack pnpm e2e:install`.
+- Run it: `corepack pnpm dev` builds the sample release and serves the app and its Worker on port 5173.
+- Everything, both languages and the browser tests: `corepack pnpm check:all`.
+- TypeScript: `corepack pnpm check` runs `lint`, `format:check`, `typecheck`, `test`, `build` and `budget`, each also a script of its own. `corepack pnpm format` rewrites files.
 - Python: `corepack pnpm check:py` runs ruff (lint and format check), mypy, pytest and the ledger check in `forge/`. Single tools: `uv run ruff check .`, `uv run mypy`, `uv run pytest` inside `forge/`.
+- Sample release: `corepack pnpm release:sample` (runs `python -m forge.skeleton build`); output in `apps/web/public/release/sample/`, ignored by git.
+- End to end: `corepack pnpm check:e2e` builds the release and the app, then runs Playwright against `vite preview`. `corepack pnpm e2e` alone reuses an existing build.
+- Frame time on the real GPU: with `dev` running, `node scripts/measure.mjs [instances] [frames]` inside `apps/web/`.
 - Licence ledger: `uv run python -m forge.ledger check` inside `forge/` (add `--today YYYY-MM-DD` to check against another date).
 - Workflows: `actionlint` validates `.github/workflows/`.

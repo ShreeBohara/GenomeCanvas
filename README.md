@@ -8,10 +8,13 @@ generated, and every source and licence recorded.
 
 ## Status
 
-GenomeCanvas 2.0 is being rebuilt from scratch on this branch, `v2`. It has no
-interface yet: what exists is the toolchain, one typed package and the licence
-ledger. **Nothing is deployed.** Version 1 (Next.js and FastAPI, 54 proteins) is
-frozen at tag `v1.0.0` and kept runnable on branch `legacy`.
+GenomeCanvas 2.0 is being rebuilt from scratch on this branch, `v2`. What exists
+is a walking skeleton: a pipeline step turns 54 hand-placed sample proteins from
+version 1 into a small content-hashed release, and the app draws them as one
+instanced draw call on a flat map, served with its API by one Cloudflare Worker
+running locally. **The data is sample data, and nothing is deployed.** Version 1
+(Next.js and FastAPI) is frozen at tag `v1.0.0` and kept runnable on branch
+`legacy`.
 
 ## Quickstart
 
@@ -21,42 +24,49 @@ which ships with Node up to version 24, and [uv](https://docs.astral.sh/uv/)
 
 ```bash
 corepack pnpm install --frozen-lockfile
-corepack pnpm check
+(cd forge && uv sync --frozen)
+corepack pnpm dev
 ```
 
-```bash
-cd forge && uv sync --frozen && cd ..
-corepack pnpm check:py
-```
-
-`corepack pnpm check:all` runs both. The first `corepack pnpm` downloads pnpm and
-may ask for confirmation; set `COREPACK_ENABLE_DOWNLOAD_PROMPT=0` to skip that.
+`corepack pnpm dev` builds the sample release and serves the app and its Worker at
+http://localhost:5173. The first `corepack pnpm` downloads pnpm and may ask for
+confirmation; set `COREPACK_ENABLE_DOWNLOAD_PROMPT=0` to skip that. The end-to-end
+tests need Chromium once: `corepack pnpm e2e:install`.
 
 | Command | What it does |
 |---|---|
+| `corepack pnpm dev` | Build the sample release, then serve the app and the Worker with live reload |
+| `corepack pnpm release:sample` | Build the sample release into `apps/web/public/release/sample/` |
 | `corepack pnpm lint` | Biome lint |
 | `corepack pnpm format` | Biome format, writing changes |
 | `corepack pnpm typecheck` | TypeScript in every package |
 | `corepack pnpm test` | Vitest in every package |
-| `corepack pnpm build` | Build every package |
-| `corepack pnpm check` | All of the above, with format in verify mode |
+| `corepack pnpm build` | Build every package and the app |
+| `corepack pnpm budget` | Print every chunk's size; fail if first-load JavaScript is over 150 KB gzip |
+| `corepack pnpm check` | All of the above but `dev`, with format in verify mode |
 | `corepack pnpm check:py` | ruff, mypy, pytest and the licence ledger check in `forge/` |
-| `corepack pnpm check:all` | Both languages |
+| `corepack pnpm check:e2e` | Build the release and the app, then run the Playwright tests |
+| `corepack pnpm check:all` | `check`, `check:py` and `check:e2e` |
 
 ## Repository map
 
 | Path | What |
 |---|---|
-| `packages/protocol/` | `@genomecanvas/protocol`: typed entity identifiers |
-| `forge/` | The Python data pipeline; today, the licence ledger (`sources.yaml`, `src/forge/ledger.py`) |
+| `apps/web/` | The app (React, Vite, TanStack Router, Tailwind) and its Worker (`worker/`, Hono), deployed as one Worker with static assets; Playwright tests in `e2e/` |
+| `packages/protocol/` | `@genomecanvas/protocol`: typed entity identifiers, and identifier test vectors shared with Python (`vectors/`) |
+| `packages/query/` | `@genomecanvas/query`: fetches a release, checks lengths and hashes, decodes the points format |
+| `packages/engine/` | `@genomecanvas/engine`: the atlas renderer on three.js and WebGL 2; no React |
+| `packages/ui/` | `@genomecanvas/ui`: design tokens as CSS variables, wired into Tailwind |
+| `forge/` | The Python data pipeline: the licence ledger, and `forge.skeleton`, which builds the sample release |
 | `forge/fixtures/v1/` | Two data files kept from version 1 for the skeleton; not real data, see its README |
+| `docs/formats/` | Binary and file formats, starting with `points-v0.md` |
 | `docs/adr/` | Architecture decision records |
 | `docs/licensing.md` | How code and data are licensed |
 | `docs/build/` | Build status, work orders and reports |
 | `Documents/` | The 2.0 plan and the version 1 specification |
 | `reports/`, `research_notes/` | The research behind the plan |
 
-`apps/` and the other packages in the plan arrive in later steps.
+`packages/agent`, `python/`, `evals/` and `infra/` arrive in later steps.
 
 ## Read more
 
