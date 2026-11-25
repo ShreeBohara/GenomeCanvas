@@ -1,4 +1,11 @@
 {
   "extends": "./tsconfig.json",
+  // Builds resolve workspace packages to their built output, not their sources,
+  // so each package's declarations stay inside its own rootDir.
+  "compilerOptions": {
+    "customConditions": [],
+    // Shipped code must not lean on Node; only the tests use its types.
+    "types": []
+  },
   "exclude": ["src/**/*.test.ts"]
 }
